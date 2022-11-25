@@ -20,7 +20,7 @@ void Game::Run()
 {
 	while (m_IsRunning) 
 	{	
-		float currentTime = SDL_GetTicks64();;//Should be in a platform class
+		float currentTime = SDL_GetTicks64();
 		float deltaTime = currentTime - m_LastFrameTime;
 		m_LastFrameTime = currentTime;
 
