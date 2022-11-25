@@ -12,6 +12,7 @@ public:
 
 private:
 	bool m_IsRunning = true;
+	float m_LastFrameTime = 0.f;
 
 	struct SDL_Window* m_Window;
 	struct SDL_Surface* m_Surface;
