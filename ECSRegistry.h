@@ -20,7 +20,10 @@ public:
 
 	Entity CreateEntity(const std::string& name, Scene* activeScene)
 	{
-		return Entity(m_EntityAdmin->CreateEntity(),activeScene);
+		auto temp = Entity(m_EntityAdmin->CreateEntity(), activeScene);
+		//TODO make sure adding NameComp works, maybe not here since we can't include Components.h
+		//temp.AddComponent<NameComp>(name);
+		return temp;
 	}
 
 	Entity CreateEntity(const std::string& name)
