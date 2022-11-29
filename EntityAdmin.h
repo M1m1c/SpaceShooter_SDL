@@ -11,7 +11,7 @@ class EntityAdmin
 public:
 	EntityAdmin()
 	{
-		for (EntityID entity = 0; entity < MAX_ENTITIES; ++entity)
+		for (EntityID entity = 1; entity < MAX_ENTITIES+1; ++entity)
 		{
 			m_AvailableEntities.push(entity);
 		}
