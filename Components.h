@@ -1,13 +1,4 @@
 #pragma once
-#include <cstdint>
-#include <bitset>
-
-using CompType = std::uint8_t;
-
-const CompType MAX_COMPONENTS = 32;
-
-using CompSignature = std::bitset<MAX_COMPONENTS>;
-
 struct Vector3
 {
 	Vector3(float x,float y, float z) : X(x), Y(y), Z(z){}

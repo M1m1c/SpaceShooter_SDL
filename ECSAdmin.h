@@ -4,11 +4,7 @@
 #include <array>
 #include <cassert>
 
-#include "Components.h"
-
-using Entity = std::uint32_t;
-
-const Entity MAX_ENTITIES = 10000;
+#include "ECSCore.h"
 
 class ECSAdmin
 {
