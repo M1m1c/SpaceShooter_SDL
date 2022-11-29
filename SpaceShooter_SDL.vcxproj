@@ -149,6 +149,10 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CompArray.h" />
+    <ClInclude Include="Components.h" />
+    <ClInclude Include="ECSAdmin.h" />
+    <ClInclude Include="ECSCore.h" />
     <ClInclude Include="Game.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
