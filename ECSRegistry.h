@@ -6,7 +6,7 @@
 #include "EntityAdmin.h"
 #include "ComponentAdmin.h"
 #include "Entity.h"
-//#include "Scene.h"
+#include "Scene.h"
 
 class ECSRegistry
 {
@@ -15,6 +15,12 @@ public:
 	{
 		m_ComponentAdmin = std::make_unique<ComponentAdmin>();
 		m_EntityAdmin = std::make_unique<EntityAdmin>();
+	}
+
+
+	Entity CreateEntity(const std::string& name, Scene* activeScene)
+	{
+		return Entity(m_EntityAdmin->CreateEntity(),activeScene);
 	}
 
 	Entity CreateEntity(const std::string& name)

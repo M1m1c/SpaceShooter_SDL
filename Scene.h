@@ -1,8 +1,10 @@
 #pragma once
 #include <string>
+#include <memory>
 
-class Entity;
+
 class ECSRegistry;
+class Entity;
 
 class Scene
 {
@@ -14,9 +16,9 @@ public:
 
 	Entity CreateEntity(const std::string& name = std::string());
 
-	ECSRegistry& GetECSRegistry();
+	std::shared_ptr<ECSRegistry> GetECSRegistry();
 
 private:
 
-	ECSRegistry m_ECSRegistry;
+	std::shared_ptr<ECSRegistry> m_ECSRegistry;
 };

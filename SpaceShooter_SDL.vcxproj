@@ -147,13 +147,18 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompArray.h" />
+    <ClInclude Include="ComponentAdmin.h" />
     <ClInclude Include="Components.h" />
+    <ClInclude Include="ECSRegistry.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityAdmin.h" />
     <ClInclude Include="ECSCore.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
