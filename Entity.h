@@ -45,7 +45,9 @@ public:
 
 	operator bool() const { return m_EntityID != 0; }
 
+	const EntityID GetID() { return m_EntityID; }
+
 private:
-	EntityID m_EntityID{ 0 };
+	EntityID m_EntityID{ 0 }; //0 is to be treated as an invalid ID
 	Scene* m_Scene = nullptr;
 };
