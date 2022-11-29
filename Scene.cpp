@@ -5,6 +5,7 @@
 Scene::Scene()
 {
 	m_ECSRegistry = std::make_shared<ECSRegistry>();
+	m_ECSRegistry->Init();
 }
 
 Scene::~Scene()
