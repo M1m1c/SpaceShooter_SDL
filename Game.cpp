@@ -19,8 +19,6 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface)
 	m_Window = window;
 	m_Surface = surface;
 	m_ActiveScene = std::make_unique<Scene>();
-
-	testEntity = m_ActiveScene->CreateEntity("testEntity");
 }
 
 void Game::Run()
@@ -35,9 +33,5 @@ void Game::Run()
 		SDL_UpdateWindowSurface(m_Window);
 
 		m_ActiveScene->OnUpdate(deltaTime);
-
-
-		std::cout << std::to_string(testEntity.GetID()) << std::endl;
-
 	}
 }
