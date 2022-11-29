@@ -1,4 +1,6 @@
 #pragma once
+#include <memory>
+class Scene;
 
 class Game
 {
@@ -16,4 +18,6 @@ private:
 
 	struct SDL_Window* m_Window;
 	struct SDL_Surface* m_Surface;
+
+	std::unique_ptr<Scene> m_ActiveScene;
 };
