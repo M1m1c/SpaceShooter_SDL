@@ -1,9 +1,12 @@
 #pragma once
 
+#include <string>
+#include <utility>
 #include "ECSCore.h"
 #include "EntityAdmin.h"
 #include "ComponentAdmin.h"
 #include "Entity.h"
+//#include "Scene.h"
 
 class ECSRegistry
 {
@@ -14,17 +17,16 @@ public:
 		m_EntityAdmin = std::make_unique<EntityAdmin>();
 	}
 
-	Entity CreateEntity(const std::string&,Scene* activeScene)
+	Entity CreateEntity(const std::string& name)
 	{
-		auto temp = Entity(m_EntityAdmin->CreateEntity(), activeScene);
-		return temp;
+		return Entity(m_EntityAdmin->CreateEntity());
 	}
 
-	void DestroyEntity(Entity entity)
+	void DestroyEntity(EntityID entityID)
 	{
-		m_EntityAdmin->DestroyEntity(entity);
+		m_EntityAdmin->DestroyEntity(entityID);
 
-		m_ComponentAdmin->EntityDestroyed(entity);
+		m_ComponentAdmin->EntityDestroyed(entityID);
 	}
 
 	template<typename T>
@@ -33,16 +35,14 @@ public:
 		m_ComponentAdmin->RegisterComponent<T>();
 	}
 
-	template<typename T>
-	void AddComponent(EntityID entityID, T component)
+	template<typename T, typename... Args>
+	void AddComponent(EntityID entityID, Args&&... args)
 	{
-		m_ComponentAdmin->AddComponent<T>(entityID, component);
+		m_ComponentAdmin->AddComponent<T>(entityID, std::forward<Args>(args)...);
 
 		auto signature = m_EntityAdmin->GetSignature(entityID);
 		signature.set(m_ComponentAdmin->GetComponentType<T>(), true);
 		m_EntityAdmin->SetSignature(entityID, signature);
-
-		mSystemManager->EntitySignatureChanged(entityID, signature);
 	}
 
 	template<typename T>
