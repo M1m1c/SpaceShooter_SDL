@@ -17,7 +17,7 @@ public:
 
 		m_ComponentTypes.insert({ typeName, m_NextComponentType });
 
-		m_ComponentArrays.insert({ typeName, std::make_shared<ComponentArray<T>>() });
+		m_ComponentArrays.insert({ typeName, std::make_shared<CompArray<T>>() });
 
 		++m_NextComponentType;
 	}
@@ -32,10 +32,10 @@ public:
 		return m_ComponentTypes[typeName];
 	}
 
-	template<typename T>
-	void AddComponent(EntityID entity, T component)
+	template<typename T, typename... Args>
+	void AddComponent(EntityID entity, Args&&... args)
 	{
-		GetComponentArray<T>()->AddComponent(entity, component);
+		GetComponentArray<T>()->AddComponent(entity, T(args));
 	}
 
 	template<typename T>
@@ -71,6 +71,6 @@ private:
 
 		assert(m_ComponentTypes.find(typeName) != m_ComponentTypes.end() && "Component not registered before use.");
 
-		return std::static_pointer_cast<ComponentArray<T>>(m_ComponentArrays[typeName]);
+		return std::static_pointer_cast<CompArray<T>>(m_ComponentArrays[typeName]);
 	}
 };
