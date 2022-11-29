@@ -1,4 +1,9 @@
 #pragma once
+#include <cstdint>
+
+using CompType = std::uint8_t;
+
+const CompType MAX_COMPONENTS = 32;
 
 struct Vector3
 {
@@ -13,7 +18,21 @@ struct Vector3
 	}
 };
 
-struct Position
+struct Vector2
 {
-	Vector3 Position;
+	Vector2(float x, float y) : X(x), Y(y) {}
+	float X, Y;
+
+	(Vector2)operator = (Vector2 other)
+	{
+		X = other.X;
+		Y = other.Y;
+	}
+};
+
+struct Transform
+{
+	Vector2 Position;
+	float Rotation;
+	Vector2 Size;
 };
