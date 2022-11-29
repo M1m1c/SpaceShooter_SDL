@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+
 struct Vector3
 {
 	Vector3(float x,float y, float z) : X(x), Y(y), Z(z){}
@@ -24,9 +26,14 @@ struct Vector2
 	}
 };
 
-struct Transform
+struct TransformComp
 {
 	Vector2 Position;
 	float Rotation;
 	Vector2 Size;
+};
+
+struct NameComp 
+{
+	std::string Name;
 };
