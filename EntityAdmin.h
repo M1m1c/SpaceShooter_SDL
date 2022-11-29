@@ -6,10 +6,10 @@
 
 #include "ECSCore.h"
 
-class ECSAdmin
+class EntityAdmin
 {
 public:
-	ECSAdmin()
+	EntityAdmin()
 	{
 		for (Entity entity = 0; entity < MAX_ENTITIES; ++entity)
 		{

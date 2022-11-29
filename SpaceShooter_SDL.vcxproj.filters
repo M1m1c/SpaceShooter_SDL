@@ -29,7 +29,7 @@
     <ClInclude Include="Components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ECSAdmin.h">
+    <ClInclude Include="EntityAdmin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CompArray.h">
