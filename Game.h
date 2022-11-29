@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include "Entity.h"
 class Scene;
 
 class Game
@@ -20,4 +21,5 @@ private:
 	struct SDL_Surface* m_Surface;
 
 	std::unique_ptr<Scene> m_ActiveScene;
+	Entity testEntity;
 };
