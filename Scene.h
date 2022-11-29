@@ -2,6 +2,7 @@
 #include <string>
 
 class Entity;
+class ECSRegistry;
 
 class Scene
 {
@@ -13,8 +14,9 @@ public:
 
 	Entity CreateEntity(const std::string& name = std::string());
 
+	ECSRegistry& GetECSRegistry();
+
 private:
 
-	//registry m_Registry;
-
+	ECSRegistry m_ECSRegistry;
 };
