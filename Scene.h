@@ -9,7 +9,7 @@ class Entity;
 class Scene
 {
 public:
-	Scene();
+	Scene(struct SDL_Renderer* renderer);
 	~Scene();
 
 	void OnUpdate(float deltaTime);
@@ -21,4 +21,6 @@ public:
 private:
 
 	std::shared_ptr<ECSRegistry> m_ECSRegistry;
+	struct SDL_Renderer* m_Renderer;
+	Entity* testEntity;
 };
