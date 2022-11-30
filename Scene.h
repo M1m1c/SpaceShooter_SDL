@@ -14,7 +14,7 @@ public:
 
 	void OnUpdate(float deltaTime);
 
-	Entity CreateEntity(const std::string& name = std::string());
+	Entity& CreateEntity(const std::string& name = std::string());
 
 	std::shared_ptr<ECSRegistry> GetECSRegistry();
 

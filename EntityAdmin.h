@@ -5,6 +5,7 @@
 #include <cassert>
 
 #include "ECSCore.h"
+#include "Entity.h"
 
 class EntityAdmin
 {
@@ -17,20 +18,22 @@ public:
 		}
 	}
 
-	EntityID CreateEntity()
+	Entity& CreateEntity(Scene* activeScene)
 	{
 		assert(m_LivingEntityCount < MAX_ENTITIES && "Too many entities in existence.");
 		EntityID id = m_AvailableEntities.front();
 		m_AvailableEntities.pop();
 		++m_LivingEntityCount;
-		return id;
+		m_Entities[id] = Entity(id, activeScene);
+		return m_Entities[id];
 	}
 
-	void DestroyEntity(EntityID entity)
+	void DestroyEntity(EntityID entityID)
 	{
-		assert(entity < MAX_ENTITIES && "Entity out of range.");
-		m_Signatures[entity].reset();
-		m_AvailableEntities.push(entity);
+		assert(entityID < MAX_ENTITIES && "Entity out of range.");
+		m_Signatures[entityID].reset();
+		m_Entities[entityID] = Entity(0,nullptr);
+		m_AvailableEntities.push(entityID);
 		--m_LivingEntityCount;
 	}
 
@@ -50,6 +53,7 @@ private:
 	std::queue<EntityID> m_AvailableEntities{};
 
 	std::array<CompSignature, MAX_ENTITIES> m_Signatures{};
+	std::array<Entity, MAX_ENTITIES> m_Entities{};
 
 	uint32_t m_LivingEntityCount{};
 };

@@ -16,7 +16,7 @@ void Scene::OnUpdate(float deltaTime)
 {
 }
 
-Entity Scene::CreateEntity(const std::string& name)
+Entity& Scene::CreateEntity(const std::string& name)
 {
 	return m_ECSRegistry->CreateEntity(name,this);
 }

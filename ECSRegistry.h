@@ -18,18 +18,18 @@ public:
 	}
 
 
-	Entity CreateEntity(const std::string& name, Scene* activeScene)
+	Entity& CreateEntity(const std::string& name, Scene* activeScene)
 	{
-		auto temp = Entity(m_EntityAdmin->CreateEntity(), activeScene);
+		//auto& temp = m_EntityAdmin->CreateEntity(activeScene);// Entity(, activeScene);
 		//TODO make sure adding NameComp works, maybe not here since we can't include Components.h
 		//temp.AddComponent<NameComp>(name);
-		return temp;
+		return m_EntityAdmin->CreateEntity(activeScene);
 	}
 
-	Entity CreateEntity(const std::string& name)
+	/*Entity CreateEntity(const std::string& name)
 	{
 		return Entity(m_EntityAdmin->CreateEntity());
-	}
+	}*/
 
 	void DestroyEntity(EntityID entityID)
 	{
