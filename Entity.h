@@ -5,7 +5,7 @@
 #include "ECSCore.h"
 #include "Scene.h"
 
-class Entity
+struct Entity
 {
 public:
 	Entity() = default;
