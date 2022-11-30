@@ -12,9 +12,10 @@ class EntityAdmin
 public:
 	EntityAdmin()
 	{
-		for (EntityID entity = 1; entity < MAX_ENTITIES+1; ++entity)
+		for (EntityID entityID = 0; entityID < MAX_ENTITIES; ++entityID)
 		{
-			m_AvailableEntities.push(entity);
+			m_AvailableEntities.push(entityID);
+			m_Entities[entityID] = Entity(entityID);
 		}
 	}
 
@@ -32,7 +33,7 @@ public:
 	{
 		assert(entityID < MAX_ENTITIES && "Entity out of range.");
 		m_Signatures[entityID].reset();
-		m_Entities[entityID] = Entity(0,nullptr);
+		m_Entities[entityID] = Entity(entityID, nullptr);
 		m_AvailableEntities.push(entityID);
 		--m_LivingEntityCount;
 	}
