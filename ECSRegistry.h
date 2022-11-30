@@ -44,14 +44,15 @@ public:
 		m_ComponentAdmin->RegisterComponent<T>();
 	}
 
-	template<typename T, typename... Args>
-	void AddComponent(EntityID entityID, Args&&... args)
+	template<typename T>
+	T& AddComponent(EntityID entityID)
 	{
-		m_ComponentAdmin->AddComponent<T>(entityID, std::forward<Args>(args)...);
+		m_ComponentAdmin->AddComponent<T>(entityID);
 
 		auto signature = m_EntityAdmin->GetSignature(entityID);
 		signature.set(m_ComponentAdmin->GetComponentType<T>(), true);
 		m_EntityAdmin->SetSignature(entityID, signature);
+		return m_ComponentAdmin->GetComponent<T>(entityID);
 	}
 
 	template<typename T>

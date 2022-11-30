@@ -32,10 +32,16 @@ public:
 		return m_ComponentTypes[typeName];
 	}
 
-	template<typename T, typename... Args>
+	/*template<typename T, typename... Args>
 	void AddComponent(EntityID entity, Args&&... args)
 	{
 		GetComponentArray<T>()->AddComponent(entity, T(args));
+	}*/
+
+	template<typename T>
+	void AddComponent(EntityID entity)
+	{
+		GetComponentArray<T>()->AddComponent(entity,T());
 	}
 
 	template<typename T>

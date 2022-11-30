@@ -16,13 +16,21 @@ public:
 	Entity(const Entity& other) = default;
 	~Entity() = default;
 
-	template<typename T, typename... Args>
-	T& AddComponent(Args&&... args)
+	//template<typename T, typename... Args>
+	//T& AddComponent(Args&&... args)
+	//{
+	//	ALIVE_CHECK();
+	//	assert(!HasComponent<T>() && "Entity already has component!");
+	//	//TODO investigaet furhter why we are not allowed to forward the args std::forward<Args>(args)...
+	//	return m_Scene->GetECSRegistry()->AddComponent<T>(m_EntityID,args);
+	//}
+
+	template<typename T>
+	T& AddComponent()
 	{
 		ALIVE_CHECK();
 		assert(!HasComponent<T>() && "Entity already has component!");
-		//TODO investigaet furhter why we are not allowed to forward the args std::forward<Args>(args)...
-		return m_Scene->GetECSRegistry()->AddComponent<T>(m_EntityID, args);
+		return m_Scene->GetECSRegistry()->AddComponent<T>(m_EntityID);
 	}
 
 	template<typename T>
