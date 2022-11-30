@@ -29,8 +29,8 @@ struct Vector2
 struct TransformComp
 {
 	Vector2 Position;
-	float Rotation;
 	Vector2 Size;
+	float Rotation;
 };
 
 struct NameComp 
