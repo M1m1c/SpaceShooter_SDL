@@ -18,7 +18,8 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface)
 {
 	m_Window = window;
 	m_Surface = surface;
-	m_ActiveScene = std::make_unique<Scene>();
+	m_Renderer = SDL_CreateRenderer(window,-1,0);
+	m_ActiveScene = std::make_unique<Scene>(m_Renderer);
 }
 
 void Game::Run()
@@ -29,9 +30,10 @@ void Game::Run()
 		float deltaTime = currentTime - m_LastFrameTime;
 		m_LastFrameTime = currentTime;
 
-		SDL_FillRect(m_Surface, NULL, SDL_MapRGB(m_Surface->format, 20, 20, 30));
-		SDL_UpdateWindowSurface(m_Window);
+		//SDL_FillRect(m_Surface, NULL, SDL_MapRGB(m_Surface->format, 20, 20, 30));
+		//SDL_UpdateWindowSurface(m_Window);
 
 		m_ActiveScene->OnUpdate(deltaTime);
+
 	}
 }

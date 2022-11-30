@@ -18,6 +18,7 @@ private:
 
 	struct SDL_Window* m_Window;
 	struct SDL_Surface* m_Surface;
+	struct SDL_Renderer* m_Renderer;
 
 	std::unique_ptr<Scene> m_ActiveScene;
 };
