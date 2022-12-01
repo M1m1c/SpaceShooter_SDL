@@ -23,4 +23,7 @@ private:
 	std::shared_ptr<ECSRegistry> m_ECSRegistry;
 	struct SDL_Renderer* m_Renderer;
 	Entity* testEntity;
+
+	//TODO just an idea, have the scene hold all the systems in an array or vector.
+	//have the scene send refernces to all components relevant to the system in a tuple in the systems update call
 };

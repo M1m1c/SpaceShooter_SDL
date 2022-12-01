@@ -53,6 +53,7 @@ public:
 private:
 	std::queue<EntityID> m_AvailableEntities{};
 
+	//TODO maybe move signature into entity class
 	std::array<CompSignature, MAX_ENTITIES> m_Signatures{};
 	std::array<Entity, MAX_ENTITIES> m_Entities{};
 
