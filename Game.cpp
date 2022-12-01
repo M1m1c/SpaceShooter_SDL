@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Components.h"
 #include "PlayerController.h"
+#include "MovementSystem.h"
 #include <iostream>
 
 
@@ -41,6 +42,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface)
 	comp.Size = Vector2(10.f, 10.f);
 
 	m_PlayerController = std::make_unique<PlayerController>(m_EventHandle, inputComp);
+	m_MovementSystem = std::make_unique<MovementSystem>(m_ECSRegistry);
 }
 
 void Game::Run()
@@ -48,17 +50,21 @@ void Game::Run()
 	while (m_IsRunning)
 	{
 		float currentTime = SDL_GetTicks64();
-		float deltaTime = currentTime - m_LastFrameTime;
+		float deltaTime = (currentTime - m_LastFrameTime) * 0.001f;
 		m_LastFrameTime = currentTime;
 
 		//SDL_FillRect(m_Surface, NULL, SDL_MapRGB(m_Surface->format, 20, 20, 30));
-		//SDL_UpdateWindowSurface(m_Window);
+		
 
 		m_PlayerController->Update();
 
 		auto input=testEntity->GetComponent<InputComp>().InputSignature;
 		
-		std::cout << input.to_string() << std::endl;
+		std::cout << std::to_string(deltaTime) << std::endl;
+
+		m_MovementSystem->Update(testEntity->GetID(), deltaTime);
+
+		SDL_RenderClear(m_Renderer);
 
 		if (testEntity)
 		{
@@ -74,9 +80,10 @@ void Game::Run()
 
 		}
 
-		//SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
+		SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
 
 		SDL_RenderPresent(m_Renderer);
+		
 	}
 }
 

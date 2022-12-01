@@ -5,6 +5,7 @@
 class ECSRegistry;
 class Entity;
 class PlayerController;
+class MovementSystem;
 
 class Game
 {
@@ -32,6 +33,7 @@ private:
 	std::shared_ptr<ECSRegistry> m_ECSRegistry;
 
 	std::unique_ptr<PlayerController> m_PlayerController;
+	std::unique_ptr<MovementSystem> m_MovementSystem;
 
 	Entity* testEntity;
 };
