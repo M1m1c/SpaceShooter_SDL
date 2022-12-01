@@ -1,6 +1,9 @@
 #pragma once
+#include <string>
 #include <memory>
-class Scene;
+//class Game;
+class ECSRegistry;
+class Entity;
 
 class Game
 {
@@ -12,6 +15,10 @@ public:
 
 	void Run();
 
+	std::shared_ptr<ECSRegistry> GetECSRegistry();
+
+	Entity& CreateEntity(const std::string& name = std::string());
+
 private:
 	bool m_IsRunning = true;
 	float m_LastFrameTime = 0.f;
@@ -20,5 +27,8 @@ private:
 	struct SDL_Surface* m_Surface;
 	struct SDL_Renderer* m_Renderer;
 
-	std::unique_ptr<Scene> m_ActiveScene;
+	std::shared_ptr<ECSRegistry> m_ECSRegistry;
+	Entity* testEntity;
+
+	//std::unique_ptr<Game> m_ActiveGame;
 };

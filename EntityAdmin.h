@@ -19,13 +19,13 @@ public:
 		}
 	}
 
-	Entity& CreateEntity(Scene* activeScene)
+	Entity& CreateEntity(Game* activeGame)
 	{
 		assert(m_LivingEntityCount < MAX_ENTITIES && "Too many entities in existence.");
 		EntityID id = m_AvailableEntities.front();
 		m_AvailableEntities.pop();
 		++m_LivingEntityCount;
-		m_Entities[id] = Entity(id, activeScene);
+		m_Entities[id] = Entity(id, activeGame);
 		return m_Entities[id];
 	}
 

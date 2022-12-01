@@ -6,7 +6,7 @@
 #include "EntityAdmin.h"
 #include "ComponentAdmin.h"
 #include "Entity.h"
-#include "Scene.h"
+#include "Game.h"
 
 class ECSRegistry
 {
@@ -18,12 +18,12 @@ public:
 	}
 
 
-	Entity& CreateEntity(const std::string& name, Scene* activeScene)
+	Entity& CreateEntity(const std::string& name, Game* activeGame)
 	{
-		//auto& temp = m_EntityAdmin->CreateEntity(activeScene);// Entity(, activeScene);
+		//auto& temp = m_EntityAdmin->CreateEntity(activeGame);// Entity(, activeGame);
 		//TODO make sure adding NameComp works, maybe not here since we can't include Components.h
 		//temp.AddComponent<NameComp>(name);
-		return m_EntityAdmin->CreateEntity(activeScene);
+		return m_EntityAdmin->CreateEntity(activeGame);
 	}
 
 	/*Entity CreateEntity(const std::string& name)
