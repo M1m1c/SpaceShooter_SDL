@@ -45,3 +45,9 @@ struct NameComp
 {
 	std::string Name;
 };
+
+struct RigidBodyComp
+{
+	Vector2 velocity;
+	Vector2 acceleration;
+};
