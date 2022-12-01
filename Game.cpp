@@ -20,13 +20,15 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface)
 	m_Window = window;
 	m_Surface = surface;
 	m_Renderer = SDL_CreateRenderer(window,-1,0);
-	//m_ActiveGame = std::make_unique<Game>(m_Renderer);
+
 
 	m_ECSRegistry = std::make_shared<ECSRegistry>();
 	m_ECSRegistry->Init();
 	//TODO register components for later use
 
 	m_ECSRegistry->RegisterComponent<TransformComp>();
+	m_ECSRegistry->RegisterComponent<NameComp>();
+
 
 	testEntity = &CreateEntity("Test");
 	auto& comp = testEntity->AddComponent<TransformComp>();
@@ -45,8 +47,6 @@ void Game::Run()
 
 		//SDL_FillRect(m_Surface, NULL, SDL_MapRGB(m_Surface->format, 20, 20, 30));
 		//SDL_UpdateWindowSurface(m_Window);
-
-		//m_ActiveGame->OnUpdate(deltaTime);
 
 		if (testEntity)
 		{

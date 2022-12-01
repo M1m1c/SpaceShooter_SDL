@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
-//class Game;
+
 class ECSRegistry;
 class Entity;
 
@@ -29,6 +29,4 @@ private:
 
 	std::shared_ptr<ECSRegistry> m_ECSRegistry;
 	Entity* testEntity;
-
-	//std::unique_ptr<Game> m_ActiveGame;
 };
