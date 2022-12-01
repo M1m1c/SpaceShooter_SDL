@@ -4,6 +4,7 @@
 #include "ECSRegistry.h"
 #include "Entity.h"
 #include "Components.h"
+#include "PlayerController.h"
 #include <iostream>
 
 
@@ -20,6 +21,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface)
 	m_Window = window;
 	m_Surface = surface;
 	m_Renderer = SDL_CreateRenderer(window,-1,0);
+	m_EventHandle = std::make_shared<SDL_Event>();
 
 
 	m_ECSRegistry = std::make_shared<ECSRegistry>();
@@ -27,14 +29,18 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface)
 	//TODO register components for later use
 
 	m_ECSRegistry->RegisterComponent<TransformComp>();
-	m_ECSRegistry->RegisterComponent<NameComp>();
+	m_ECSRegistry->RegisterComponent<InputComp>();
+
 
 
 	testEntity = &CreateEntity("Test");
+	auto& inputComp = testEntity->AddComponent<InputComp>();
 	auto& comp = testEntity->AddComponent<TransformComp>();
 
 	comp.Position = Vector2(640.f, 400.f);
 	comp.Size = Vector2(10.f, 10.f);
+
+	m_PlayerController = std::make_unique<PlayerController>(m_EventHandle, inputComp);
 }
 
 void Game::Run()
@@ -47,6 +53,12 @@ void Game::Run()
 
 		//SDL_FillRect(m_Surface, NULL, SDL_MapRGB(m_Surface->format, 20, 20, 30));
 		//SDL_UpdateWindowSurface(m_Window);
+
+		m_PlayerController->Update();
+
+		auto input=testEntity->GetComponent<InputComp>().InputSignature;
+		
+		std::cout << input.to_string() << std::endl;
 
 		if (testEntity)
 		{
