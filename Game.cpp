@@ -81,6 +81,14 @@ void Game::Run()
 			SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
 			SDL_RenderFillRect(m_Renderer, &rect);
 
+			auto cX = rect.x;
+			auto cY = rect.y + 10.f;
+			SDL_RenderDrawLine(m_Renderer, cX, cY, cX - 5.f, cY + 10.f);
+			cX = rect.x + 10.f;
+			SDL_RenderDrawLine(m_Renderer, cX, cY, cX + 5.f, cY + 10.f);
+			cX = rect.x + 5.f;
+			SDL_RenderDrawLine(m_Renderer, cX-2.f, cY, cX-4.f, cY + 8.f);
+			SDL_RenderDrawLine(m_Renderer, cX+2.f, cY, cX+4.f, cY + 8.f);
 		}
 
 		SDL_RenderPresent(m_Renderer);
