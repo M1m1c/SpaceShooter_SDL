@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <bitset>
 
 struct Vector3
 {
@@ -28,6 +29,15 @@ struct Vector2
 	}*/
 };
 
+enum Inputs
+{
+	Up =	0,
+	Down =	1,
+	Left =	2,
+	Right = 3,
+	Shoot = 4,
+};
+
 struct TransformComp
 {
 	Vector2 Position;
@@ -50,4 +60,9 @@ struct RigidBodyComp
 {
 	Vector2 velocity;
 	Vector2 acceleration;
+};
+
+struct InputComp
+{
+	std::bitset<5> InputSignature = 0;
 };
