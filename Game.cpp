@@ -52,18 +52,21 @@ void Game::Run()
 		float currentTime = SDL_GetTicks64();
 		float deltaTime = (currentTime - m_LastFrameTime) * 0.001f;
 		m_LastFrameTime = currentTime;
-
-		//SDL_FillRect(m_Surface, NULL, SDL_MapRGB(m_Surface->format, 20, 20, 30));
 		
+		//TODO make systems able to get the components they need to affect by themselves
 
 		m_PlayerController->Update();
 
-		auto input=testEntity->GetComponent<InputComp>().InputSignature;
+		/*auto position =testEntity->GetComponent<TransformComp>().Position;
 		
-		std::cout << std::to_string(deltaTime) << std::endl;
+		std::cout << "X = " << std::to_string(position.X)<<" Y = "<< std::to_string(position.Y) << std::endl;*/
 
 		m_MovementSystem->Update(testEntity->GetID(), deltaTime);
 
+
+		//TODO implement render system
+
+		SDL_SetRenderDrawColor(m_Renderer, 20, 20, 30, 255);
 		SDL_RenderClear(m_Renderer);
 
 		if (testEntity)
@@ -79,8 +82,6 @@ void Game::Run()
 			SDL_RenderFillRect(m_Renderer, &rect);
 
 		}
-
-		SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
 
 		SDL_RenderPresent(m_Renderer);
 		

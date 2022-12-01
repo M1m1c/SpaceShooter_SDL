@@ -15,11 +15,16 @@ void MovementSystem::Update(const EntityID& entityID, float deltaTime)
 
 	Vector2 inputDir;
 	inputDir.X = (input[Inputs::Left] == 1 ? -1.f : (input[Inputs::Right] == 1 ? 1.f : 0.f));
-	inputDir.Y = (input[Inputs::Down] == 1 ? -1.f : (input[Inputs::Up] == 1 ? 1.f : 0.f));
+	inputDir.Y = (input[Inputs::Down] == 1 ? 1.f : (input[Inputs::Up] == 1 ? -1.f : 0.f));
 
+	//TODO maybe just decide to use glm for vectors and math
 	//TODO normalise inputDir
+	/*auto combined = inputDir.X + inputDir.Y;
+	inputDir.X = combined / 2.f;
+	inputDir.Y = combined / 2.f;*/
+	//inputDir.Normalize();
 
-	Vector2 moveStep = inputDir * 100.f * deltaTime;
+	Vector2 moveStep = inputDir * 250.f * deltaTime;
 
 	transformComp.Position += moveStep;
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <bitset>
+#include <cmath>
 
 struct Vector3
 {
@@ -42,6 +43,13 @@ struct Vector2
 		Y *= other;
 		return *this;
 	}
+
+	//void Normalize() 
+	//{
+	//	float length = std::sqrt((X * X) + (Y * Y));
+	//	X = X / length;
+	//	Y = Y / length;
+	//}
 };
 
 enum Inputs
