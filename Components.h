@@ -22,11 +22,22 @@ struct Vector2
 	Vector2(float x, float y) : X(x), Y(y) {}
 	float X, Y;
 
-	/*(Vector2)operator = (Vector2 other)
+	Vector2 operator = (Vector2 other)
 	{
-		X = other.X;
-		Y = other.Y;
-	}*/
+		return Vector2(other.X, other.Y);
+	}
+
+	Vector2 operator += (Vector2 other)
+	{
+		X += other.X;
+		Y += other.Y;
+	}
+
+	Vector2 operator* (float other) 
+	{
+		X *= other;
+		Y *= other;
+	}
 };
 
 enum Inputs
