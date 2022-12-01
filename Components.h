@@ -22,25 +22,25 @@ struct Vector2
 	Vector2(float x, float y) : X(x), Y(y) {}
 	float X, Y;
 
-	Vector2 operator = (Vector2 other)
+	Vector2& operator = (const Vector2& other)
 	{
-		return Vector2(other.X, other.Y);
+		X = other.X;
+		Y = other.Y;
+		return *this;
 	}
 
-	Vector2 operator += (Vector2 other)
+	Vector2& operator += (const Vector2& other)
 	{
-		auto temp = Vector2(X, Y);
-		temp.X += other.X;
-		temp.Y += other.Y;
-		return temp;
+		X += other.X;
+		Y += other.Y;
+		return *this;
 	}
 
-	Vector2 operator* (float other) 
+	Vector2& operator* (const float& other) 
 	{	
-		auto temp = Vector2(X, Y);
 		X *= other;
 		Y *= other;
-		return temp;
+		return *this;
 	}
 };
 
