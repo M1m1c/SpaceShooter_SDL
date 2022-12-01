@@ -29,14 +29,18 @@ struct Vector2
 
 	Vector2 operator += (Vector2 other)
 	{
-		X += other.X;
-		Y += other.Y;
+		auto temp = Vector2(X, Y);
+		temp.X += other.X;
+		temp.Y += other.Y;
+		return temp;
 	}
 
 	Vector2 operator* (float other) 
-	{
+	{	
+		auto temp = Vector2(X, Y);
 		X *= other;
 		Y *= other;
+		return temp;
 	}
 };
 
