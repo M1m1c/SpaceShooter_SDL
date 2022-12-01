@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MovementSystem.cpp" />
     <ClCompile Include="PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +159,7 @@
     <ClInclude Include="EntityAdmin.h" />
     <ClInclude Include="ECSCore.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="MovementSystem.h" />
     <ClInclude Include="PlayerController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
