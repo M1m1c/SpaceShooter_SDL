@@ -11,7 +11,7 @@ class Entity
 {
 public:
 	Entity() = default;
-	Entity(EntityID id, Game* game) : m_EntityID(id), m_Game(game) {}
+	Entity(EntityID id, Game* game) : m_EntityID(id), m_Game(game), m_IsAlive(true) {}
 	Entity(EntityID id) : m_EntityID(id) {}
 	Entity(const Entity& other) = default;
 	~Entity() = default;
@@ -61,9 +61,11 @@ public:
 	operator bool() const { return m_EntityID != 0; }
 
 	const EntityID GetID() { return m_EntityID; }
-	const bool IsAlive() { return m_Game != nullptr; }
+	const bool IsAlive() { return IsAlive; }
+	void SetAlive(bool b) { m_IsAlive = b; }
 
 private:
 	EntityID m_EntityID{};
 	Game* m_Game = nullptr;
+	bool m_IsAlive = false;
 };
