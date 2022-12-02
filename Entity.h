@@ -61,7 +61,7 @@ public:
 	operator bool() const { return m_EntityID != 0; }
 
 	const EntityID GetID() { return m_EntityID; }
-	const bool IsAlive() { return IsAlive; }
+	const bool IsAlive() { return m_IsAlive; }
 	void SetAlive(bool b) { m_IsAlive = b; }
 
 private:
