@@ -1,6 +1,7 @@
 #pragma once
 #include <tuple>
 #include <array>
+#include <variant>
 #include "ECSCore.h"
 
 //template<size_t size, typename... Types>
@@ -20,7 +21,7 @@ struct DataTable
     // Constructor that initializes the unique_ptr elements with nullptr
     DataTable()
     {
-        (std::get<2 + sizeof...(Types)>(data) = std::make_unique<Types>(nullptr), ...);
+        (std::get<2 + sizeof...(Types)>(data) = std::make_unique<Types>(nullptr));
     }
 
     // Method to set the value of an element in the DataTable
@@ -43,7 +44,7 @@ struct DataTable
 //template<size_t size, typename... Types>
 //struct DataTable
 //{
-//    using type = std::tuple<std::array<Entity, size>, std::array<CompSignature, size>, std::array<std::vector<Types>, size>>;
+//    using type = std::tuple<std::array<Entity, size>, std::array<CompSignature, size>, std::array<std::vector<Types>, size>...>;
 //
 //    // Method to set the size of an array in the DataTable
 //    template<size_t index>
