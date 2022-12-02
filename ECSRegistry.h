@@ -7,6 +7,9 @@
 #include "ComponentAdmin.h"
 #include "Entity.h"
 #include "Game.h"
+#include "DataTable.h"
+
+
 
 class ECSRegistry
 {
@@ -75,6 +78,21 @@ public:
 	CompType GetComponentType()
 	{
 		return m_ComponentAdmin->GetComponentType<T>();
+	}
+
+	template<typename T, typename... Types>
+	CompSignature& SignSignature(CompSignature& signature)
+	{
+		signature.set(GetComponentType<T>());
+		(SignSignature<Types>(signature), ...);
+		return signature;
+	}
+
+	template<typename... Types>
+	CompSignature& ComposeSignature() 
+	{
+		CompSignature retSignature;
+		return (SignSignature<Types>(retSignature),...);
 	}
 
 	template<typename T>
