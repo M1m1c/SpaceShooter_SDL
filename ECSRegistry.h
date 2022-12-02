@@ -100,7 +100,17 @@ public:
 		return m_EntityAdmin->GetMatchingSignatureCount(signature);
 	}
 
-	
+	template<typename... Types, size_t size>
+	void GetComponents(DataTable<size, Types...>& outTable)
+	{
+
+
+		CompSignature signature = (ComposeSignature<Types>(), ...);
+		//TODO compose a signature based on sent in types const CompSignature& signature. 
+		// get all entites that have the signature these components, 
+		//return a table of components corresponding to each entity with said components.
+	}
+
 	template<typename T>
 	bool AnyOf(EntityID entityID)
 	{
