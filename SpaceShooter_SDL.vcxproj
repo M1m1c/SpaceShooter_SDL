@@ -117,6 +117,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\vendor\SDL2-2.26.0\include;$(SolutionDir)\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,6 +135,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\vendor\SDL2-2.26.0\include;$(SolutionDir)\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,6 +156,7 @@
     <ClInclude Include="CompArray.h" />
     <ClInclude Include="ComponentAdmin.h" />
     <ClInclude Include="Components.h" />
+    <ClInclude Include="DataTable.h" />
     <ClInclude Include="ECSRegistry.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityAdmin.h" />

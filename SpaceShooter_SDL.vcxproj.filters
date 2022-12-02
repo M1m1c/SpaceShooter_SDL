@@ -59,5 +59,8 @@
     <ClInclude Include="MovementSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DataTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
