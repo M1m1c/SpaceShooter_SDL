@@ -33,7 +33,7 @@ public:
 	{
 		assert(entityID < MAX_ENTITIES && "Entity out of range.");
 		m_Signatures[entityID].reset();
-		m_Entities[entityID] = Entity(entityID, nullptr);
+		m_Entities[entityID].SetAlive(false);
 		m_AvailableEntities.push(entityID);
 		--m_LivingEntityCount;
 	}
@@ -48,6 +48,30 @@ public:
 	{
 		assert(entity < MAX_ENTITIES && "Entity out of range.");
 		return m_Signatures[entity];
+	}
+
+	uint32_t GetMatchingSignatureCount(const CompSignature& signature)
+	{
+		uint32_t matchingCount = 0;
+		uint32_t nonActiveCount = 0;
+		for (size_t i = 0; i < MAX_ENTITIES; i++)
+		{
+			if (nonActiveCount >= 20) { break; }
+
+			Entity& entity = m_Entities[i];
+			if (entity.IsAlive()) 
+			{
+				nonActiveCount++;
+				continue;
+			}
+
+			const CompSignature& entitySig = m_Signatures[i];
+			if ((entitySig & signature) == signature) 
+			{
+				matchingCount++;
+			}
+		}
+		return matchingCount;
 	}
 
 private:

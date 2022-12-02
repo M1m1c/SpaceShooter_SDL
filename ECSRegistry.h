@@ -95,6 +95,12 @@ public:
 		return (SignSignature<Types>(retSignature),...);
 	}
 
+	uint32_t GetMatchingSignatureCount(const CompSignature& signature)
+	{
+		return m_EntityAdmin->GetMatchingSignatureCount(signature);
+	}
+
+	
 	template<typename T>
 	bool AnyOf(EntityID entityID)
 	{
