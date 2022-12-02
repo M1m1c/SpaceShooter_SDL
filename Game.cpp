@@ -8,6 +8,7 @@
 #include "MovementSystem.h"
 #include <iostream>
 
+const float MILLI_TO_SECONDS = 0.001f;
 
 Game::Game()
 {
@@ -50,7 +51,7 @@ void Game::Run()
 	while (m_IsRunning)
 	{
 		float currentTime = SDL_GetTicks64();
-		float deltaTime = (currentTime - m_LastFrameTime) * 0.001f;
+		float deltaTime = (currentTime - m_LastFrameTime) * MILLI_TO_SECONDS;
 		m_LastFrameTime = currentTime;
 		
 		//TODO make systems able to get the components they need to affect by themselves
