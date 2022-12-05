@@ -74,13 +74,6 @@ public:
 		return m_ComponentAdmin->GetComponent<T>(entityID);
 	}
 
-	template<typename... Types>
-	auto GetComponents(EntityID entityID)
-	{
-		// Return a tuple containing the components
-		return std::make_tuple(m_ComponentAdmin->GetComponent<Types>(entityID)...);
-	}
-
 	template<typename T>
 	CompType GetComponentType()
 	{
@@ -107,6 +100,7 @@ public:
 		return m_EntityAdmin->GetMatchingSignatureCount(signature);
 	}
 
+	//TODO for some reason this does not return refernces to teh components, try to figure out why
 	//Composes a DataTable& where each entry corresponds to the components of one entity,
 	//based on the sent in componenttypes.
 	//Returns the number of entities that have these components.
@@ -121,14 +115,7 @@ public:
 
 		for (size_t i = 0; i < entityCount; i++)
 		{
-			//std::tuple_cat(std::make_tuple(std::type_identity_t<Types>{}...),make_tuple_of_types(std::type_identity_t<Types>{}...));
-			//outTable.push_back(std::make_tuple(GetComponent<Types...>(entityIDs[i])));
-			//outTable.push_back(GetComponents<Types...>(entityIDs[i]));
-
-			//auto tuple = std::make_tuple();
-
-			// Push the tuple of components into outTable
-			outTable.push_back(GetComponents<Types...>(entityIDs[i]));
+			outTable.push_back(std::tie(GetComponent<Types>(entityIDs[i])...));
 		}
 
 		return entityCount;
