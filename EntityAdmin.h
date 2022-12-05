@@ -56,6 +56,11 @@ public:
 		uint32_t nonActiveCount = 0;
 		for (size_t i = 0; i < MAX_ENTITIES; i++)
 		{
+			//TODO there might be issues with this nonActiveCount 
+			//for instance what happens if there is a large gap between active entityIDs
+			// the risk is that there is a bunch of entityIDs stored from 1 to 10 and a bunch
+			// stored from 50 to 70, the latter ones will not get used for this.
+			//but do we want to go through each element up to max entites just to amke sure that there are no mistakes, won't that have an impact on performance
 			if (nonActiveCount >= 20) { break; }
 
 			Entity& entity = m_Entities[i];
@@ -72,6 +77,26 @@ public:
 			}
 		}
 		return matchingCount;
+	}
+
+	std::vector<EntityID> GetEntitiesWithMatchingSignature(const CompSignature& signature)
+	{
+		std::vector<EntityID> matchingEntities;
+		for (size_t i = 0; i < MAX_ENTITIES; i++)
+		{
+			Entity& entity = m_Entities[i];
+			if (entity.IsAlive())
+			{
+				continue;
+			}
+
+			const CompSignature& entitySig = m_Signatures[i];
+			if ((entitySig & signature) == signature)
+			{
+				matchingEntities.push_back(i);
+			}
+		}
+		return matchingEntities;
 	}
 
 private:
