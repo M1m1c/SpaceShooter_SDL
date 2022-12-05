@@ -16,26 +16,26 @@
 template<size_t size, typename... Types>
 struct DataTable
 {
-    using type = std::tuple<std::array<Entity, size>, std::array<CompSignature, size>, std::array<std::unique_ptr<Types>, size>...>;
+    using type = std::tuple<std::array<Entity, size>, std::array<CompSignature, size>, Types...>;
 
-    // Constructor that initializes the unique_ptr elements with nullptr
+    // Constructor that initializes the elements with default values
     DataTable()
     {
-        (std::get<2 + sizeof...(Types)>(data) = std::make_unique<Types>(nullptr));
+        (std::get<2 + sizeof...(Types)>(data) = Types());
     }
 
     // Method to set the value of an element in the DataTable
     template<size_t index, typename T>
     void set(T&& value)
     {
-        std::get<2 + sizeof...(Types)>(data)[index] = std::make_unique<T>(std::forward<T>(value));
+        std::get<index>(data) = std::forward<T>(value);
     }
 
     // Method to get the value of an element in the DataTable
     template<size_t index, typename T>
     T& get()
     {
-        return *std::get<2 + sizeof...(Types)>(data)[index];
+        return std::get<index>(data);
     }
 
     type data;
