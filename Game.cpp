@@ -80,16 +80,16 @@ void Game::Run()
 		auto count = m_ECSRegistry->GetAllComponentPairs<MAX_ENTITIES,TransformComp>(table);
 		for (size_t i = 0; i < count; i++)
 		{
-			auto item = std::get<0>(table[i]);//std::get<0>(table.get<0,TransformComp>());
+			auto item = std::get<0>(table[i]);
 			if (true)
 			{
 				//auto transform = testEntity->GetComponent<TransformComp>();
 				auto transform = item;
 				SDL_Rect rect;
-				rect.x = transform.Position.X;
-				rect.y = transform.Position.Y;
-				rect.w = transform.Size.X;
-				rect.h = transform.Size.Y;
+				rect.x = transform.Position.x;
+				rect.y = transform.Position.y;
+				rect.w = transform.Size.x;
+				rect.h = transform.Size.y;
 
 				SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
 				SDL_RenderFillRect(m_Renderer, &rect);

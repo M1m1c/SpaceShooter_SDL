@@ -2,55 +2,9 @@
 #include <string>
 #include <bitset>
 #include <cmath>
+#include <glm/glm.hpp>
 
-struct Vector3
-{
-	Vector3() = default;
-	Vector3(float x, float y, float z) : X(x), Y(y), Z(z) {}
-	float X, Y, Z;
-
-	/*(Vector3)operator = (Vector3 other)
-	{
-		X = other.X;
-		Y = other.Y;
-		Z = other.Z;
-	}*/
-};
-
-struct Vector2
-{
-	Vector2() = default;
-	Vector2(float x, float y) : X(x), Y(y) {}
-	float X, Y;
-
-	Vector2& operator = (const Vector2& other)
-	{
-		X = other.X;
-		Y = other.Y;
-		return *this;
-	}
-
-	Vector2& operator += (const Vector2& other)
-	{
-		X += other.X;
-		Y += other.Y;
-		return *this;
-	}
-
-	Vector2& operator* (const float& other) 
-	{	
-		X *= other;
-		Y *= other;
-		return *this;
-	}
-
-	//void Normalize() 
-	//{
-	//	float length = std::sqrt((X * X) + (Y * Y));
-	//	X = X / length;
-	//	Y = Y / length;
-	//}
-};
+using Vector2 = glm::vec2;
 
 enum Inputs
 {
@@ -68,9 +22,6 @@ struct TransformComp
 	float Rotation;
 
 	TransformComp() = default;
-	/*TransformComp(const TransformComp&) = default;
-	TransformComp(Vector2 position = { 0.f,0.f }, Vector2 size = { 0.f,0.f }, float rotation = 0.f) :
-		Position(position), Size(size), Rotation(rotation) {}*/
 	~TransformComp() = default;
 };
 
