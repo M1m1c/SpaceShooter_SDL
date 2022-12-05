@@ -8,13 +8,17 @@
 // then later we should update position based on rigidbody velocity
 void MovementSystem::Update(const std::shared_ptr<ECSRegistry>& registry, float deltaTime)
 {
-	DataTable<MAX_ENTITIES, TransformComp, InputComp> table;
-	auto pairCount = registry->GetAllComponentPairs<MAX_ENTITIES, TransformComp, InputComp>(table);
+	/*DataTable<MAX_ENTITIES, TransformComp, InputComp> table;
+	auto pairCount = registry->GetAllComponentPairs<MAX_ENTITIES, TransformComp, InputComp>(table);*/
 
-	for (size_t i = 0; i < pairCount; i++)
+	auto entityIDs = registry->GetEntityIDsMatchingSignature<TransformComp, InputComp>();
+
+	for (size_t i = 0; i < entityIDs.size(); i++)
 	{
-		auto& transformComp = std::get<0>(table[i]);//m_ECSRegistry->GetComponent<TransformComp>(entityID);
-		auto input = std::get<1>(table[i]).InputSignature;//m_ECSRegistry->GetComponent<InputComp>(entityID).InputSignature;
+		//auto& transformComp = std::get<0>(table[i]);//m_ECSRegistry->GetComponent<TransformComp>(entityID);
+		//auto& input = std::get<1>(table[i]).InputSignature;//m_ECSRegistry->GetComponent<InputComp>(entityID).InputSignature;
+		auto& transformComp = registry->GetComponent<TransformComp>(entityIDs[i]);
+		auto input = registry->GetComponent<InputComp>(entityIDs[i]).InputSignature;
 
 		Vector2 inputDir;
 		inputDir.x = (input[Inputs::Left] == 1 ? -1.f : (input[Inputs::Right] == 1 ? 1.f : 0.f));
@@ -24,7 +28,6 @@ void MovementSystem::Update(const std::shared_ptr<ECSRegistry>& registry, float 
 		{
 			inputDir = glm::normalize(inputDir);
 		}
-
 		Vector2 moveStep = inputDir * 250.f * deltaTime;
 
 		transformComp.Position += moveStep;
