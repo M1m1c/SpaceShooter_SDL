@@ -7,10 +7,10 @@ class ECSRegistry;
 class MovementSystem
 {
 public:
-	MovementSystem(std::shared_ptr<ECSRegistry> registry);
+	MovementSystem() = default;
 	~MovementSystem() = default;
 
-	void Update(const EntityID& entityID, float deltaTime);
+	void Update(const std::shared_ptr<ECSRegistry>& registry, float deltaTime);
 private:
-	std::shared_ptr<ECSRegistry> m_ECSRegistry;
+	//std::shared_ptr<ECSRegistry> m_ECSRegistry;
 };

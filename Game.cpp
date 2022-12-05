@@ -49,7 +49,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface)
 	comp2.Size = Vector2(10.f, 10.f);
 
 	m_PlayerController = std::make_unique<PlayerController>(m_EventHandle, inputComp);
-	m_MovementSystem = std::make_unique<MovementSystem>(m_ECSRegistry);
+	m_MovementSystem = std::make_unique<MovementSystem>();
 }
 
 void Game::Run()
@@ -68,7 +68,7 @@ void Game::Run()
 		
 		std::cout << "X = " << std::to_string(position.X)<<" Y = "<< std::to_string(position.Y) << std::endl;*/
 
-		m_MovementSystem->Update(testEntity->GetID(), deltaTime);
+		m_MovementSystem->Update(m_ECSRegistry, deltaTime);
 
 		//TODO implement render system
 
