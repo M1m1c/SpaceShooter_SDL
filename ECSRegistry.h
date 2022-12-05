@@ -122,6 +122,16 @@ public:
 	}
 
 
+	template< typename... Types>
+	std::vector<EntityID> GetEntityIDsMatchingSignature()
+	{
+		CompSignature signature = (ComposeSignature<Types>(), ...);
+		size_t entityCount = 0;
+
+		return m_EntityAdmin->GetEntitiesWithMatchingSignature(signature);
+	}
+
+
 	template<typename T>
 	bool AnyOf(EntityID entityID)
 	{
