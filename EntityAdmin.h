@@ -64,7 +64,7 @@ public:
 			if (nonActiveCount >= 20) { break; }
 
 			Entity& entity = m_Entities[i];
-			if (entity.IsAlive()) 
+			if (!entity.IsAlive()) 
 			{
 				nonActiveCount++;
 				continue;
@@ -85,7 +85,7 @@ public:
 		for (size_t i = 0; i < MAX_ENTITIES; i++)
 		{
 			Entity& entity = m_Entities[i];
-			if (entity.IsAlive())
+			if (!entity.IsAlive())
 			{
 				continue;
 			}
