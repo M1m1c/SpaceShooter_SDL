@@ -36,4 +36,5 @@ private:
 	std::unique_ptr<MovementSystem> m_MovementSystem;
 
 	Entity* testEntity;
+	Entity* testEntity2;
 };
