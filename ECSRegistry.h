@@ -103,29 +103,19 @@ public:
 	//Composes a DataTable& where each entry corresponds to the components of one entity,
 	//based on the sent in componenttypes.
 	//Returns the number of entities that have these components.
-	template<typename... Types, size_t size>
+	template<size_t size, typename... Types>
 	size_t GetAllComponentPairs(DataTable<size, Types...>& outTable)
 	{
 		CompSignature signature = (ComposeSignature<Types>(), ...);
 		size_t entityCount = 0;
-		//TODO get the entities that have this signature, store their ID,
-		// get tuples of entries form the different componentArrays matching the entityIDs,
-		// compose each entry in  out table using the gotten tuples of componentarrays
-		std::vector<EntityID>& entityIDs = m_EntityAdmin->GetEntitiesWithMatchingSignature(signature);
+	
+		std::vector<EntityID> entityIDs = m_EntityAdmin->GetEntitiesWithMatchingSignature(signature);
 		entityCount = entityIDs.size();
+
 		for (size_t i = 0; i < entityCount; i++)
 		{
-			outTable.set<i>((GetComponent<Types>(entityIDs[i]), ...));
+			outTable.push_back(std::make_tuple((GetComponent<Types>(entityIDs[i]), ...)));
 		}
-
-		/*std::tuple<std::shared_ptr<CompArray<Types>>...> compArrays;
-
-		(compArrays = std::make_tuple(m_ComponentAdmin->GetComponentArray<Types>()), ...);
-
-		for (size_t i = 0; i < size; i++)
-		{
-			outTable.set<i>(std::get<i>(compArrays));
-		}*/
 
 		return entityCount;
 	}
