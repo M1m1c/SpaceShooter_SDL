@@ -150,7 +150,9 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MovementSystem.cpp" />
+    <ClCompile Include="MoveTranslateSystem.cpp" />
     <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="RenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompArray.h" />
@@ -162,8 +164,11 @@
     <ClInclude Include="EntityAdmin.h" />
     <ClInclude Include="ECSCore.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="ISystem.h" />
     <ClInclude Include="MovementSystem.h" />
+    <ClInclude Include="MoveTranslateSystem.h" />
     <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="RenderSystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
