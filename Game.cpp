@@ -6,6 +6,7 @@
 #include "Components.h"
 #include "PlayerController.h"
 #include "MovementSystem.h"
+#include "RenderSystem.h"
 #include <iostream>
 
 const float MILLI_TO_SECONDS = 0.001f;
@@ -32,24 +33,40 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface)
 
 	m_ECSRegistry->RegisterComponent<TransformComp>();
 	m_ECSRegistry->RegisterComponent<InputComp>();
+	m_ECSRegistry->RegisterComponent<TagComp>();
 
 
 
-	testEntity = &CreateEntity("Test");
-	auto& inputComp = testEntity->AddComponent<InputComp>();
-	auto& comp = testEntity->AddComponent<TransformComp>();
+	playerEntity = &CreateEntity("Test");
+	auto& inputComp = playerEntity->AddComponent<InputComp>();
+	auto& comp = playerEntity->AddComponent<TransformComp>();
+	auto& tagComp = playerEntity->AddComponent<TagComp>();
+
+	tagComp.Tag = ObjectTag::Player;
 
 	comp.Position = Vector2(640.f, 400.f);
 	comp.Size = Vector2(10.f, 10.f);
 
-	testEntity2 = &CreateEntity("Test2");
-	auto& comp2 = testEntity2->AddComponent<TransformComp>();
 
-	comp2.Position = Vector2(640.f, 400.f);
-	comp2.Size = Vector2(10.f, 10.f);
+	for (size_t i = 0; i < 10; i++)
+	{
+		std::string name = "Enemy";
+		name += std::to_string(i);
+		auto testEnemy = &CreateEntity(name);
+		auto& comp2 = testEnemy->AddComponent<TransformComp>();
+		auto& tagComp2 = testEnemy->AddComponent<TagComp>();
+
+		tagComp2.Tag = ObjectTag::Enemy;
+
+		comp2.Position = Vector2(100.f * (i+1), 400.f);
+		comp2.Size = Vector2(20.f, 20.f);
+
+		
+	}
 
 	m_PlayerController = std::make_unique<PlayerController>(m_EventHandle, inputComp);
 	m_MovementSystem = std::make_unique<MovementSystem>();
+	m_RenderSystem = std::make_unique<RenderSystem>();
 }
 
 void Game::Run()
@@ -72,41 +89,7 @@ void Game::Run()
 
 		//TODO implement render system
 
-		SDL_SetRenderDrawColor(m_Renderer, 20, 20, 30, 255);
-		SDL_RenderClear(m_Renderer);
-
-		DataTable<MAX_ENTITIES, TransformComp> table;
-
-		auto count = m_ECSRegistry->GetAllComponentPairs<MAX_ENTITIES,TransformComp>(table);
-		for (size_t i = 0; i < count; i++)
-		{
-			auto item = std::get<0>(table[i]);
-			if (true)
-			{
-				//auto transform = testEntity->GetComponent<TransformComp>();
-				auto transform = item;
-				SDL_Rect rect;
-				rect.x = transform.Position.x;
-				rect.y = transform.Position.y;
-				rect.w = transform.Size.x;
-				rect.h = transform.Size.y;
-
-				SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
-				SDL_RenderFillRect(m_Renderer, &rect);
-
-				auto cX = rect.x;
-				auto cY = rect.y + 10.f;
-				SDL_RenderDrawLine(m_Renderer, cX, cY, cX - 5.f, cY + 10.f);
-				cX = rect.x + 10.f;
-				SDL_RenderDrawLine(m_Renderer, cX, cY, cX + 5.f, cY + 10.f);
-				cX = rect.x + 5.f;
-				SDL_RenderDrawLine(m_Renderer, cX - 2.f, cY, cX - 4.f, cY + 8.f);
-				SDL_RenderDrawLine(m_Renderer, cX + 2.f, cY, cX + 4.f, cY + 8.f);
-			}
-		}
-		
-
-		SDL_RenderPresent(m_Renderer);
+		m_RenderSystem->Update(m_ECSRegistry, m_Renderer, deltaTime);
 		
 	}
 }

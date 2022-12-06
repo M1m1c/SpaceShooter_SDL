@@ -6,6 +6,7 @@ class ECSRegistry;
 class Entity;
 class PlayerController;
 class MovementSystem;
+class RenderSystem;
 
 class Game
 {
@@ -34,7 +35,7 @@ private:
 
 	std::unique_ptr<PlayerController> m_PlayerController;
 	std::unique_ptr<MovementSystem> m_MovementSystem;
+	std::unique_ptr<RenderSystem> m_RenderSystem;
 
-	Entity* testEntity;
-	Entity* testEntity2;
+	Entity* playerEntity;
 };
