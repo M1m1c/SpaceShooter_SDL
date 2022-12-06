@@ -6,7 +6,7 @@
 
 using Vector2 = glm::vec2;
 
-enum Inputs
+enum class Inputs
 {
 	Up = 0,
 	Down = 1,
@@ -15,7 +15,7 @@ enum Inputs
 	Shoot = 4,
 };
 
-enum ObjectTag
+enum class ObjectTag
 {
 	None,
 	Player = 1 << 0,
@@ -52,4 +52,8 @@ struct InputComp
 struct TagComp 
 {
 	ObjectTag Tag = ObjectTag::None;
+
+	//TagComp(ObjectTag tag): Tag(tag){}
+	TagComp() = default;
+	~TagComp() = default;
 };
