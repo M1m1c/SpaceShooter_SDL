@@ -25,26 +25,26 @@ void PlayerController::Update()
 			break;
 		case SDLK_w:
 		case SDLK_UP:
-			m_PlayerInputComp.InputSignature[Inputs::Up] = value;
+			m_PlayerInputComp.InputSignature[(int)Inputs::Up] = value;
 			break;
 
 		case SDLK_s:
 		case SDLK_DOWN:
-			m_PlayerInputComp.InputSignature[Inputs::Down] = value;
+			m_PlayerInputComp.InputSignature[(int)Inputs::Down] = value;
 			break;
 
 		case SDLK_a:
 		case SDLK_LEFT:
-			m_PlayerInputComp.InputSignature[Inputs::Left] = value;
+			m_PlayerInputComp.InputSignature[(int)Inputs::Left] = value;
 			break;
 
 		case SDLK_d:
 		case SDLK_RIGHT:
-			m_PlayerInputComp.InputSignature[Inputs::Right] = value;
+			m_PlayerInputComp.InputSignature[(int)Inputs::Right] = value;
 			break;
 
 		case SDLK_SPACE:
-			m_PlayerInputComp.InputSignature[Inputs::Shoot] = value;
+			m_PlayerInputComp.InputSignature[(int)Inputs::Shoot] = value;
 			break;
 		}
 	}
