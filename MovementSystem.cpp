@@ -16,18 +16,16 @@ void MovementSystem::Update(const std::shared_ptr<ECSRegistry>& registry, float 
 	/*DataTable<MAX_ENTITIES, TransformComp, InputComp> table;
 	auto pairCount = registry->GetAllComponentPairs<MAX_ENTITIES, TransformComp, InputComp>(table);*/
 
-	auto entityIDs = registry->GetEntityIDsMatchingSignature<TransformComp, InputComp>();
+	auto entityIDs = registry->GetEntityIDsMatchingSignature<RigidBodyComp, InputComp>();
 
 	for (size_t i = 0; i < entityIDs.size(); i++)
 	{
-		//auto& transformComp = std::get<0>(table[i]);//m_ECSRegistry->GetComponent<TransformComp>(entityID);
-		//auto& input = std::get<1>(table[i]).InputSignature;//m_ECSRegistry->GetComponent<InputComp>(entityID).InputSignature;
-		auto& transformComp = registry->GetComponent<TransformComp>(entityIDs[i]);
+		auto& rigidBody = registry->GetComponent<RigidBodyComp>(entityIDs[i]);
 		auto input = registry->GetComponent<InputComp>(entityIDs[i]).InputSignature;
 
 		Vector2 inputDir;
-		inputDir.x = (input[Inputs::Left] == 1 ? -1.f : (input[Inputs::Right] == 1 ? 1.f : 0.f));
-		inputDir.y = (input[Inputs::Down] == 1 ? 1.f : (input[Inputs::Up] == 1 ? -1.f : 0.f));
+		inputDir.x = (input[(int)Inputs::Left] == 1 ? -1.f : (input[(int)Inputs::Right] == 1 ? 1.f : 0.f));
+		inputDir.y = (input[(int)Inputs::Down] == 1 ? 1.f : (input[(int)Inputs::Up] == 1 ? -1.f : 0.f));
 
 		if (inputDir.x != 0.f || inputDir.y != 0.f)
 		{
@@ -35,7 +33,7 @@ void MovementSystem::Update(const std::shared_ptr<ECSRegistry>& registry, float 
 		}
 		Vector2 moveStep = inputDir * 250.f * deltaTime;
 
-		transformComp.Position += moveStep;
+		rigidBody.velocity = moveStep;
 	}
 	
 }
