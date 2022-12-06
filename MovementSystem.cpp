@@ -1,4 +1,5 @@
 #include "MovementSystem.h"
+#include "ECSCore.h"
 #include "ECSRegistry.h"
 #include "Entity.h"
 #include "Components.h"
