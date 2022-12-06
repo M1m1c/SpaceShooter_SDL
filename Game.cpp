@@ -45,7 +45,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface)
 	tagComp.Tag = ObjectTag::Player;
 
 	comp.Position = Vector2(640.f, 400.f);
-	comp.Size = Vector2(10.f, 10.f);
+	comp.Size = Vector2(15.f, 15.f);
 
 
 	for (size_t i = 0; i < 10; i++)

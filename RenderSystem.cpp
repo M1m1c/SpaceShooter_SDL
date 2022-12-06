@@ -11,9 +11,9 @@ void RenderSystem::Update(const std::shared_ptr<ECSRegistry>& registry, SDL_Rend
 	SDL_SetRenderDrawColor(renderer, 20, 20, 30, 255);
 	SDL_RenderClear(renderer);
 
-	DataTable<MAX_ENTITIES, TransformComp,TagComp> table;
+	DataTable<MAX_ENTITIES, TransformComp, TagComp> table;
 
-	auto count = registry->GetAllComponentPairs<MAX_ENTITIES, TransformComp,TagComp>(table);
+	auto count = registry->GetAllComponentPairs<MAX_ENTITIES, TransformComp, TagComp>(table);
 
 	for (size_t i = 0; i < count; i++)
 	{
@@ -53,14 +53,17 @@ void RenderSystem::RenderPlayer(TransformComp& transform, SDL_Renderer* renderer
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	SDL_RenderFillRect(renderer, &rect);
 
+	auto halfW = (rect.w * 0.5f);
+
 	auto cX = rect.x;
-	auto cY = rect.y + 10.f;
-	SDL_RenderDrawLine(renderer, cX, cY, cX - 5.f, cY + 10.f);
-	cX = rect.x + 10.f;
-	SDL_RenderDrawLine(renderer, cX, cY, cX + 5.f, cY + 10.f);
-	cX = rect.x + 5.f;
-	SDL_RenderDrawLine(renderer, cX - 2.f, cY, cX - 4.f, cY + 8.f);
-	SDL_RenderDrawLine(renderer, cX + 2.f, cY, cX + 4.f, cY + 8.f);
+	auto cY = rect.y + rect.h;
+	SDL_RenderDrawLine(renderer, cX, cY, cX - halfW, cY + rect.h);
+	cX = rect.x + rect.w;
+	SDL_RenderDrawLine(renderer, cX, cY, cX + halfW, cY + rect.h);
+
+	cX = rect.x + halfW;
+	SDL_RenderDrawLine(renderer, cX - 2.f, cY, cX - 4.f, cY + rect.h-2.f);
+	SDL_RenderDrawLine(renderer, cX + 2.f, cY, cX + 4.f, cY + rect.h-2.f);
 }
 
 void RenderSystem::RenderEnemy(TransformComp& transform, SDL_Renderer* renderer)
@@ -71,7 +74,7 @@ void RenderSystem::RenderEnemy(TransformComp& transform, SDL_Renderer* renderer)
 	rect.w = transform.Size.x;
 	rect.h = transform.Size.y;
 
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	SDL_SetRenderDrawColor(renderer, 240, 0, 0, 255);
 	SDL_RenderFillRect(renderer, &rect);
 
 	/*auto cX = rect.x;
