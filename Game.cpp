@@ -20,8 +20,11 @@ Game::~Game()
 {
 }
 
-void Game::Init(SDL_Window* window, SDL_Surface* surface)
+void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const int height)
 {
+	m_Width = width;
+	m_Height = height;
+
 	m_Window = window;
 	m_Surface = surface;
 	m_Renderer = SDL_CreateRenderer(window,-1,0);
@@ -71,7 +74,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface)
 	m_PlayerController = std::make_unique<PlayerController>(m_EventHandle, inputComp);
 	m_MovementSystem = std::make_unique<MovementSystem>();
 	m_RenderSystem = std::make_unique<RenderSystem>();
-	m_MoveTranslateSystem = std::make_unique<MoveTranslateSystem>();
+	m_MoveTranslateSystem = std::make_unique<MoveTranslateSystem>(m_Width,m_Height);
 }
 
 void Game::Run()
@@ -85,13 +88,10 @@ void Game::Run()
 		SDL_SetRenderDrawColor(m_Renderer, 20, 20, 30, 255);
 		SDL_RenderClear(m_Renderer);
 		
-		//TODO make systems able to get the components they need to affect by themselves
+		//TODO make systems use observer pattern to only get new entites and components when they get added,
+		//otherwise store reference to components at the creation of systems
 
 		m_PlayerController->Update();
-
-		/*auto position =testEntity->GetComponent<TransformComp>().Position;
-		
-		std::cout << "X = " << std::to_string(position.X)<<" Y = "<< std::to_string(position.Y) << std::endl;*/
 
 		m_MovementSystem->Update(m_ECSRegistry, deltaTime);
 

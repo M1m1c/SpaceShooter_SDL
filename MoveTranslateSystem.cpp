@@ -3,6 +3,7 @@
 #include "ECSRegistry.h"
 #include "Entity.h"
 #include "SDL.h"
+#include <iostream>
 
 
 void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, SDL_Renderer* renderer, float deltaTime)
@@ -19,28 +20,35 @@ void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, S
 
 		auto nextPosition = transformA.Position + rigidBody.velocity;
 
-		//TODO check if we would go out of the bounds with the next move
+		//TODO should only stop player form moving, should queue destroy on other things
+		//Boundry check
+		if (nextPosition.x <= 0.f ||
+			nextPosition.x >= m_ScreenWidth ||
+			nextPosition.y <= 0.f ||
+			nextPosition.y >= m_ScreenHeight)
+		{
+			canMove = false;
+		}
+
 
 		const glm::vec2 aMin = getMin(nextPosition, transformA.Size);
 		const glm::vec2 aMax = getMax(nextPosition, transformA.Size);
 		glm::vec2 collderSize = glm::vec2(aMax.x - aMin.x, aMax.y - aMin.y);
+
+		
 
 		for (int j = i + 1; j < count; ++j)
 		{
 
 			auto& transformB = registry->GetComponent<TransformComp>(entityIDs[j]);
 
-			// Get the AABBs for the two transforms
-
 			const glm::vec2 bMin = getMin(transformB);
 			const glm::vec2 bMax = getMax(transformB);
 
-			//collderSize = glm::vec2(aMin.x + aMax.x, aMin.y + aMax.y);
 
 			// Check if the AABBs intersect
 			if (aMax.x >= bMin.x && aMin.x <= bMax.x && aMax.y >= bMin.y && aMin.y <= bMax.y)
 			{
-				//Collision detected
 
 				//TODO stop us from moving, alternativley take damage, depending on our tag compared to other tag
 				//also skip our own index
