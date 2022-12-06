@@ -15,7 +15,7 @@ public:
 	Game();
 	~Game();
 
-	void Init(struct SDL_Window* window, struct SDL_Surface* surface);
+	void Init(struct SDL_Window* window, struct SDL_Surface* surface, const int width, const int height);
 
 	void Run();
 
@@ -26,6 +26,9 @@ public:
 private:
 	bool m_IsRunning = true;
 	float m_LastFrameTime = 0.f;
+
+	int m_Width=0;
+	int m_Height=0;
 
 	struct SDL_Window* m_Window;
 	struct SDL_Surface* m_Surface;

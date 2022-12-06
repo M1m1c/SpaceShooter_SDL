@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
 
 	SDL_Surface* screenSurface = SDL_GetWindowSurface(window);
 	
-	game.Init(window, screenSurface);
+	game.Init(window, screenSurface,SCREEN_WIDTH,SCREEN_HEIGHT);
 
 	game.Run();
 
