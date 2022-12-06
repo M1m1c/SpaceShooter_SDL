@@ -7,6 +7,7 @@
 #include "PlayerController.h"
 #include "MovementSystem.h"
 #include "RenderSystem.h"
+#include "MoveTranslateSystem.h"
 #include <iostream>
 
 const float MILLI_TO_SECONDS = 0.001f;
@@ -34,6 +35,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface)
 	m_ECSRegistry->RegisterComponent<TransformComp>();
 	m_ECSRegistry->RegisterComponent<InputComp>();
 	m_ECSRegistry->RegisterComponent<TagComp>();
+	m_ECSRegistry->RegisterComponent<RigidBodyComp>();
 
 
 
@@ -41,6 +43,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface)
 	auto& inputComp = playerEntity->AddComponent<InputComp>();
 	auto& comp = playerEntity->AddComponent<TransformComp>();
 	auto& tagComp = playerEntity->AddComponent<TagComp>();
+	playerEntity->AddComponent<RigidBodyComp>();
 
 	tagComp.Tag = ObjectTag::Player;
 
@@ -55,6 +58,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface)
 		auto testEnemy = &CreateEntity(name);
 		auto& comp2 = testEnemy->AddComponent<TransformComp>();
 		auto& tagComp2 = testEnemy->AddComponent<TagComp>();
+		testEnemy->AddComponent<RigidBodyComp>();
 
 		tagComp2.Tag = ObjectTag::Enemy;
 
@@ -67,6 +71,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface)
 	m_PlayerController = std::make_unique<PlayerController>(m_EventHandle, inputComp);
 	m_MovementSystem = std::make_unique<MovementSystem>();
 	m_RenderSystem = std::make_unique<RenderSystem>();
+	m_MoveTranslateSystem = std::make_unique<MoveTranslateSystem>();
 }
 
 void Game::Run()
@@ -76,6 +81,9 @@ void Game::Run()
 		float currentTime = SDL_GetTicks64();
 		float deltaTime = (currentTime - m_LastFrameTime) * MILLI_TO_SECONDS;
 		m_LastFrameTime = currentTime;
+
+		SDL_SetRenderDrawColor(m_Renderer, 20, 20, 30, 255);
+		SDL_RenderClear(m_Renderer);
 		
 		//TODO make systems able to get the components they need to affect by themselves
 
@@ -87,10 +95,11 @@ void Game::Run()
 
 		m_MovementSystem->Update(m_ECSRegistry, deltaTime);
 
-		//TODO implement render system
-
 		m_RenderSystem->Update(m_ECSRegistry, m_Renderer, deltaTime);
-		
+
+		m_MoveTranslateSystem->Update(m_ECSRegistry,m_Renderer, deltaTime);
+
+		SDL_RenderPresent(m_Renderer);
 	}
 }
 
