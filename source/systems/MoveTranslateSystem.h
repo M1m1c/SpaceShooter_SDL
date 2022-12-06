@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include <glm/glm.hpp>
-#include "Components.h"
+#include "../Components.h"
 class ECSRegistry;
 struct SDL_Renderer;
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include "SDL.h"
-#include "Components.h"
+#include "../Components.h"
 
 class PlayerController
 {

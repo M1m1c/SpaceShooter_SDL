@@ -4,10 +4,10 @@
 #include "ECSRegistry.h"
 #include "Entity.h"
 #include "Components.h"
-#include "PlayerController.h"
-#include "ThrottleSystem.h"
-#include "RenderSystem.h"
-#include "MoveTranslateSystem.h"
+#include "systems/PlayerController.h"
+#include "systems/ThrottleSystem.h"
+#include "systems/RenderSystem.h"
+#include "systems/MoveTranslateSystem.h"
 #include <iostream>
 
 const float MILLI_TO_SECONDS = 0.001f;

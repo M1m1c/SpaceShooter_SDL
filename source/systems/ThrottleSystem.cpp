@@ -1,8 +1,8 @@
 #include "ThrottleSystem.h"
-#include "ECSCore.h"
-#include "ECSRegistry.h"
-#include "Entity.h"
-#include "Components.h"
+#include "../ECSCore.h"
+#include "../ECSRegistry.h"
+#include "../Entity.h"
+#include "../Components.h"
 
 
 //TODO instead of moving position imedietly have input affect rigidbody velocity,

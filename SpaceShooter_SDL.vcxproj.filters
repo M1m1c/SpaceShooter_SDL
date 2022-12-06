@@ -15,66 +15,66 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="source\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerController.cpp">
+    <ClCompile Include="source\systems\PlayerController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ThrottleSystem.cpp">
+    <ClCompile Include="source\systems\ThrottleSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RenderSystem.cpp">
+    <ClCompile Include="source\systems\RenderSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MoveTranslateSystem.cpp">
+    <ClCompile Include="source\systems\MoveTranslateSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="source\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Components.h">
+    <ClInclude Include="source\Components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EntityAdmin.h">
+    <ClInclude Include="source\EntityAdmin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CompArray.h">
+    <ClInclude Include="source\CompArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ECSCore.h">
+    <ClInclude Include="source\ECSCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
+    <ClInclude Include="source\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentAdmin.h">
+    <ClInclude Include="source\ComponentAdmin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ECSRegistry.h">
+    <ClInclude Include="source\ECSRegistry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerController.h">
+    <ClInclude Include="source\systems\PlayerController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ThrottleSystem.h">
+    <ClInclude Include="source\systems\ThrottleSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataTable.h">
+    <ClInclude Include="source\DataTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RenderSystem.h">
+    <ClInclude Include="source\systems\RenderSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ISystem.h">
+    <ClInclude Include="source\systems\ISystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MoveTranslateSystem.h">
+    <ClInclude Include="source\systems\MoveTranslateSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
