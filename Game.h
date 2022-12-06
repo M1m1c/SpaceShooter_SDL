@@ -5,7 +5,7 @@
 class ECSRegistry;
 class Entity;
 class PlayerController;
-class MovementSystem;
+class ThrottleSystem;
 class RenderSystem;
 class MoveTranslateSystem;
 
@@ -38,7 +38,7 @@ private:
 	std::shared_ptr<ECSRegistry> m_ECSRegistry;
 
 	std::unique_ptr<PlayerController> m_PlayerController;
-	std::unique_ptr<MovementSystem> m_MovementSystem;
+	std::unique_ptr<ThrottleSystem> m_ThrottleSystem;
 	std::unique_ptr<RenderSystem> m_RenderSystem;
 	std::unique_ptr<MoveTranslateSystem> m_MoveTranslateSystem;
 

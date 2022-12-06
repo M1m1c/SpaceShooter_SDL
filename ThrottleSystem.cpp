@@ -1,4 +1,4 @@
-#include "MovementSystem.h"
+#include "ThrottleSystem.h"
 #include "ECSCore.h"
 #include "ECSRegistry.h"
 #include "Entity.h"
@@ -11,7 +11,7 @@
 // update the references array using observer pattern looking at updates to teh arrays it cares about,
 // and checking if the entity whos components was removed is one the system cares about.
 // only then should we make sure to update the references tehy system store.
-void MovementSystem::Update(const std::shared_ptr<ECSRegistry>& registry, float deltaTime)
+void ThrottleSystem::Update(const std::shared_ptr<ECSRegistry>& registry, float deltaTime)
 {
 	/*DataTable<MAX_ENTITIES, TransformComp, InputComp> table;
 	auto pairCount = registry->GetAllComponentPairs<MAX_ENTITIES, TransformComp, InputComp>(table);*/

@@ -2,11 +2,11 @@
 #include <memory>
 class ECSRegistry;
 
-class MovementSystem
+class ThrottleSystem
 {
 public:
-	MovementSystem() = default;
-	~MovementSystem() = default;
+	ThrottleSystem() = default;
+	~ThrottleSystem() = default;
 
 	void Update(const std::shared_ptr<ECSRegistry>& registry, float deltaTime);
 private:

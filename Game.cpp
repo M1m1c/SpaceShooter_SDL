@@ -5,7 +5,7 @@
 #include "Entity.h"
 #include "Components.h"
 #include "PlayerController.h"
-#include "MovementSystem.h"
+#include "ThrottleSystem.h"
 #include "RenderSystem.h"
 #include "MoveTranslateSystem.h"
 #include <iostream>
@@ -72,7 +72,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	}
 
 	m_PlayerController = std::make_unique<PlayerController>(m_EventHandle, inputComp);
-	m_MovementSystem = std::make_unique<MovementSystem>();
+	m_ThrottleSystem = std::make_unique<ThrottleSystem>();
 	m_RenderSystem = std::make_unique<RenderSystem>();
 	m_MoveTranslateSystem = std::make_unique<MoveTranslateSystem>(m_Width,m_Height);
 }
@@ -93,7 +93,7 @@ void Game::Run()
 
 		m_PlayerController->Update();
 
-		m_MovementSystem->Update(m_ECSRegistry, deltaTime);
+		m_ThrottleSystem->Update(m_ECSRegistry, deltaTime);
 
 		m_RenderSystem->Update(m_ECSRegistry, m_Renderer, deltaTime);
 

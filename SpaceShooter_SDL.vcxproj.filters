@@ -24,7 +24,7 @@
     <ClCompile Include="PlayerController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MovementSystem.cpp">
+    <ClCompile Include="ThrottleSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RenderSystem.cpp">
@@ -62,7 +62,7 @@
     <ClInclude Include="PlayerController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MovementSystem.h">
+    <ClInclude Include="ThrottleSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DataTable.h">
