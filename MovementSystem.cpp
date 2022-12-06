@@ -6,6 +6,10 @@
 
 //TODO instead of moving position imedietly have input affect rigidbody velocity,
 // then later we should update position based on rigidbody velocity
+//TODO have the systems store refernces to component pairs it cares about at creation,
+// update the references array using observer pattern looking at updates to teh arrays it cares about,
+// and checking if the entity whos components was removed is one the system cares about.
+// only then should we make sure to update the references tehy system store.
 void MovementSystem::Update(const std::shared_ptr<ECSRegistry>& registry, float deltaTime)
 {
 	/*DataTable<MAX_ENTITIES, TransformComp, InputComp> table;
