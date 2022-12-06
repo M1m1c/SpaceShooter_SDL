@@ -8,8 +8,7 @@
 void RenderSystem::Update(const std::shared_ptr<ECSRegistry>& registry, SDL_Renderer* renderer, float deltaTime)
 {
 
-	SDL_SetRenderDrawColor(renderer, 20, 20, 30, 255);
-	SDL_RenderClear(renderer);
+
 
 	DataTable<MAX_ENTITIES, TransformComp, TagComp> table;
 
@@ -22,15 +21,15 @@ void RenderSystem::Update(const std::shared_ptr<ECSRegistry>& registry, SDL_Rend
 
 		switch (tag)
 		{
-		case None:
+		case ObjectTag::None:
 			break;
-		case Player:
+		case ObjectTag::Player:
 			RenderPlayer(transform, renderer);
 			break;
-		case Enemy:
+		case ObjectTag::Enemy:
 			RenderEnemy(transform, renderer);
 			break;
-		case Bullet:
+		case ObjectTag::Bullet:
 			break;
 		default:
 			break;
@@ -38,17 +37,15 @@ void RenderSystem::Update(const std::shared_ptr<ECSRegistry>& registry, SDL_Rend
 	}
 
 
-	SDL_RenderPresent(renderer);
+	//SDL_RenderPresent(renderer);
 
 }
 
 void RenderSystem::RenderPlayer(TransformComp& transform, SDL_Renderer* renderer)
 {
-	SDL_Rect rect;
-	rect.x = transform.Position.x;
-	rect.y = transform.Position.y;
-	rect.w = transform.Size.x;
-	rect.h = transform.Size.y;
+
+	SDL_Rect rect = GenerateQuad(transform);
+	
 
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	SDL_RenderFillRect(renderer, &rect);
@@ -66,23 +63,27 @@ void RenderSystem::RenderPlayer(TransformComp& transform, SDL_Renderer* renderer
 	SDL_RenderDrawLine(renderer, cX + 2.f, cY, cX + 4.f, cY + rect.h-2.f);
 }
 
+
 void RenderSystem::RenderEnemy(TransformComp& transform, SDL_Renderer* renderer)
 {
-	SDL_Rect rect;
-	rect.x = transform.Position.x;
-	rect.y = transform.Position.y;
-	rect.w = transform.Size.x;
-	rect.h = transform.Size.y;
+	SDL_Rect rect = GenerateQuad(transform);
 
 	SDL_SetRenderDrawColor(renderer, 240, 0, 0, 255);
 	SDL_RenderFillRect(renderer, &rect);
+}
 
-	/*auto cX = rect.x;
-	auto cY = rect.y + 10.f;
-	SDL_RenderDrawLine(renderer, cX, cY, cX - 5.f, cY + 10.f);
-	cX = rect.x + 10.f;
-	SDL_RenderDrawLine(renderer, cX, cY, cX + 5.f, cY + 10.f);
-	cX = rect.x + 5.f;
-	SDL_RenderDrawLine(renderer, cX - 2.f, cY, cX - 4.f, cY + 8.f);
-	SDL_RenderDrawLine(renderer, cX + 2.f, cY, cX + 4.f, cY + 8.f);*/
+
+SDL_Rect RenderSystem::GenerateQuad(TransformComp& transform)
+{
+	auto min = transform.Position - transform.Size;
+	auto max = transform.Position + transform.Size;
+	auto width = max.x - min.x;
+	auto height = max.y - min.y;
+
+	SDL_Rect rect;
+	rect.x = transform.Position.x - (width * 0.25f);
+	rect.y = transform.Position.y - (height * 0.25f);
+	rect.w = transform.Size.x;
+	rect.h = transform.Size.y;
+	return rect;
 }

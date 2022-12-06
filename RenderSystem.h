@@ -3,6 +3,7 @@
 class ECSRegistry;
 struct SDL_Renderer;
 struct TransformComp;
+struct SDL_Rect;
 
 class RenderSystem
 {
@@ -17,5 +18,7 @@ private:
 	void RenderPlayer(TransformComp& transform, SDL_Renderer* renderer);
 
 	void RenderEnemy(TransformComp& transform, SDL_Renderer* renderer);
+
+	SDL_Rect GenerateQuad(TransformComp& transform);
 
 };
