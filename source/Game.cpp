@@ -101,11 +101,21 @@ void Game::Run()
 
 		m_RenderSystem->Update(m_ECSRegistry, m_Renderer, deltaTime);
 
-		m_MoveTranslateSystem->Update(m_ECSRegistry,m_Renderer, deltaTime);
-
 		m_WeaponSystem->Update(m_ECSRegistry, this, deltaTime);
 
+		m_MoveTranslateSystem->Update(m_ECSRegistry,m_Renderer, deltaTime);
+
 		SDL_RenderPresent(m_Renderer);
+
+		auto aliveEntities = m_ECSRegistry->GetLivingEntities();
+		for (size_t i = 0; i < aliveEntities; i++)
+		{
+			auto isEntityDead = !m_ECSRegistry->GetEntity(i).IsAlive();
+			if (isEntityDead) 
+			{
+				m_ECSRegistry->DestroyEntity(i);
+			}
+		}
 	}
 }
 
