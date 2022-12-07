@@ -50,6 +50,17 @@ public:
 		return m_Signatures[entity];
 	}
 
+	Entity& GetEntity(EntityID entity)
+	{
+		assert(entity < MAX_ENTITIES && "Entity out of range.");
+		return m_Entities[entity];
+	}
+
+	uint32_t GetLivingEntities()
+	{
+		return m_LivingEntityCount;
+	}
+
 	uint32_t GetMatchingSignatureCount(const CompSignature& signature)
 	{
 		uint32_t matchingCount = 0;

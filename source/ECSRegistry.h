@@ -29,6 +29,11 @@ public:
 		return m_EntityAdmin->CreateEntity(activeGame);
 	}
 
+	Entity& GetEntity(EntityID entity)
+	{
+		return m_EntityAdmin->GetEntity(entity);
+	}
+
 	/*Entity CreateEntity(const std::string& name)
 	{
 		return Entity(m_EntityAdmin->CreateEntity());
@@ -39,6 +44,11 @@ public:
 		m_EntityAdmin->DestroyEntity(entityID);
 
 		m_ComponentAdmin->EntityDestroyed(entityID);
+	}
+
+	uint32_t GetLivingEntities()
+	{
+		return m_EntityAdmin->GetLivingEntities();
 	}
 
 	template<typename T>
