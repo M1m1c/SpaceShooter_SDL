@@ -30,6 +30,7 @@ void RenderSystem::Update(const std::shared_ptr<ECSRegistry>& registry, SDL_Rend
 			RenderEnemy(transform, renderer);
 			break;
 		case ObjectTag::Bullet:
+			RenderBullet(transform, renderer);
 			break;
 		default:
 			break;
@@ -69,6 +70,14 @@ void RenderSystem::RenderEnemy(TransformComp& transform, SDL_Renderer* renderer)
 	SDL_Rect rect = GenerateQuad(transform);
 
 	SDL_SetRenderDrawColor(renderer, 240, 0, 0, 255);
+	SDL_RenderFillRect(renderer, &rect);
+}
+
+void RenderSystem::RenderBullet(TransformComp& transform, SDL_Renderer* renderer)
+{
+	SDL_Rect rect = GenerateQuad(transform);
+
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	SDL_RenderFillRect(renderer, &rect);
 }
 

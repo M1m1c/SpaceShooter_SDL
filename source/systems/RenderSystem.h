@@ -19,6 +19,8 @@ private:
 
 	void RenderEnemy(TransformComp& transform, SDL_Renderer* renderer);
 
+	void RenderBullet(TransformComp& transform, SDL_Renderer* renderer);
+
 	SDL_Rect GenerateQuad(TransformComp& transform);
 
 };
