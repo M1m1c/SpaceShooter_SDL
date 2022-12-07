@@ -57,3 +57,8 @@ struct TagComp
 	TagComp() = default;
 	~TagComp() = default;
 };
+
+struct WeaponComp
+{
+	bool CanShoot = true;
+};
