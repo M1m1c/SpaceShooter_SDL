@@ -61,11 +61,14 @@ public:
 	operator bool() const { return m_EntityID != 0; }
 
 	const EntityID GetID() { return m_EntityID; }
-	const bool IsAlive() { return m_IsAlive; }
+	const bool IsAlive() { return m_IsAlive && !m_IsQueuedForDestroy; }
 	void SetAlive(bool b) { m_IsAlive = b; }
+	void QueueDestroy() { m_IsQueuedForDestroy = true; }
 
+	//TODO honestly everything in here should probably be its own component, instead of storing enites and signatures in entity admin
 private:
 	EntityID m_EntityID{};
 	Game* m_Game = nullptr;
 	bool m_IsAlive = false;
+	bool m_IsQueuedForDestroy = false;
 };
