@@ -41,7 +41,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	m_ECSRegistry->RegisterComponent<TagComp>();
 	m_ECSRegistry->RegisterComponent<RigidBodyComp>();
 	m_ECSRegistry->RegisterComponent<WeaponComp>();
-	m_ECSRegistry->RegisterComponent<LivingComp>();
+	m_ECSRegistry->RegisterComponent<HealthComp>();
 
 
 

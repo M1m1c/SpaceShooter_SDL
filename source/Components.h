@@ -63,7 +63,8 @@ struct WeaponComp
 	bool CanShoot = true;
 };
 
-struct LivingComp
+struct HealthComp
 {
-	bool m_IsQueuedForDestroy = false;
+	uint16_t Health;
+	bool IsQueuedForDestroy = false;
 };
