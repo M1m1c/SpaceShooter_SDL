@@ -30,7 +30,7 @@ void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, S
 		{
 			canMove = false;
 			//TODO invastigate why destroy entity does not destroy it
-			//if (tagA.Tag == ObjectTag::Bullet) { registry->DestroyEntity(entityIDs[i]); }
+			if (tagA.Tag == ObjectTag::Bullet) { registry->DestroyEntity(entityIDs[i]); }
 		}
 
 
@@ -61,7 +61,12 @@ void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, S
 				//also skip our own index
 				//TODO add all events to a queue, go through queue when we are done chekcing all collisions
 
-				if (tagB.Tag == ObjectTag::Bullet) { continue; }
+
+				if (tagB.Tag == ObjectTag::Bullet) 
+				{ 
+					//registry->DestroyEntity(entityIDs[j]);
+					continue;
+				}
 				canMove = false;
 			}
 		}
