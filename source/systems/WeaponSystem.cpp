@@ -31,10 +31,11 @@ void WeaponSystem::Update(const std::shared_ptr<ECSRegistry>& registry, Game* ga
 			case ObjectTag::None:
 				break;
 			case ObjectTag::Player:
-				SpawnBullet(game,transform.Position,(int)Inputs::Up);
+				
+				SpawnBullet(game,transform.Position - glm::vec2(0.f, transform.Size.y), (int)Inputs::Up);
 				break;
 			case ObjectTag::Enemy:
-				SpawnBullet(game, transform.Position, (int)Inputs::Down);
+				SpawnBullet(game, transform.Position - glm::vec2(0.f, transform.Size.y), (int)Inputs::Down);
 				break;
 			case ObjectTag::Bullet:
 				break;
