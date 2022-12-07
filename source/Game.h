@@ -8,6 +8,7 @@ class PlayerController;
 class ThrottleSystem;
 class RenderSystem;
 class MoveTranslateSystem;
+class WeaponSystem;
 
 class Game
 {
@@ -41,6 +42,7 @@ private:
 	std::unique_ptr<ThrottleSystem> m_ThrottleSystem;
 	std::unique_ptr<RenderSystem> m_RenderSystem;
 	std::unique_ptr<MoveTranslateSystem> m_MoveTranslateSystem;
+	std::unique_ptr<WeaponSystem> m_WeaponSystem;
 
 	Entity* playerEntity;
 };

@@ -8,6 +8,7 @@
 #include "systems/ThrottleSystem.h"
 #include "systems/RenderSystem.h"
 #include "systems/MoveTranslateSystem.h"
+#include "systems/WeaponSystem.h"
 #include <iostream>
 
 const float MILLI_TO_SECONDS = 0.001f;
@@ -77,6 +78,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	m_ThrottleSystem = std::make_unique<ThrottleSystem>();
 	m_RenderSystem = std::make_unique<RenderSystem>();
 	m_MoveTranslateSystem = std::make_unique<MoveTranslateSystem>(m_Width,m_Height);
+	m_WeaponSystem = std::make_unique<WeaponSystem>();
 }
 
 void Game::Run()
@@ -100,6 +102,8 @@ void Game::Run()
 		m_RenderSystem->Update(m_ECSRegistry, m_Renderer, deltaTime);
 
 		m_MoveTranslateSystem->Update(m_ECSRegistry,m_Renderer, deltaTime);
+
+		m_WeaponSystem->Update(m_ECSRegistry, this, deltaTime);
 
 		SDL_RenderPresent(m_Renderer);
 	}
