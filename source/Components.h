@@ -62,3 +62,8 @@ struct WeaponComp
 {
 	bool CanShoot = true;
 };
+
+struct LivingComp
+{
+	bool m_IsQueuedForDestroy = false;
+};
