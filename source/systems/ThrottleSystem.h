@@ -10,7 +10,4 @@ public:
 
 	void Update(const std::shared_ptr<ECSRegistry>& registry, float deltaTime);
 private:
-	//std::shared_ptr<ECSRegistry> m_ECSRegistry;
-
-	float m_MoveSpeed = 250.f;
 };

@@ -41,7 +41,7 @@ struct NameComp
 struct RigidBodyComp
 {
 	Vector2 velocity;
-	Vector2 acceleration;
+	float acceleration = 250.f;
 };
 
 struct InputComp

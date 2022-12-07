@@ -31,7 +31,7 @@ void ThrottleSystem::Update(const std::shared_ptr<ECSRegistry>& registry, float 
 		{
 			inputDir = glm::normalize(inputDir);
 		}
-		Vector2 moveStep = inputDir * m_MoveSpeed * deltaTime;
+		Vector2 moveStep = inputDir * rigidBody.acceleration * deltaTime;
 
 		rigidBody.velocity = moveStep;
 	}
