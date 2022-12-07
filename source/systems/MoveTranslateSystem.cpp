@@ -17,6 +17,7 @@ void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, S
 		bool canMove = true;
 		auto& transformA = registry->GetComponent<TransformComp>(entityIDs[i]);
 		auto& rigidBody = registry->GetComponent<RigidBodyComp>(entityIDs[i]);
+		auto tagA = registry->GetComponent<TagComp>(entityIDs[i]);
 
 		auto nextPosition = transformA.Position + rigidBody.velocity;
 
@@ -28,6 +29,8 @@ void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, S
 			nextPosition.y >= m_ScreenHeight)
 		{
 			canMove = false;
+			//TODO invastigate why destroy entity does not destroy it
+			//if (tagA.Tag == ObjectTag::Bullet) { registry->DestroyEntity(entityIDs[i]); }
 		}
 
 
@@ -39,6 +42,10 @@ void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, S
 
 		for (int j = i + 1; j < count; ++j)
 		{
+
+			auto& tagB = registry->GetComponent<TagComp>(entityIDs[j]);
+
+			
 
 			auto& transformB = registry->GetComponent<TransformComp>(entityIDs[j]);
 
@@ -53,6 +60,8 @@ void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, S
 				//TODO stop us from moving, alternativley take damage, depending on our tag compared to other tag
 				//also skip our own index
 				//TODO add all events to a queue, go through queue when we are done chekcing all collisions
+
+				if (tagB.Tag == ObjectTag::Bullet) { continue; }
 				canMove = false;
 			}
 		}
