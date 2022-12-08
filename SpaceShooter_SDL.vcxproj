@@ -161,7 +161,6 @@
     <ClInclude Include="source\Components.h" />
     <ClInclude Include="source\DataTable.h" />
     <ClInclude Include="source\ECSRegistry.h" />
-    <ClInclude Include="source\Entity.h" />
     <ClInclude Include="source\EntityAdmin.h" />
     <ClInclude Include="source\ECSCore.h" />
     <ClInclude Include="source\Game.h" />

@@ -2,7 +2,6 @@
 
 #include "SDL.h"
 #include "ECSRegistry.h"
-#include "Entity.h"
 #include "Components.h"
 #include "systems/PlayerController.h"
 #include "systems/ThrottleSystem.h"

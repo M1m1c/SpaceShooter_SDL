@@ -1,7 +1,6 @@
 #include "MoveTranslateSystem.h"
 #include "../ECSCore.h"
 #include "../ECSRegistry.h"
-#include "../Entity.h"
 #include "SDL.h"
 #include <iostream>
 

@@ -6,7 +6,6 @@
 #include "EntityAdmin.h"
 #include "ComponentAdmin.h"
 #include "Components.h"
-#include "Entity.h"
 #include "Game.h"
 #include "DataTable.h"
 

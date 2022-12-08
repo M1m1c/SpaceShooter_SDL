@@ -1,7 +1,6 @@
 #include "WeaponSystem.h"
 #include "../ECSCore.h"
 #include "../ECSRegistry.h"
-#include "../Entity.h"
 #include "../Components.h"
 #include "../Game.h"
 #include <glm/gtc/epsilon.hpp>
