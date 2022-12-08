@@ -3,9 +3,9 @@
 #include <queue>
 #include <array>
 #include <cassert>
+#include <unordered_set>
 
-#include "ECSCore.h"
-#include "Entity.h"
+
 
 class EntityAdmin
 {
@@ -15,26 +15,25 @@ public:
 		for (EntityID entityID = 0; entityID < MAX_ENTITIES; ++entityID)
 		{
 			m_AvailableEntities.push(entityID);
-			m_Entities[entityID] = Entity(entityID);
 		}
 	}
 
-	Entity& CreateEntity(Game* activeGame)
+	EntityID& CreateEntity()
 	{
 		assert(m_LivingEntityCount < MAX_ENTITIES && "Too many entities in existence.");
 		EntityID id = m_AvailableEntities.front();
+		m_InUseEntityIDs.insert(id);
 		m_AvailableEntities.pop();
 		++m_LivingEntityCount;
-		m_Entities[id] = Entity(id, activeGame);
-		return m_Entities[id];
+		return id;
 	}
 
 	void DestroyEntity(EntityID entityID)
 	{
 		assert(entityID < MAX_ENTITIES && "Entity out of range.");
 		m_Signatures[entityID].reset();
-		m_Entities[entityID].SetAlive(false);
 		m_AvailableEntities.push(entityID);
+		m_InUseEntityIDs.erase(entityID);
 		--m_LivingEntityCount;
 	}
 
@@ -44,40 +43,16 @@ public:
 		m_Signatures[entity] = signature;
 	}
 
-	CompSignature GetSignature(EntityID entity)
-	{
-		assert(entity < MAX_ENTITIES && "Entity out of range.");
-		return m_Signatures[entity];
-	}
-
-	Entity& GetEntity(EntityID entity)
-	{
-		assert(entity < MAX_ENTITIES && "Entity out of range.");
-		return m_Entities[entity];
-	}
-
-	uint32_t GetLivingEntities()
-	{
-		return m_LivingEntityCount;
-	}
-
+	
 	uint32_t GetMatchingSignatureCount(const CompSignature& signature)
 	{
 		uint32_t matchingCount = 0;
 		uint32_t nonActiveCount = 0;
 		for (size_t i = 0; i < MAX_ENTITIES; i++)
 		{
-			//TODO there might be issues with this nonActiveCount 
-			//for instance what happens if there is a large gap between active entityIDs
-			// the risk is that there is a bunch of entityIDs stored from 1 to 10 and a bunch
-			// stored from 50 to 70, the latter ones will not get used for this.
-			//but do we want to go through each element up to max entites just to amke sure that there are no mistakes, won't that have an impact on performance
-			if (nonActiveCount >= 20) { break; }
-
-			Entity& entity = m_Entities[i];
-			if (!entity.IsAlive()) 
+			
+			if(!IsEntityActive(i))
 			{
-				nonActiveCount++;
 				continue;
 			}
 
@@ -95,8 +70,7 @@ public:
 		std::vector<EntityID> matchingEntities;
 		for (size_t i = 0; i < MAX_ENTITIES; i++)
 		{
-			Entity& entity = m_Entities[i];
-			if (!entity.IsAlive())
+			if (!IsEntityActive(i))
 			{
 				continue;
 			}
@@ -110,12 +84,30 @@ public:
 		return matchingEntities;
 	}
 
+	CompSignature GetSignature(EntityID entity)
+	{
+		assert(entity < MAX_ENTITIES && "Entity out of range.");
+		return m_Signatures[entity];
+	}
+
+	uint32_t GetLivingEntitiesCount()
+	{
+		return m_LivingEntityCount;
+	}
+
+	const std::unordered_set<EntityID>& GetActiveEntities()
+	{
+		return  m_InUseEntityIDs;
+	}
+
+	bool IsEntityActive(EntityID id)
+	{
+		return m_InUseEntityIDs.count(id) > 0;
+	}
+
 private:
 	std::queue<EntityID> m_AvailableEntities{};
-
-	//TODO maybe move signature into entity class
+	std::unordered_set<EntityID> m_InUseEntityIDs;
 	std::array<CompSignature, MAX_ENTITIES> m_Signatures{};
-	std::array<Entity, MAX_ENTITIES> m_Entities{};
-
 	uint32_t m_LivingEntityCount{};
 };

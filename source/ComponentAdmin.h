@@ -38,10 +38,10 @@ public:
 		GetComponentArray<T>()->AddComponent(entity, T(args));
 	}*/
 
-	template<typename T>
-	void AddComponent(EntityID entity)
+	template<typename T, typename... Args>
+	void AddComponent(EntityID entity, Args&&... args)
 	{
-		GetComponentArray<T>()->AddComponent(entity,T());
+		GetComponentArray<T>()->AddComponent(entity,T(args...));
 	}
 
 	template<typename T>

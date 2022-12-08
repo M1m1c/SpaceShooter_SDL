@@ -53,9 +53,6 @@
     <ClInclude Include="source\ECSCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\ComponentAdmin.h">
       <Filter>Header Files</Filter>
     </ClInclude>

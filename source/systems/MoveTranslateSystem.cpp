@@ -1,7 +1,6 @@
 #include "MoveTranslateSystem.h"
 #include "../ECSCore.h"
 #include "../ECSRegistry.h"
-#include "../Entity.h"
 #include "SDL.h"
 #include <iostream>
 
@@ -32,7 +31,7 @@ void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, S
 
 			if (tagA.Tag == ObjectTag::Bullet) 
 			{ 
-				registry->GetEntity(entityIDs[i]).QueueDestroy();
+				registry->GetComponent<HealthComp>(entityIDs[i]).IsQueuedForDestroy = true;
 			}
 		}
 
@@ -67,7 +66,7 @@ void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, S
 
 				if (tagA.Tag == ObjectTag::Bullet)
 				{
-					registry->GetEntity(entityIDs[i]).QueueDestroy();
+					registry->GetComponent<HealthComp>(entityIDs[i]).IsQueuedForDestroy = true;
 				}
 
 				if (tagB.Tag == ObjectTag::Bullet) 

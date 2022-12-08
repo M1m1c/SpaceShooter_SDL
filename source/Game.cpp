@@ -2,7 +2,6 @@
 
 #include "SDL.h"
 #include "ECSRegistry.h"
-#include "Entity.h"
 #include "Components.h"
 #include "systems/PlayerController.h"
 #include "systems/ThrottleSystem.h"
@@ -45,36 +44,19 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 
 
 
-	playerEntity = &CreateEntity("Test");
-	auto& inputComp = playerEntity->AddComponent<InputComp>();
-	auto& comp = playerEntity->AddComponent<TransformComp>();
-	auto& tagComp = playerEntity->AddComponent<TagComp>();
-	playerEntity->AddComponent<RigidBodyComp>();
-	playerEntity->AddComponent<WeaponComp>();
-
-	tagComp.Tag = ObjectTag::Player;
-
-	comp.Position = Vector2(640.f, 400.f);
-	comp.Size = Vector2(15.f, 15.f);
+	playerEntity = m_ECSRegistry->CreateEntity<InputComp,RigidBodyComp,WeaponComp>(
+		Vector4(640.f,400.f,15.f,15.f),
+		ObjectTag::Player);
 
 
 	for (size_t i = 0; i < 10; i++)
 	{
-		std::string name = "Enemy";
-		name += std::to_string(i);
-		auto testEnemy = &CreateEntity(name);
-		auto& comp2 = testEnemy->AddComponent<TransformComp>();
-		auto& tagComp2 = testEnemy->AddComponent<TagComp>();
-		testEnemy->AddComponent<RigidBodyComp>();
-
-		tagComp2.Tag = ObjectTag::Enemy;
-
-		comp2.Position = Vector2(100.f * (i+1), 400.f);
-		comp2.Size = Vector2(20.f, 20.f);
-
-		
+		auto enemy= m_ECSRegistry->CreateEntity<RigidBodyComp>(
+			Vector4(100.f * (i + 1), 400.f, 20.f, 20.f),
+			ObjectTag::Enemy);	
 	}
 
+	auto& inputComp = m_ECSRegistry->GetComponent<InputComp>(playerEntity);
 	m_PlayerController = std::make_unique<PlayerController>(m_EventHandle, inputComp);
 	m_ThrottleSystem = std::make_unique<ThrottleSystem>();
 	m_RenderSystem = std::make_unique<RenderSystem>();
@@ -108,13 +90,13 @@ void Game::Run()
 
 		SDL_RenderPresent(m_Renderer);
 
-		auto aliveEntities = m_ECSRegistry->GetLivingEntities();
-		for (size_t i = 0; i < aliveEntities; i++)
+		auto aliveEntities = m_ECSRegistry->GetActiveEntities();
+		for (auto entityId : aliveEntities)
 		{
-			auto isEntityDead = !m_ECSRegistry->GetEntity(i).IsAlive();
-			if (isEntityDead) 
+			auto isEntityDead = m_ECSRegistry->GetComponent<HealthComp>(entityId).IsQueuedForDestroy;
+			if (isEntityDead)
 			{
-				m_ECSRegistry->DestroyEntity(i);
+				m_ECSRegistry->DestroyEntity(entityId);
 			}
 		}
 	}
@@ -123,9 +105,4 @@ void Game::Run()
 std::shared_ptr<ECSRegistry> Game::GetECSRegistry()
 {
 	return m_ECSRegistry;
-}
-
-Entity& Game::CreateEntity(const std::string& name)
-{
-	return m_ECSRegistry->CreateEntity(name,this);
 }

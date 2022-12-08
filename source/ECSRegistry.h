@@ -5,7 +5,7 @@
 #include "ECSCore.h"
 #include "EntityAdmin.h"
 #include "ComponentAdmin.h"
-#include "Entity.h"
+#include "Components.h"
 #include "Game.h"
 #include "DataTable.h"
 
@@ -20,24 +20,26 @@ public:
 		m_EntityAdmin = std::make_unique<EntityAdmin>();
 	}
 
-
-	Entity& CreateEntity(const std::string& name, Game* activeGame)
+	template<typename... Types>
+	EntityID& CreateEntity(
+		Vector4 transformValues = Vector4(0.f, 0.f, 1.f, 1.f),
+		ObjectTag tag = ObjectTag::None,
+		uint16_t health = 1)
 	{
-		//auto& temp = m_EntityAdmin->CreateEntity(activeGame);// Entity(, activeGame);
-		//TODO make sure adding NameComp works, maybe not here since we can't include Components.h
-		//temp.AddComponent<NameComp>(name);
-		return m_EntityAdmin->CreateEntity(activeGame);
+		auto id = m_EntityAdmin->CreateEntity();
+
+		AddComponent<TransformComp>(
+			id,
+			Vector2(transformValues.x, transformValues.y),
+			Vector2(transformValues.z, transformValues.w));
+
+		AddComponent<TagComp>(id, tag);
+		AddComponent<HealthComp>(id, health);
+
+		(AddComponent<Types>(id), ...);
+
+		return id;
 	}
-
-	Entity& GetEntity(EntityID entity)
-	{
-		return m_EntityAdmin->GetEntity(entity);
-	}
-
-	/*Entity CreateEntity(const std::string& name)
-	{
-		return Entity(m_EntityAdmin->CreateEntity());
-	}*/
 
 	void DestroyEntity(EntityID entityID)
 	{
@@ -46,9 +48,14 @@ public:
 		m_ComponentAdmin->EntityDestroyed(entityID);
 	}
 
-	uint32_t GetLivingEntities()
+	uint32_t GetLivingEntitiesCount()
 	{
-		return m_EntityAdmin->GetLivingEntities();
+		return m_EntityAdmin->GetLivingEntitiesCount();
+	}
+
+	const std::unordered_set<EntityID>& GetActiveEntities()
+	{
+		return   m_EntityAdmin->GetActiveEntities();
 	}
 
 	template<typename T>
@@ -57,10 +64,10 @@ public:
 		m_ComponentAdmin->RegisterComponent<T>();
 	}
 
-	template<typename T>
-	T& AddComponent(EntityID entityID)
+	template<typename T, typename... Args>
+	T& AddComponent(EntityID entityID, Args&&... args)
 	{
-		m_ComponentAdmin->AddComponent<T>(entityID);
+		m_ComponentAdmin->AddComponent<T>(entityID,args...);
 
 		auto signature = m_EntityAdmin->GetSignature(entityID);
 		signature.set(m_ComponentAdmin->GetComponentType<T>(), true);

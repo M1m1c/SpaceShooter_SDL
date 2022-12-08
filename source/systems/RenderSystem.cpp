@@ -2,7 +2,6 @@
 #include "SDL.h"
 #include "../ECSCore.h"
 #include "../ECSRegistry.h"
-#include "../Entity.h"
 #include "../Components.h"
 
 void RenderSystem::Update(const std::shared_ptr<ECSRegistry>& registry, SDL_Renderer* renderer, float deltaTime)

@@ -1,7 +1,6 @@
 #include "ThrottleSystem.h"
 #include "../ECSCore.h"
 #include "../ECSRegistry.h"
-#include "../Entity.h"
 #include "../Components.h"
 
 
