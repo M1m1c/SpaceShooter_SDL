@@ -9,7 +9,7 @@ PlayerController::~PlayerController()
 {
 }
 
-void PlayerController::Update()
+void PlayerController::Update(float deltaTime)
 {
 	SDL_PollEvent(m_EventHandle.get());
 	auto type = m_EventHandle->type;
