@@ -4,6 +4,7 @@
 #include <cmath>
 #include <glm/glm.hpp>
 
+using Vector4 = glm::vec4;
 using Vector2 = glm::vec2;
 
 enum class Inputs
@@ -27,9 +28,9 @@ struct TransformComp
 {
 	Vector2 Position;
 	Vector2 Size;
-	float Rotation;
 
 	TransformComp() = default;
+	TransformComp(Vector2 position,Vector2 size): Position(position), Size(size){}
 	~TransformComp() = default;
 };
 
@@ -51,10 +52,10 @@ struct InputComp
 
 struct TagComp 
 {
-	ObjectTag Tag = ObjectTag::None;
+	ObjectTag Tag;
 
-	//TagComp(ObjectTag tag): Tag(tag){}
 	TagComp() = default;
+	TagComp(ObjectTag tag) : Tag(tag){}
 	~TagComp() = default;
 };
 
@@ -67,4 +68,8 @@ struct HealthComp
 {
 	uint16_t Health;
 	bool IsQueuedForDestroy = false;
+
+	HealthComp() = default;
+	HealthComp(uint16_t health) : Health(health){}
+	~HealthComp() = default;
 };
