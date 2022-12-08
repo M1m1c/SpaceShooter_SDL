@@ -32,10 +32,10 @@ void WeaponSystem::Update(const std::shared_ptr<ECSRegistry>& registry, Game* ga
 				break;
 			case ObjectTag::Player:
 				
-				SpawnBullet(game,transform.Position - glm::vec2(0.f, transform.Size.y), (int)Inputs::Up);
+				SpawnBullet(registry,transform.Position - glm::vec2(0.f, transform.Size.y), (int)Inputs::Up);
 				break;
 			case ObjectTag::Enemy:
-				SpawnBullet(game, transform.Position - glm::vec2(0.f, transform.Size.y), (int)Inputs::Down);
+				SpawnBullet(registry, transform.Position - glm::vec2(0.f, transform.Size.y), (int)Inputs::Down);
 				break;
 			case ObjectTag::Bullet:
 				break;
@@ -50,22 +50,17 @@ void WeaponSystem::Update(const std::shared_ptr<ECSRegistry>& registry, Game* ga
 	}
 }
 
-void WeaponSystem::SpawnBullet(Game* game,glm::vec2 position,int direction)
+void WeaponSystem::SpawnBullet(const std::shared_ptr<ECSRegistry>& registry,glm::vec2 position,int direction)
 {
-	auto& bullet = game->CreateEntity("bullet");
 
-	auto& transform = bullet.AddComponent<TransformComp>();
-	auto& rigidBody = bullet.AddComponent<RigidBodyComp>();
-	auto& input = bullet.AddComponent<InputComp>();
-	auto& tag = bullet.AddComponent<TagComp>();
+	auto bullet = registry->CreateEntity<RigidBodyComp, InputComp>(
+		Vector4(position.x, position.y, 5.f, 5.f),
+		ObjectTag::Bullet);
 
-
-	transform.Position = position;
-	transform.Size = Vector2(5.f, 5.f);
+	auto& rigidBody = registry->GetComponent<RigidBodyComp>(bullet);
+	auto& input = registry->GetComponent<InputComp>(bullet);
 
 	rigidBody.acceleration = 500.f;
-
-	tag.Tag = ObjectTag::Bullet;
 
 	input.InputSignature[direction] = 1;
 }
