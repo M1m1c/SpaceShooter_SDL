@@ -28,6 +28,14 @@ public:
 		m_Entities[id] = Entity(id, activeGame);
 		return m_Entities[id];
 	}
+	EntityID& CreateEntity()
+	{
+		assert(m_LivingEntityCount < MAX_ENTITIES && "Too many entities in existence.");
+		EntityID id = m_AvailableEntities.front();
+		m_AvailableEntities.pop();
+		++m_LivingEntityCount;
+		return id;
+	}
 
 	void DestroyEntity(EntityID entityID)
 	{
@@ -74,12 +82,12 @@ public:
 			//but do we want to go through each element up to max entites just to amke sure that there are no mistakes, won't that have an impact on performance
 			if (nonActiveCount >= 20) { break; }
 
-			Entity& entity = m_Entities[i];
+			/*Entity& entity = m_Entities[i];
 			if (!entity.IsAlive()) 
 			{
 				nonActiveCount++;
 				continue;
-			}
+			}*/
 
 			const CompSignature& entitySig = m_Signatures[i];
 			if ((entitySig & signature) == signature) 
@@ -95,11 +103,11 @@ public:
 		std::vector<EntityID> matchingEntities;
 		for (size_t i = 0; i < MAX_ENTITIES; i++)
 		{
-			Entity& entity = m_Entities[i];
+			/*Entity& entity = m_Entities[i];
 			if (!entity.IsAlive())
 			{
 				continue;
-			}
+			}*/
 
 			const CompSignature& entitySig = m_Signatures[i];
 			if ((entitySig & signature) == signature)
