@@ -1,15 +1,19 @@
 #pragma once
 #include <string>
 #include <memory>
+#include <array>
 #include "ECSCore.h"
 
 class ECSRegistry;
 class Entity;
+class ISystem;
 class PlayerController;
 class ThrottleSystem;
 class RenderSystem;
 class MoveTranslateSystem;
 class WeaponSystem;
+
+const uint32_t MAX_SYSTEMS = 32;
 
 class Game
 {
@@ -26,6 +30,9 @@ public:
 	Entity& CreateEntity(const std::string& name = std::string());
 
 private:
+	template<typename T,typename... Args>
+	void AddSystem(Args&&... args);
+
 	bool m_IsRunning = true;
 	float m_LastFrameTime = 0.f;
 
@@ -39,7 +46,9 @@ private:
 
 	std::shared_ptr<ECSRegistry> m_ECSRegistry;
 
-	std::unique_ptr<PlayerController> m_PlayerController;
+	uint32_t m_SystemCount = 0;
+	std::array<std::unique_ptr<ISystem>, MAX_SYSTEMS> m_Systems;
+
 	std::unique_ptr<ThrottleSystem> m_ThrottleSystem;
 	std::unique_ptr<RenderSystem> m_RenderSystem;
 	std::unique_ptr<MoveTranslateSystem> m_MoveTranslateSystem;
@@ -47,3 +56,5 @@ private:
 
 	EntityID playerEntity;
 };
+
+
