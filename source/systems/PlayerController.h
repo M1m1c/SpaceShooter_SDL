@@ -1,15 +1,16 @@
 #pragma once
+#include "ISystem.h"
 #include <memory>
 #include "SDL.h"
 #include "../Components.h"
 
-class PlayerController
+class PlayerController : public ISystem
 {
 public:
-	PlayerController(std::shared_ptr<SDL_Event> eventHandle, InputComp& playerInputComp);
-	~PlayerController();
+	PlayerController(std::shared_ptr<SDL_Event> eventHandle, InputComp& playerInputComp) :m_EventHandle(eventHandle), m_PlayerInputComp(playerInputComp) {}
+	~PlayerController() = default;
 
-	void Update();
+	virtual void Update(float deltaTime) override;
 
 private:
 	std::shared_ptr<SDL_Event> m_EventHandle;
