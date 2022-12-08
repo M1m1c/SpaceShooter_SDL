@@ -60,8 +60,8 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	
 	auto& inputComp = m_ECSRegistry->GetComponent<InputComp>(playerEntity);
 	AddSystem<PlayerController>(m_EventHandle, inputComp);
+	AddSystem<ThrottleSystem>(m_ECSRegistry);
 
-	m_ThrottleSystem = std::make_unique<ThrottleSystem>();
 	m_RenderSystem = std::make_unique<RenderSystem>();
 	m_MoveTranslateSystem = std::make_unique<MoveTranslateSystem>(m_Width, m_Height);
 	m_WeaponSystem = std::make_unique<WeaponSystem>();
@@ -87,8 +87,6 @@ void Game::Run()
 		{
 			m_Systems[i]->Update(deltaTime);
 		}
-
-		m_ThrottleSystem->Update(m_ECSRegistry, deltaTime);
 
 		m_RenderSystem->Update(m_ECSRegistry, m_Renderer, deltaTime);
 

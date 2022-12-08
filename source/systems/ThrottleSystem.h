@@ -1,13 +1,15 @@
 #pragma once
+#include "ISystem.h"
 #include <memory>
 class ECSRegistry;
 
-class ThrottleSystem
+class ThrottleSystem: public ISystem
 {
 public:
-	ThrottleSystem() = default;
+	ThrottleSystem(const std::shared_ptr<ECSRegistry>& registry);
 	~ThrottleSystem() = default;
 
-	void Update(const std::shared_ptr<ECSRegistry>& registry, float deltaTime);
+	virtual void Update(float deltaTime) override;
 private:
+	const std::shared_ptr<ECSRegistry>& m_Registry;
 };
