@@ -91,24 +91,19 @@ void Game::Run()
 
 		SDL_RenderPresent(m_Renderer);
 
-		/*auto aliveEntities = m_ECSRegistry->GetLivingEntities();
-		for (size_t i = 0; i < aliveEntities; i++)
+		auto aliveEntities = m_ECSRegistry->GetActiveEntities();
+		for (auto entityId : aliveEntities)
 		{
-			auto isEntityDead = !m_ECSRegistry->GetEntity(i).IsAlive();
-			if (isEntityDead) 
+			auto isEntityDead = m_ECSRegistry->GetComponent<HealthComp>(entityId).IsQueuedForDestroy;
+			if (isEntityDead)
 			{
-				m_ECSRegistry->DestroyEntity(i);
+				m_ECSRegistry->DestroyEntity(entityId);
 			}
-		}*/
+		}
 	}
 }
 
 std::shared_ptr<ECSRegistry> Game::GetECSRegistry()
 {
 	return m_ECSRegistry;
-}
-
-Entity& Game::CreateEntity(const std::string& name)
-{
-	return m_ECSRegistry->CreateEntity(name,this);
 }

@@ -32,7 +32,7 @@ void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, S
 
 			if (tagA.Tag == ObjectTag::Bullet) 
 			{ 
-				registry->GetEntity(entityIDs[i]).QueueDestroy();
+				registry->GetComponent<HealthComp>(entityIDs[i]).IsQueuedForDestroy = true;
 			}
 		}
 
@@ -67,7 +67,7 @@ void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, S
 
 				if (tagA.Tag == ObjectTag::Bullet)
 				{
-					registry->GetEntity(entityIDs[i]).QueueDestroy();
+					registry->GetComponent<HealthComp>(entityIDs[i]).IsQueuedForDestroy = true;
 				}
 
 				if (tagB.Tag == ObjectTag::Bullet) 

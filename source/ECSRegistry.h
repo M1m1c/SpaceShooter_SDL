@@ -21,14 +21,6 @@ public:
 		m_EntityAdmin = std::make_unique<EntityAdmin>();
 	}
 
-
-	Entity& CreateEntity(const std::string& name, Game* activeGame)
-	{
-		//auto& temp = m_EntityAdmin->CreateEntity(activeGame);// Entity(, activeGame);
-		//TODO make sure adding NameComp works, maybe not here since we can't include Components.h
-		//temp.AddComponent<NameComp>(name);
-		return m_EntityAdmin->CreateEntity(activeGame);
-	}
 	template<typename... Types>
 	EntityID& CreateEntity(
 		Vector4 transformValues = Vector4(0.f, 0.f, 1.f, 1.f),
@@ -50,16 +42,6 @@ public:
 		return id;
 	}
 
-	Entity& GetEntity(EntityID entity)
-	{
-		return m_EntityAdmin->GetEntity(entity);
-	}
-
-	/*Entity CreateEntity(const std::string& name)
-	{
-		return Entity(m_EntityAdmin->CreateEntity());
-	}*/
-
 	void DestroyEntity(EntityID entityID)
 	{
 		m_EntityAdmin->DestroyEntity(entityID);
@@ -67,9 +49,14 @@ public:
 		m_ComponentAdmin->EntityDestroyed(entityID);
 	}
 
-	uint32_t GetLivingEntities()
+	uint32_t GetLivingEntitiesCount()
 	{
-		return m_EntityAdmin->GetLivingEntities();
+		return m_EntityAdmin->GetLivingEntitiesCount();
+	}
+
+	const std::unordered_set<EntityID>& GetActiveEntities()
+	{
+		return   m_EntityAdmin->GetActiveEntities();
 	}
 
 	template<typename T>
