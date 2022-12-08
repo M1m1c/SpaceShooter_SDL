@@ -4,14 +4,14 @@
 #include "../ECSRegistry.h"
 #include "../Components.h"
 
-void RenderSystem::Update(const std::shared_ptr<ECSRegistry>& registry, SDL_Renderer* renderer, float deltaTime)
+void RenderSystem::Update(float deltaTime)
 {
 
 
 
 	DataTable<MAX_ENTITIES, TransformComp, TagComp> table;
 
-	auto count = registry->GetAllComponentPairs<MAX_ENTITIES, TransformComp, TagComp>(table);
+	auto count = m_Registry->GetAllComponentPairs<MAX_ENTITIES, TransformComp, TagComp>(table);
 
 	for (size_t i = 0; i < count; i++)
 	{
@@ -23,13 +23,13 @@ void RenderSystem::Update(const std::shared_ptr<ECSRegistry>& registry, SDL_Rend
 		case ObjectTag::None:
 			break;
 		case ObjectTag::Player:
-			RenderPlayer(transform, renderer);
+			RenderPlayer(transform);
 			break;
 		case ObjectTag::Enemy:
-			RenderEnemy(transform, renderer);
+			RenderEnemy(transform);
 			break;
 		case ObjectTag::Bullet:
-			RenderBullet(transform, renderer);
+			RenderBullet(transform);
 			break;
 		default:
 			break;
@@ -41,43 +41,48 @@ void RenderSystem::Update(const std::shared_ptr<ECSRegistry>& registry, SDL_Rend
 
 }
 
-void RenderSystem::RenderPlayer(TransformComp& transform, SDL_Renderer* renderer)
+RenderSystem::RenderSystem(const std::shared_ptr<ECSRegistry>& registry, SDL_Renderer* renderer) :
+	m_Registry(registry), m_Renderer(renderer)
+{
+}
+
+void RenderSystem::RenderPlayer(TransformComp& transform)
 {
 
 	SDL_Rect rect = GenerateQuad(transform);
 	
 
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	SDL_RenderFillRect(renderer, &rect);
+	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
+	SDL_RenderFillRect(m_Renderer, &rect);
 
 	auto halfW = (rect.w * 0.5f);
 
 	auto cX = rect.x;
 	auto cY = rect.y + rect.h;
-	SDL_RenderDrawLine(renderer, cX, cY, cX - halfW, cY + rect.h);
+	SDL_RenderDrawLine(m_Renderer, cX, cY, cX - halfW, cY + rect.h);
 	cX = rect.x + rect.w;
-	SDL_RenderDrawLine(renderer, cX, cY, cX + halfW, cY + rect.h);
+	SDL_RenderDrawLine(m_Renderer, cX, cY, cX + halfW, cY + rect.h);
 
 	cX = rect.x + halfW;
-	SDL_RenderDrawLine(renderer, cX - 2.f, cY, cX - 4.f, cY + rect.h-2.f);
-	SDL_RenderDrawLine(renderer, cX + 2.f, cY, cX + 4.f, cY + rect.h-2.f);
+	SDL_RenderDrawLine(m_Renderer, cX - 2.f, cY, cX - 4.f, cY + rect.h-2.f);
+	SDL_RenderDrawLine(m_Renderer, cX + 2.f, cY, cX + 4.f, cY + rect.h-2.f);
 }
 
 
-void RenderSystem::RenderEnemy(TransformComp& transform, SDL_Renderer* renderer)
+void RenderSystem::RenderEnemy(TransformComp& transform)
 {
 	SDL_Rect rect = GenerateQuad(transform);
 
-	SDL_SetRenderDrawColor(renderer, 240, 0, 0, 255);
-	SDL_RenderFillRect(renderer, &rect);
+	SDL_SetRenderDrawColor(m_Renderer, 240, 0, 0, 255);
+	SDL_RenderFillRect(m_Renderer, &rect);
 }
 
-void RenderSystem::RenderBullet(TransformComp& transform, SDL_Renderer* renderer)
+void RenderSystem::RenderBullet(TransformComp& transform)
 {
 	SDL_Rect rect = GenerateQuad(transform);
 
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	SDL_RenderFillRect(renderer, &rect);
+	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
+	SDL_RenderFillRect(m_Renderer, &rect);
 }
 
 
