@@ -1,19 +1,20 @@
 #pragma once
+#include "ISystem.h"
 #include <memory>
 #include <glm/glm.hpp>
 class ECSRegistry;
 class Game;
 
-class WeaponSystem
+class WeaponSystem : public ISystem
 {
 public:
-	WeaponSystem() = default;
+	WeaponSystem(const std::shared_ptr<ECSRegistry>& registry): m_Registry(registry){}
 	~WeaponSystem() = default;
 
-	void Update(const std::shared_ptr<ECSRegistry>& registry, Game* game, float deltaTime);
+	virtual void Update(float deltaTime) override;
 
 private:
-	void SpawnBullet(const std::shared_ptr<ECSRegistry>& registry, glm::vec2 position, int direction);
-
+	void SpawnBullet( glm::vec2 position, int direction);
+	const std::shared_ptr<ECSRegistry>& m_Registry;
 };
 

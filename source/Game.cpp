@@ -62,9 +62,8 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	AddSystem<PlayerController>(m_EventHandle, inputComp);
 	AddSystem<ThrottleSystem>(m_ECSRegistry);
 	AddSystem<RenderSystem>(m_ECSRegistry, m_Renderer);
+	AddSystem<WeaponSystem>(m_ECSRegistry);
 	AddSystem<MoveTranslateSystem>(m_ECSRegistry, m_Renderer, m_Width, m_Height);
-
-	m_WeaponSystem = std::make_unique<WeaponSystem>();
 }
 
 void Game::Run()
@@ -81,14 +80,10 @@ void Game::Run()
 		//TODO make systems use observer pattern to only get new entites and components when they get added,
 		//otherwise store reference to components at the creation of systems
 
-		//m_PlayerController->Update(deltaTime);
-
 		for (size_t i = 0; i < m_SystemCount; i++)
 		{
 			m_Systems[i]->Update(deltaTime);
 		}
-
-		m_WeaponSystem->Update(m_ECSRegistry, this, deltaTime);
 
 		SDL_RenderPresent(m_Renderer);
 
