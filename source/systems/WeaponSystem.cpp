@@ -61,7 +61,7 @@ void WeaponSystem::SpawnBullet(Game* game,glm::vec2 position,int direction)
 
 
 	transform.Position = position;
-	transform.Size = glm::vec2(5.f, 5.f);
+	transform.Size = Vector2(5.f, 5.f);
 
 	rigidBody.acceleration = 500.f;
 
