@@ -49,7 +49,6 @@ private:
 	uint32_t m_SystemCount = 0;
 	std::array<std::unique_ptr<ISystem>, MAX_SYSTEMS> m_Systems;
 
-	std::unique_ptr<MoveTranslateSystem> m_MoveTranslateSystem;
 	std::unique_ptr<WeaponSystem> m_WeaponSystem;
 
 	EntityID playerEntity;

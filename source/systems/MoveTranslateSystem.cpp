@@ -5,18 +5,18 @@
 #include <iostream>
 
 
-void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, SDL_Renderer* renderer, float deltaTime)
+void MoveTranslateSystem::Update(float deltaTime)
 {
 
-	auto entityIDs = registry->GetEntityIDsMatchingSignature<TransformComp, RigidBodyComp, TagComp>();
+	auto entityIDs = m_Registry->GetEntityIDsMatchingSignature<TransformComp, RigidBodyComp, TagComp>();
 	auto count = entityIDs.size();
 
 	for (int i = 0; i < count; ++i)
 	{
 		bool canMove = true;
-		auto& transformA = registry->GetComponent<TransformComp>(entityIDs[i]);
-		auto& rigidBody = registry->GetComponent<RigidBodyComp>(entityIDs[i]);
-		auto tagA = registry->GetComponent<TagComp>(entityIDs[i]);
+		auto& transformA = m_Registry->GetComponent<TransformComp>(entityIDs[i]);
+		auto& rigidBody = m_Registry->GetComponent<RigidBodyComp>(entityIDs[i]);
+		auto tagA = m_Registry->GetComponent<TagComp>(entityIDs[i]);
 
 		auto nextPosition = transformA.Position + rigidBody.velocity;
 
@@ -31,7 +31,7 @@ void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, S
 
 			if (tagA.Tag == ObjectTag::Bullet) 
 			{ 
-				registry->GetComponent<HealthComp>(entityIDs[i]).IsQueuedForDestroy = true;
+				m_Registry->GetComponent<HealthComp>(entityIDs[i]).IsQueuedForDestroy = true;
 			}
 		}
 
@@ -46,11 +46,11 @@ void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, S
 		{
 			if (j == i) { continue; }
 
-			auto& tagB = registry->GetComponent<TagComp>(entityIDs[j]);
+			auto& tagB = m_Registry->GetComponent<TagComp>(entityIDs[j]);
 
 			
 
-			auto& transformB = registry->GetComponent<TransformComp>(entityIDs[j]);
+			auto& transformB = m_Registry->GetComponent<TransformComp>(entityIDs[j]);
 
 			const glm::vec2 bMin = getMin(transformB);
 			const glm::vec2 bMax = getMax(transformB);
@@ -66,7 +66,7 @@ void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, S
 
 				if (tagA.Tag == ObjectTag::Bullet)
 				{
-					registry->GetComponent<HealthComp>(entityIDs[i]).IsQueuedForDestroy = true;
+					m_Registry->GetComponent<HealthComp>(entityIDs[i]).IsQueuedForDestroy = true;
 				}
 
 				if (tagB.Tag == ObjectTag::Bullet) 
@@ -80,7 +80,7 @@ void MoveTranslateSystem::Update(const std::shared_ptr<ECSRegistry>& registry, S
 		if (canMove) { transformA.Position += rigidBody.velocity; }
 
 #ifdef _DEBUG
-		DrawCollider(transformA, collderSize, canMove, renderer);
+		DrawCollider(transformA, collderSize, canMove, m_Renderer);
 #endif
 	}
 }
