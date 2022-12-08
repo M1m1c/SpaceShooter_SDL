@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
+#include "ECSCore.h"
 
 class ECSRegistry;
 class Entity;
@@ -44,5 +45,5 @@ private:
 	std::unique_ptr<MoveTranslateSystem> m_MoveTranslateSystem;
 	std::unique_ptr<WeaponSystem> m_WeaponSystem;
 
-	Entity* playerEntity;
+	EntityID playerEntity;
 };
