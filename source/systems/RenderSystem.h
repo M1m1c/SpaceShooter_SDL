@@ -9,8 +9,8 @@ struct SDL_Rect;
 class RenderSystem : public ISystem
 {
 public:
-	RenderSystem(const std::shared_ptr<ECSRegistry>& registry, SDL_Renderer* renderer);
-	~RenderSystem()= default;
+	RenderSystem(const std::shared_ptr<ECSRegistry>& registry, SDL_Renderer* renderer) :m_Registry(registry), m_Renderer(renderer) {}
+	~RenderSystem() = default;
 
 	virtual void Update(float deltaTime) override;
 

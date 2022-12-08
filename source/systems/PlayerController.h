@@ -7,8 +7,8 @@
 class PlayerController : public ISystem
 {
 public:
-	PlayerController(std::shared_ptr<SDL_Event> eventHandle, InputComp& playerInputComp);
-	~PlayerController();
+	PlayerController(std::shared_ptr<SDL_Event> eventHandle, InputComp& playerInputComp) :m_EventHandle(eventHandle), m_PlayerInputComp(playerInputComp) {}
+	~PlayerController() = default;
 
 	virtual void Update(float deltaTime) override;
 

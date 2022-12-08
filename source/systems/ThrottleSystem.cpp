@@ -31,7 +31,3 @@ void ThrottleSystem::Update(float deltaTime)
 	}
 	
 }
-
-ThrottleSystem::ThrottleSystem(const std::shared_ptr<ECSRegistry>& registry) : m_Registry(registry)
-{
-}

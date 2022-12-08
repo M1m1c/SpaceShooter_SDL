@@ -6,7 +6,7 @@ class ECSRegistry;
 class ThrottleSystem: public ISystem
 {
 public:
-	ThrottleSystem(const std::shared_ptr<ECSRegistry>& registry);
+	ThrottleSystem(const std::shared_ptr<ECSRegistry>& registry) : m_Registry(registry){}
 	~ThrottleSystem() = default;
 
 	virtual void Update(float deltaTime) override;

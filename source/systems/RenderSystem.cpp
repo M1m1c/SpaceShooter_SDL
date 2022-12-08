@@ -41,11 +41,6 @@ void RenderSystem::Update(float deltaTime)
 
 }
 
-RenderSystem::RenderSystem(const std::shared_ptr<ECSRegistry>& registry, SDL_Renderer* renderer) :
-	m_Registry(registry), m_Renderer(renderer)
-{
-}
-
 void RenderSystem::RenderPlayer(TransformComp& transform)
 {
 

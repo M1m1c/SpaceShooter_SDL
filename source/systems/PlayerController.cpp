@@ -1,14 +1,5 @@
 #include "PlayerController.h"
 
-PlayerController::PlayerController(std::shared_ptr<SDL_Event> eventHandle, InputComp& playerInputComp) :
-	m_EventHandle(eventHandle), m_PlayerInputComp(playerInputComp)
-{
-}
-
-PlayerController::~PlayerController()
-{
-}
-
 void PlayerController::Update(float deltaTime)
 {
 	SDL_PollEvent(m_EventHandle.get());
