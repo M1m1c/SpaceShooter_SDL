@@ -9,9 +9,9 @@ void RenderSystem::Update(float deltaTime)
 
 
 
-	DataTable<MAX_ENTITIES, TransformComp, TagComp> table;
+	DataTable<TransformComp, TagComp> table;
 
-	auto count = m_Registry->GetAllComponentPairs<MAX_ENTITIES, TransformComp, TagComp>(table);
+	auto count = m_Registry->GetAllComponentPairs<TransformComp, TagComp>(table);
 
 	for (size_t i = 0; i < count; i++)
 	{

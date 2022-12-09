@@ -65,7 +65,7 @@
     <ClInclude Include="source\systems\ThrottleSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\DataTable.h">
+    <ClInclude Include="source\ComponentView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\systems\RenderSystem.h">

@@ -7,7 +7,7 @@
 #include "ComponentAdmin.h"
 #include "Components.h"
 #include "Game.h"
-#include "DataTable.h"
+#include "ComponentView.h"
 
 
 
@@ -121,8 +121,8 @@ public:
 	//Composes a DataTable& where each entry corresponds to the components of one entity,
 	//based on the sent in componenttypes.
 	//Returns the number of entities that have these components.
-	template<size_t size, typename... Types>
-	size_t GetAllComponentPairs(DataTable<size, Types...>& outTable)
+	template<typename... Types>
+	size_t GetAllComponentPairs(DataTable<Types...>& outTable)
 	{
 		CompSignature signature = (ComposeSignature<Types>(), ...);
 		size_t entityCount = 0;

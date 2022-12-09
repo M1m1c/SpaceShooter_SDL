@@ -159,7 +159,7 @@
     <ClInclude Include="source\CompArray.h" />
     <ClInclude Include="source\ComponentAdmin.h" />
     <ClInclude Include="source\Components.h" />
-    <ClInclude Include="source\DataTable.h" />
+    <ClInclude Include="source\ComponentView.h" />
     <ClInclude Include="source\ECSRegistry.h" />
     <ClInclude Include="source\EntityAdmin.h" />
     <ClInclude Include="source\ECSCore.h" />
