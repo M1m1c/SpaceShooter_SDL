@@ -2,6 +2,7 @@
 
 #include <string>
 #include <utility>
+#include <memory>
 #include "ECSCore.h"
 #include "EntityAdmin.h"
 #include "ComponentAdmin.h"
@@ -47,6 +48,17 @@ public:
 
 		m_ComponentAdmin->EntityDestroyed(entityID);
 	}
+
+	template<typename... Components>
+	std::shared_ptr<ComponentView<Components...>> CreateComponentView() 
+	{
+		return std::make_shared<ComponentView<Components...>>(
+			GetActiveEntities(),
+			m_EntityAdmin->Getsignatures(),
+			ComposeSignature<Components...>(),
+			(m_ComponentAdmin->GetComponentArray<Components>())...);
+	}
+
 
 	uint32_t GetLivingEntitiesCount()
 	{
@@ -156,6 +168,17 @@ public:
 		CompType type = m_ComponentAdmin->GetComponentType<T>();
 		return signature[type];
 	}
+
+	/*const std::array<CompSignature, MAX_ENTITIES>& Getsignatures()
+	{
+		return m_EntityAdmin->Getsignatures();
+	}
+
+	template<typename T>
+	std::shared_ptr<CompArray<T>> GetComponentArray()
+	{
+		return m_ComponentAdmin->GetComponentArray<T>();
+	}*/
 
 private:
 	std::unique_ptr<ComponentAdmin> m_ComponentAdmin;
