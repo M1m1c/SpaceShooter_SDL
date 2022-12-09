@@ -9,7 +9,7 @@
 // only then should we make sure to update the references tehy system store.
 void ThrottleSystem::Update(float deltaTime)
 {
-	auto table = m_ComponentView->GetAllComponentPairs();
+	auto table = m_ComponentView->Get();
 
 	for (size_t i = 0; i < table.size(); i++)
 	{
