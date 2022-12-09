@@ -105,6 +105,12 @@ public:
 		return m_InUseEntityIDs.count(id) > 0;
 	}
 
+
+	const std::array<CompSignature, MAX_ENTITIES>& Getsignatures() 
+	{
+		return m_Signatures;
+	}
+
 private:
 	std::queue<EntityID> m_AvailableEntities{};
 	std::unordered_set<EntityID> m_InUseEntityIDs;
