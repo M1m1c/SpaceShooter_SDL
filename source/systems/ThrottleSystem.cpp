@@ -9,25 +9,24 @@
 // only then should we make sure to update the references tehy system store.
 void ThrottleSystem::Update(float deltaTime)
 {
+	auto table = m_ComponentView->GetAllComponentPairs();
 
-	auto entityIDs = m_Registry->GetEntityIDsMatchingSignature<RigidBodyComp, InputComp>();
-
-	for (size_t i = 0; i < entityIDs.size(); i++)
+	for (size_t i = 0; i < table.size(); i++)
 	{
-		auto& rigidBody = m_Registry->GetComponent<RigidBodyComp>(entityIDs[i]);
-		auto input = m_Registry->GetComponent<InputComp>(entityIDs[i]).InputSignature;
+		auto rigidBody = std::get<0>(table[i]);
+		auto inputSig = std::get<1>(table[i])->InputSignature;
+
 
 		Vector2 inputDir;
-		inputDir.x = (input[(int)Inputs::Left] == 1 ? -1.f : (input[(int)Inputs::Right] == 1 ? 1.f : 0.f));
-		inputDir.y = (input[(int)Inputs::Down] == 1 ? 1.f : (input[(int)Inputs::Up] == 1 ? -1.f : 0.f));
+		inputDir.x = (inputSig[(int)Inputs::Left] == 1 ? -1.f : (inputSig[(int)Inputs::Right] == 1 ? 1.f : 0.f));
+		inputDir.y = (inputSig[(int)Inputs::Down] == 1 ? 1.f : (inputSig[(int)Inputs::Up] == 1 ? -1.f : 0.f));
 
 		if (inputDir.x != 0.f || inputDir.y != 0.f)
 		{
 			inputDir = glm::normalize(inputDir);
 		}
-		Vector2 moveStep = inputDir * rigidBody.acceleration * deltaTime;
+		Vector2 moveStep = inputDir * rigidBody->acceleration * deltaTime;
 
-		rigidBody.velocity = moveStep;
+		rigidBody->velocity = moveStep;
 	}
-	
 }
