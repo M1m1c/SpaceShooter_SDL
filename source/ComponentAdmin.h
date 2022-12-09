@@ -66,10 +66,6 @@ public:
 		}
 	}
 
-private:
-	std::unordered_map<const char*, CompType> m_ComponentTypes{};
-	std::unordered_map<const char*, std::shared_ptr<ICompArray>> m_ComponentArrays{};
-	CompType m_NextComponentType{};
 	template<typename T>
 	std::shared_ptr<CompArray<T>> GetComponentArray()
 	{
@@ -79,4 +75,9 @@ private:
 
 		return std::static_pointer_cast<CompArray<T>>(m_ComponentArrays[typeName]);
 	}
+
+private:
+	std::unordered_map<const char*, CompType> m_ComponentTypes{};
+	std::unordered_map<const char*, std::shared_ptr<ICompArray>> m_ComponentArrays{};
+	CompType m_NextComponentType{};
 };
