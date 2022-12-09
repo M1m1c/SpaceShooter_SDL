@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include "ECSRegistry.h"
 #include "Components.h"
+#include "ComponentView.h"
 #include "systems/ISystem.h"
 #include "systems/PlayerController.h"
 #include "systems/ThrottleSystem.h"
@@ -10,6 +11,7 @@
 #include "systems/MoveTranslateSystem.h"
 #include "systems/WeaponSystem.h"
 #include <iostream>
+#include <memory>
 
 const float MILLI_TO_SECONDS = 0.001f;
 
@@ -60,7 +62,10 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	
 	auto& inputComp = m_ECSRegistry->GetComponent<InputComp>(playerEntity);
 	AddSystem<PlayerController>(m_EventHandle, inputComp);
-	AddSystem<ThrottleSystem>(m_ECSRegistry);
+
+	AddSystem<ThrottleSystem>(m_ECSRegistry->CreateComponentView<RigidBodyComp,InputComp>());
+
+	//AddSystem<ThrottleSystem>(m_ECSRegistry);
 	AddSystem<RenderSystem>(m_ECSRegistry, m_Renderer);
 	AddSystem<WeaponSystem>(m_ECSRegistry);
 	AddSystem<MoveTranslateSystem>(m_ECSRegistry, m_Renderer, m_Width, m_Height);
