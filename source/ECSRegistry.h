@@ -57,7 +57,7 @@ public:
 			GetActiveEntities(),
 			m_EntityAdmin->Getsignatures(),
 			signature,
-			(m_ComponentAdmin->GetComponentArray<Components>())...);
+			m_ComponentAdmin);
 	}
 
 
