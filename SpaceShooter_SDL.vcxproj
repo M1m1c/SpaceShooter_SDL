@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\systems\DestructionSystem.cpp" />
     <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\systems\ThrottleSystem.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="source\systems\WeaponSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\systems\DestructionSystem.h" />
     <ClInclude Include="source\CompArray.h" />
     <ClInclude Include="source\ComponentAdmin.h" />
     <ClInclude Include="source\Components.h" />

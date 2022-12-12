@@ -10,6 +10,7 @@
 #include "systems/RenderSystem.h"
 #include "systems/MoveTranslateSystem.h"
 #include "systems/WeaponSystem.h"
+#include "systems/DestructionSystem.h"
 #include <iostream>
 #include <memory>
 
@@ -33,18 +34,16 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	m_Renderer = SDL_CreateRenderer(window, -1, 0);
 	m_EventHandle = std::make_shared<SDL_Event>();
 
-
 	m_ECSRegistry = std::make_shared<ECSRegistry>();
 	m_ECSRegistry->Init();
-	//TODO register components for later use
 
+	//Registering components with ECS registry
 	m_ECSRegistry->RegisterComponent<TransformComp>();
 	m_ECSRegistry->RegisterComponent<InputComp>();
 	m_ECSRegistry->RegisterComponent<TagComp>();
 	m_ECSRegistry->RegisterComponent<RigidBodyComp>();
 	m_ECSRegistry->RegisterComponent<WeaponComp>();
 	m_ECSRegistry->RegisterComponent<HealthComp>();
-
 
 
 	playerEntity = m_ECSRegistry->CreateEntity<InputComp, RigidBodyComp, WeaponComp>(
@@ -59,13 +58,15 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 			ObjectTag::Enemy);
 	}
 
-	
 	auto& inputComp = m_ECSRegistry->GetComponent<InputComp>(playerEntity);
+
+	//Systems added in execution order
 	AddSystem<PlayerController>(m_EventHandle, inputComp);
 	AddSystem<ThrottleSystem>(m_ECSRegistry->CreateComponentView<RigidBodyComp,InputComp>());
 	AddSystem<RenderSystem>(m_Renderer, m_ECSRegistry->CreateComponentView<TransformComp, TagComp>());
 	AddSystem<WeaponSystem>(m_ECSRegistry, m_ECSRegistry->CreateComponentView<TransformComp, InputComp, TagComp, WeaponComp>());
 	AddSystem<MoveTranslateSystem>(m_Renderer, m_Width, m_Height, m_ECSRegistry->CreateComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp>());
+	AddSystem<DestructionSystem>(m_ECSRegistry);
 }
 
 void Game::Run()
@@ -85,16 +86,6 @@ void Game::Run()
 		}
 
 		SDL_RenderPresent(m_Renderer);
-
-		auto aliveEntities = m_ECSRegistry->GetActiveEntities();
-		for (auto entityId : aliveEntities)
-		{
-			auto isEntityDead = m_ECSRegistry->GetComponent<HealthComp>(entityId).IsQueuedForDestroy;
-			if (isEntityDead)
-			{
-				m_ECSRegistry->DestroyEntity(entityId);
-			}
-		}
 	}
 }
 
