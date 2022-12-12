@@ -80,6 +80,9 @@ void Game::Run()
 		SDL_SetRenderDrawColor(m_Renderer, 20, 20, 30, 255);
 		SDL_RenderClear(m_Renderer);
 
+		//TODO maybe we should just get all the components of active enties here at once and tehn filter them down to the systems,
+		// this would avoid having to read for each system
+
 		for (size_t i = 0; i < m_SystemCount; i++)
 		{
 			m_Systems[i]->Update(deltaTime);
