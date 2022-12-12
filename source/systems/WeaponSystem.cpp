@@ -5,8 +5,6 @@
 
 void WeaponSystem::Update( float deltaTime)
 {
-	//TODO implement firerate if the player is holding fire button, so you don't have to release to fire again
-
 	auto table = m_ComponentView->GetComponents();
 
 	for (size_t i = 0; i < table.size(); i++)
@@ -16,11 +14,23 @@ void WeaponSystem::Update( float deltaTime)
 
 		bool isInputingShoot = input[(int)Inputs::Shoot] == 1;
 
-		if ( isInputingShoot && weapon.CanShoot)
+		if ( isInputingShoot)
 		{
+			weapon.CoolDown -= deltaTime;
+
+			if ((weapon.CoolDown <= 0.f && !weapon.CanShoot))
+			{
+				weapon.CanShoot = true;	
+			}
+			else if(!weapon.CanShoot)
+			{
+				continue;
+			}
+
 			auto tag = std::get<2>(table[i]).Tag;
 			auto transform = std::get<0>(table[i]);
 			weapon.CanShoot = false;
+			weapon.CoolDown = weapon.GetMaxCoolDown();
 
 			switch (tag)
 			{
@@ -42,6 +52,7 @@ void WeaponSystem::Update( float deltaTime)
 		else if(!isInputingShoot)
 		{
 			weapon.CanShoot = true;
+			weapon.CoolDown = weapon.GetMaxCoolDown();
 		}
 	}
 }
