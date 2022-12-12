@@ -3,18 +3,14 @@
 #include "../ECSRegistry.h"
 #include "../Components.h"
 
-//TODO have the systems store refernces to component pairs it cares about at creation,
-// update the references array using observer pattern looking at updates to teh arrays it cares about,
-// and checking if the entity whos components was removed is one the system cares about.
-// only then should we make sure to update the references tehy system store.
 void ThrottleSystem::Update(float deltaTime)
 {
-	auto table = m_ComponentView->Get();
+	auto table = m_ComponentView->GetAllComponentPairs();
 
 	for (size_t i = 0; i < table.size(); i++)
 	{
-		auto rigidBody = std::get<0>(table[i]);
-		auto inputSig = std::get<1>(table[i])->InputSignature;
+		auto& rigidBody = std::get<0>(table[i]);
+		auto inputSig = std::get<1>(table[i]).InputSignature;
 
 
 		Vector2 inputDir;
@@ -25,8 +21,8 @@ void ThrottleSystem::Update(float deltaTime)
 		{
 			inputDir = glm::normalize(inputDir);
 		}
-		Vector2 moveStep = inputDir * rigidBody->acceleration * deltaTime;
+		Vector2 moveStep = inputDir * rigidBody.acceleration * deltaTime;
 
-		rigidBody->velocity = moveStep;
+		rigidBody.velocity = moveStep;
 	}
 }
