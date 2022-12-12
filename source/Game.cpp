@@ -62,7 +62,6 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	
 	auto& inputComp = m_ECSRegistry->GetComponent<InputComp>(playerEntity);
 	AddSystem<PlayerController>(m_EventHandle, inputComp);
-
 	AddSystem<ThrottleSystem>(m_ECSRegistry->CreateComponentView<RigidBodyComp,InputComp>());
 	AddSystem<RenderSystem>(m_Renderer, m_ECSRegistry->CreateComponentView<TransformComp, TagComp>());
 	AddSystem<WeaponSystem>(m_ECSRegistry, m_ECSRegistry->CreateComponentView<TransformComp, InputComp, TagComp, WeaponComp>());
