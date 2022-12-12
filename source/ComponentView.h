@@ -30,7 +30,7 @@ public:
 		m_CompAdmin(compAdmin)
 	{}
 
-	std::vector<std::tuple<Components&...>> GetAllComponentPairs()
+	std::vector<std::tuple<Components&...>> GetComponents()
 	{
 		std::vector<std::tuple<Components&...>> table;
 			for (EntityID id : m_AliveEntities)
