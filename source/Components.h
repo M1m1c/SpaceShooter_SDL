@@ -62,6 +62,10 @@ struct TagComp
 struct WeaponComp
 {
 	bool CanShoot = true;
+	float CoolDown = 0.f;
+	float GetMaxCoolDown() { return maxCoolDown; }
+private:
+	float maxCoolDown = 0.2f;
 };
 
 struct HealthComp

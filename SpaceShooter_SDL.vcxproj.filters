@@ -36,6 +36,9 @@
     <ClCompile Include="source\systems\WeaponSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\systems\DestructionSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Game.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\systems\WeaponSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\systems\DestructionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

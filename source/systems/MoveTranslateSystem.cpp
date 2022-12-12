@@ -14,11 +14,12 @@ void MoveTranslateSystem::Update(float deltaTime)
 		bool canMove = true;
 		auto& transformA = std::get<0>(table[i]);
 		auto& rigidBody = std::get<1>(table[i]);
-		auto tagA = std::get<2>(table[i]);
+		auto& tagA = std::get<2>(table[i]);
+		auto& healthCompA = std::get<3>(table[i]);
 
 		auto nextPosition = transformA.Position + rigidBody.velocity;
 
-		//TODO should only stop player form moving, should queue destroy on other things
+		//TODO should only stop player from moving, should queue destroy on other things
 		//Boundry check
 		if (nextPosition.x <= 0.f ||
 			nextPosition.x >= m_ScreenWidth ||
@@ -29,7 +30,7 @@ void MoveTranslateSystem::Update(float deltaTime)
 
 			if (tagA.Tag == ObjectTag::Bullet) 
 			{ 
-				std::get<3>(table[i]).IsQueuedForDestroy = true;
+				healthCompA.IsQueuedForDestroy = true;
 			}
 		}
 
@@ -46,6 +47,7 @@ void MoveTranslateSystem::Update(float deltaTime)
 
 			auto& tagB = std::get<2>(table[j]);
 			auto& transformB = std::get<0>(table[j]);
+			auto& HealthCompB = std::get<3>(table[j]);
 
 			const glm::vec2 bMin = getMin(transformB);
 			const glm::vec2 bMax = getMax(transformB);
@@ -61,11 +63,13 @@ void MoveTranslateSystem::Update(float deltaTime)
 
 				if (tagA.Tag == ObjectTag::Bullet)
 				{
-					std::get<3>(table[i]).IsQueuedForDestroy = true;
+					healthCompA.IsQueuedForDestroy = true;
+					HealthCompB.Health--;
 				}
 
 				if (tagB.Tag == ObjectTag::Bullet) 
 				{ 
+					
 					continue;
 				}
 				canMove = false;
