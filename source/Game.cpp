@@ -64,11 +64,9 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	AddSystem<PlayerController>(m_EventHandle, inputComp);
 
 	AddSystem<ThrottleSystem>(m_ECSRegistry->CreateComponentView<RigidBodyComp,InputComp>());
-
-	//AddSystem<ThrottleSystem>(m_ECSRegistry);
 	AddSystem<RenderSystem>(m_Renderer, m_ECSRegistry->CreateComponentView<TransformComp, TagComp>());
 	AddSystem<WeaponSystem>(m_ECSRegistry, m_ECSRegistry->CreateComponentView<TransformComp, InputComp, TagComp, WeaponComp>());
-	AddSystem<MoveTranslateSystem>(m_ECSRegistry, m_Renderer, m_Width, m_Height);
+	AddSystem<MoveTranslateSystem>(m_Renderer, m_Width, m_Height, m_ECSRegistry->CreateComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp>());
 }
 
 void Game::Run()
@@ -81,9 +79,6 @@ void Game::Run()
 
 		SDL_SetRenderDrawColor(m_Renderer, 20, 20, 30, 255);
 		SDL_RenderClear(m_Renderer);
-
-		//TODO make systems use observer pattern to only get new entites and components when they get added,
-		//otherwise store reference to components at the creation of systems
 
 		for (size_t i = 0; i < m_SystemCount; i++)
 		{

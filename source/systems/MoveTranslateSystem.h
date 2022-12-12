@@ -1,8 +1,9 @@
 #pragma once
 #include "ISystem.h"
+#include "../ComponentView.h"
+#include "../Components.h"
 #include <memory>
 #include <glm/glm.hpp>
-#include "../Components.h"
 class ECSRegistry;
 struct SDL_Renderer;
 
@@ -10,8 +11,12 @@ class MoveTranslateSystem : public ISystem
 {
 public:
 
-	MoveTranslateSystem(const std::shared_ptr<ECSRegistry>& registry, SDL_Renderer* renderer,int width, int height) :
-		m_Registry(registry),m_Renderer(renderer), m_ScreenWidth(width), m_ScreenHeight(height) {}
+	MoveTranslateSystem(
+		SDL_Renderer* renderer,
+		int width,
+		int height,
+		std::shared_ptr<ComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp >> componentView) :
+		m_Renderer(renderer), m_ScreenWidth(width), m_ScreenHeight(height), m_ComponentView(componentView) {}
 	~MoveTranslateSystem() = default;
 
 	virtual void Update(float deltaTime) override;
@@ -25,7 +30,7 @@ private:
 
 	void DrawCollider(TransformComp& transformA, glm::vec2& collderSize, bool canMove, SDL_Renderer* renderer);
 
-	const std::shared_ptr<ECSRegistry>& m_Registry;
+	std::shared_ptr<ComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp >> m_ComponentView;
 	SDL_Renderer* m_Renderer;
 	int m_ScreenWidth, m_ScreenHeight;
 };
