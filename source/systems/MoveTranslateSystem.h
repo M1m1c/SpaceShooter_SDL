@@ -4,7 +4,6 @@
 #include "../Components.h"
 #include <memory>
 #include <glm/glm.hpp>
-class ECSRegistry;
 struct SDL_Renderer;
 
 class MoveTranslateSystem : public ISystem
