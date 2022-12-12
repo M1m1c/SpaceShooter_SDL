@@ -4,6 +4,7 @@
 #include <iostream>
 
 
+//TODO this system does too much, break it up into smaller parts
 void MoveTranslateSystem::Update(float deltaTime)
 {
 
