@@ -66,7 +66,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	AddSystem<ThrottleSystem>(m_ECSRegistry->CreateComponentView<RigidBodyComp,InputComp>());
 
 	//AddSystem<ThrottleSystem>(m_ECSRegistry);
-	AddSystem<RenderSystem>(m_ECSRegistry, m_Renderer);
+	AddSystem<RenderSystem>(m_Renderer, m_ECSRegistry->CreateComponentView<TransformComp, TagComp>());
 	AddSystem<WeaponSystem>(m_ECSRegistry);
 	AddSystem<MoveTranslateSystem>(m_ECSRegistry, m_Renderer, m_Width, m_Height);
 }
