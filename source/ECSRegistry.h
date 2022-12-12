@@ -2,12 +2,13 @@
 
 #include <string>
 #include <utility>
+#include <memory>
 #include "ECSCore.h"
 #include "EntityAdmin.h"
 #include "ComponentAdmin.h"
 #include "Components.h"
 #include "Game.h"
-#include "DataTable.h"
+#include "ComponentView.h"
 
 
 
@@ -47,6 +48,18 @@ public:
 
 		m_ComponentAdmin->EntityDestroyed(entityID);
 	}
+
+	template<typename... Components>
+	std::shared_ptr<ComponentView<Components...>> CreateComponentView() 
+	{
+		auto signature = ComposeSignature<Components...>();
+		return std::make_shared<ComponentView<Components...>>(
+			GetActiveEntities(),
+			m_EntityAdmin->Getsignatures(),
+			signature,
+			m_ComponentAdmin);
+	}
+
 
 	uint32_t GetLivingEntitiesCount()
 	{
@@ -121,10 +134,10 @@ public:
 	//Composes a DataTable& where each entry corresponds to the components of one entity,
 	//based on the sent in componenttypes.
 	//Returns the number of entities that have these components.
-	template<size_t size, typename... Types>
-	size_t GetAllComponentPairs(DataTable<size, Types...>& outTable)
+	template<typename... Types>
+	size_t GetAllComponentPairs(DataTable<Types...>& outTable)
 	{
-		CompSignature signature = (ComposeSignature<Types>(), ...);
+		CompSignature signature = ComposeSignature<Types...>();
 		size_t entityCount = 0;
 
 		std::vector<EntityID> entityIDs = m_EntityAdmin->GetEntitiesWithMatchingSignature(signature);
@@ -142,7 +155,7 @@ public:
 	template< typename... Types>
 	std::vector<EntityID> GetEntityIDsMatchingSignature()
 	{
-		CompSignature signature = (ComposeSignature<Types>(), ...);
+		CompSignature signature = ComposeSignature<Types...>();
 		size_t entityCount = 0;
 
 		return m_EntityAdmin->GetEntitiesWithMatchingSignature(signature);
@@ -156,6 +169,17 @@ public:
 		CompType type = m_ComponentAdmin->GetComponentType<T>();
 		return signature[type];
 	}
+
+	/*const std::array<CompSignature, MAX_ENTITIES>& Getsignatures()
+	{
+		return m_EntityAdmin->Getsignatures();
+	}
+
+	template<typename T>
+	std::shared_ptr<CompArray<T>> GetComponentArray()
+	{
+		return m_ComponentAdmin->GetComponentArray<T>();
+	}*/
 
 private:
 	std::unique_ptr<ComponentAdmin> m_ComponentAdmin;

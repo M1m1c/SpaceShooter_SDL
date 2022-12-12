@@ -1,19 +1,13 @@
 #include "RenderSystem.h"
 #include "SDL.h"
 #include "../ECSCore.h"
-#include "../ECSRegistry.h"
 #include "../Components.h"
 
 void RenderSystem::Update(float deltaTime)
 {
+	auto table = m_ComponentView->GetComponents();
 
-
-
-	DataTable<MAX_ENTITIES, TransformComp, TagComp> table;
-
-	auto count = m_Registry->GetAllComponentPairs<MAX_ENTITIES, TransformComp, TagComp>(table);
-
-	for (size_t i = 0; i < count; i++)
+	for (size_t i = 0; i < table.size(); i++)
 	{
 		auto transform = std::get<0>(table[i]);
 		auto tag = std::get<1>(table[i]).Tag;
@@ -35,10 +29,6 @@ void RenderSystem::Update(float deltaTime)
 			break;
 		}
 	}
-
-
-	//SDL_RenderPresent(renderer);
-
 }
 
 void RenderSystem::RenderPlayer(TransformComp& transform)

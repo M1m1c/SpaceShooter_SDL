@@ -9,19 +9,19 @@ void WeaponSystem::Update( float deltaTime)
 {
 	//TODO implement firerate if the player is holding fire button, so you don't have to release to fire again
 
-	auto entityIDs = m_Registry->GetEntityIDsMatchingSignature<TransformComp,InputComp, TagComp,WeaponComp>();
+	auto table = m_ComponentView->GetComponents();
 
-	for (size_t i = 0; i < entityIDs.size(); i++)
+	for (size_t i = 0; i < table.size(); i++)
 	{
-		auto input = m_Registry->GetComponent<InputComp>(entityIDs[i]).InputSignature;
-		auto& weapon = m_Registry->GetComponent<WeaponComp>(entityIDs[i]);
+		auto input = std::get<1>(table[i]).InputSignature;
+		auto& weapon = std::get<3>(table[i]);
 
 		bool isInputingShoot = input[(int)Inputs::Shoot] == 1;
 
 		if ( isInputingShoot && weapon.CanShoot)
 		{
-			auto tag = m_Registry->GetComponent<TagComp>(entityIDs[i]).Tag;
-			auto transform = m_Registry->GetComponent<TransformComp>(entityIDs[i]);
+			auto tag = std::get<2>(table[i]).Tag;
+			auto transform = std::get<0>(table[i]);
 			weapon.CanShoot = false;
 
 			switch (tag)
@@ -48,6 +48,7 @@ void WeaponSystem::Update( float deltaTime)
 	}
 }
 
+//TODO figure out way of spawning bullet without needing access to registry
 void WeaponSystem::SpawnBullet(glm::vec2 position,int direction)
 {
 

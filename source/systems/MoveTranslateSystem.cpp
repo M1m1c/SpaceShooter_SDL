@@ -1,6 +1,5 @@
 #include "MoveTranslateSystem.h"
 #include "../ECSCore.h"
-#include "../ECSRegistry.h"
 #include "SDL.h"
 #include <iostream>
 
@@ -8,15 +7,14 @@
 void MoveTranslateSystem::Update(float deltaTime)
 {
 
-	auto entityIDs = m_Registry->GetEntityIDsMatchingSignature<TransformComp, RigidBodyComp, TagComp>();
-	auto count = entityIDs.size();
-
-	for (int i = 0; i < count; ++i)
+	auto table = m_ComponentView->GetComponents();
+	auto size = table.size();
+	for (int i = 0; i < size; ++i)
 	{
 		bool canMove = true;
-		auto& transformA = m_Registry->GetComponent<TransformComp>(entityIDs[i]);
-		auto& rigidBody = m_Registry->GetComponent<RigidBodyComp>(entityIDs[i]);
-		auto tagA = m_Registry->GetComponent<TagComp>(entityIDs[i]);
+		auto& transformA = std::get<0>(table[i]);
+		auto& rigidBody = std::get<1>(table[i]);
+		auto tagA = std::get<2>(table[i]);
 
 		auto nextPosition = transformA.Position + rigidBody.velocity;
 
@@ -31,7 +29,7 @@ void MoveTranslateSystem::Update(float deltaTime)
 
 			if (tagA.Tag == ObjectTag::Bullet) 
 			{ 
-				m_Registry->GetComponent<HealthComp>(entityIDs[i]).IsQueuedForDestroy = true;
+				std::get<3>(table[i]).IsQueuedForDestroy = true;
 			}
 		}
 
@@ -42,15 +40,12 @@ void MoveTranslateSystem::Update(float deltaTime)
 
 		
 
-		for (int j = 0; j < count; ++j)
+		for (int j = 0; j < size; ++j)
 		{
 			if (j == i) { continue; }
 
-			auto& tagB = m_Registry->GetComponent<TagComp>(entityIDs[j]);
-
-			
-
-			auto& transformB = m_Registry->GetComponent<TransformComp>(entityIDs[j]);
+			auto& tagB = std::get<2>(table[j]);
+			auto& transformB = std::get<0>(table[j]);
 
 			const glm::vec2 bMin = getMin(transformB);
 			const glm::vec2 bMax = getMax(transformB);
@@ -66,7 +61,7 @@ void MoveTranslateSystem::Update(float deltaTime)
 
 				if (tagA.Tag == ObjectTag::Bullet)
 				{
-					m_Registry->GetComponent<HealthComp>(entityIDs[i]).IsQueuedForDestroy = true;
+					std::get<3>(table[i]).IsQueuedForDestroy = true;
 				}
 
 				if (tagB.Tag == ObjectTag::Bullet) 

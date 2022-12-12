@@ -1,15 +1,17 @@
 #pragma once
 #include "ISystem.h"
+#include "../ComponentView.h"
 #include <memory>
-class ECSRegistry;
+struct RigidBodyComp;
+struct InputComp;
 
 class ThrottleSystem: public ISystem
 {
 public:
-	ThrottleSystem(const std::shared_ptr<ECSRegistry>& registry) : m_Registry(registry){}
+	ThrottleSystem(std::shared_ptr<ComponentView<RigidBodyComp,InputComp>> componentView) : m_ComponentView(componentView){}
 	~ThrottleSystem() = default;
 
 	virtual void Update(float deltaTime) override;
 private:
-	const std::shared_ptr<ECSRegistry>& m_Registry;
+	std::shared_ptr<ComponentView<RigidBodyComp, InputComp>> m_ComponentView;
 };

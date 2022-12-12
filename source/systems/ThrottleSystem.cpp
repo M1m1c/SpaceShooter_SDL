@@ -3,23 +3,19 @@
 #include "../ECSRegistry.h"
 #include "../Components.h"
 
-//TODO have the systems store refernces to component pairs it cares about at creation,
-// update the references array using observer pattern looking at updates to teh arrays it cares about,
-// and checking if the entity whos components was removed is one the system cares about.
-// only then should we make sure to update the references tehy system store.
 void ThrottleSystem::Update(float deltaTime)
 {
+	auto table = m_ComponentView->GetComponents();
 
-	auto entityIDs = m_Registry->GetEntityIDsMatchingSignature<RigidBodyComp, InputComp>();
-
-	for (size_t i = 0; i < entityIDs.size(); i++)
+	for (size_t i = 0; i < table.size(); i++)
 	{
-		auto& rigidBody = m_Registry->GetComponent<RigidBodyComp>(entityIDs[i]);
-		auto input = m_Registry->GetComponent<InputComp>(entityIDs[i]).InputSignature;
+		auto& rigidBody = std::get<0>(table[i]);
+		auto inputSig = std::get<1>(table[i]).InputSignature;
+
 
 		Vector2 inputDir;
-		inputDir.x = (input[(int)Inputs::Left] == 1 ? -1.f : (input[(int)Inputs::Right] == 1 ? 1.f : 0.f));
-		inputDir.y = (input[(int)Inputs::Down] == 1 ? 1.f : (input[(int)Inputs::Up] == 1 ? -1.f : 0.f));
+		inputDir.x = (inputSig[(int)Inputs::Left] == 1 ? -1.f : (inputSig[(int)Inputs::Right] == 1 ? 1.f : 0.f));
+		inputDir.y = (inputSig[(int)Inputs::Down] == 1 ? 1.f : (inputSig[(int)Inputs::Up] == 1 ? -1.f : 0.f));
 
 		if (inputDir.x != 0.f || inputDir.y != 0.f)
 		{
@@ -29,5 +25,4 @@ void ThrottleSystem::Update(float deltaTime)
 
 		rigidBody.velocity = moveStep;
 	}
-	
 }
