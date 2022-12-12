@@ -52,10 +52,11 @@ public:
 	template<typename... Components>
 	std::shared_ptr<ComponentView<Components...>> CreateComponentView() 
 	{
+		auto signature = ComposeSignature<Components...>();
 		return std::make_shared<ComponentView<Components...>>(
 			GetActiveEntities(),
 			m_EntityAdmin->Getsignatures(),
-			ComposeSignature<Components...>(),
+			signature,
 			(m_ComponentAdmin->GetComponentArray<Components>())...);
 	}
 
@@ -136,7 +137,7 @@ public:
 	template<typename... Types>
 	size_t GetAllComponentPairs(DataTable<Types...>& outTable)
 	{
-		CompSignature signature = (ComposeSignature<Types>(), ...);
+		CompSignature signature = ComposeSignature<Types...>();
 		size_t entityCount = 0;
 
 		std::vector<EntityID> entityIDs = m_EntityAdmin->GetEntitiesWithMatchingSignature(signature);
@@ -154,7 +155,7 @@ public:
 	template< typename... Types>
 	std::vector<EntityID> GetEntityIDsMatchingSignature()
 	{
-		CompSignature signature = (ComposeSignature<Types>(), ...);
+		CompSignature signature = ComposeSignature<Types...>();
 		size_t entityCount = 0;
 
 		return m_EntityAdmin->GetEntitiesWithMatchingSignature(signature);
