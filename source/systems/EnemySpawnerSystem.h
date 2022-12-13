@@ -3,7 +3,9 @@
 #include "../Components.h"
 #include <array>
 #include <random>
-class ECSRegistry;
+#include <queue>
+
+struct SpawnOrder;
 
 struct SpawnParams 
 {
@@ -18,13 +20,13 @@ public:
 class EnemySpawnerSystem : public ISystem
 {
 public:
-	EnemySpawnerSystem(const std::shared_ptr<ECSRegistry>& registry) : m_Registry(registry){ }
+	EnemySpawnerSystem(std::queue<SpawnOrder>& orderQueue) : m_OrderQueue(orderQueue) { }
 	~EnemySpawnerSystem() = default;
 
 	virtual void Update(float deltaTime) override;
 private:
 
-	const std::shared_ptr<ECSRegistry>& m_Registry;
+	std::queue<SpawnOrder>& m_OrderQueue;
 
 	std::random_device m_RD;
 

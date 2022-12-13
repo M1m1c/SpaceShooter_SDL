@@ -63,7 +63,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	AddSystem<RenderSystem>(m_Renderer, m_ECSRegistry->CreateComponentView<TransformComp, TagComp>());
 	AddSystem<WeaponSystem>(m_SpawnOrders, m_ECSRegistry->CreateComponentView<TransformComp, InputComp, TagComp, WeaponComp>());
 	AddSystem<MoveTranslateSystem>(m_Renderer, m_Width, m_Height, m_ECSRegistry->CreateComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp>());
-	AddSystem<EnemySpawnerSystem>(m_ECSRegistry);
+	AddSystem<EnemySpawnerSystem>(m_SpawnOrders);
 	AddSystem<EntitySpawnSystem>(m_ECSRegistry, m_SpawnOrders);
 	AddSystem<DestructionSystem>(m_ECSRegistry);
 
