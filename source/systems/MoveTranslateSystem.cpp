@@ -4,6 +4,7 @@
 #include <iostream>
 
 
+//TODO this system does too much, break it up into smaller parts
 void MoveTranslateSystem::Update(float deltaTime)
 {
 
@@ -21,16 +22,27 @@ void MoveTranslateSystem::Update(float deltaTime)
 
 		//TODO should only stop player from moving, should queue destroy on other things
 		//Boundry check
+
+		if (nextPosition.y >= m_ScreenHeight && tagA.Tag==ObjectTag::Enemy) 
+		{
+			healthCompA.IsQueuedForDestroy = true;
+		}
+
 		if (nextPosition.x <= 0.f ||
 			nextPosition.x >= m_ScreenWidth ||
 			nextPosition.y <= 0.f ||
 			nextPosition.y >= m_ScreenHeight)
 		{
-			canMove = false;
+
+			
 
 			if (tagA.Tag == ObjectTag::Bullet) 
 			{ 
 				healthCompA.IsQueuedForDestroy = true;
+			}
+			else if(tagA.Tag == ObjectTag::Player)
+			{
+				canMove = false;
 			}
 		}
 
@@ -47,7 +59,7 @@ void MoveTranslateSystem::Update(float deltaTime)
 
 			auto& tagB = std::get<2>(table[j]);
 			auto& transformB = std::get<0>(table[j]);
-			auto& HealthCompB = std::get<3>(table[j]);
+			auto& healthCompB = std::get<3>(table[j]);
 
 			const glm::vec2 bMin = getMin(transformB);
 			const glm::vec2 bMax = getMax(transformB);
@@ -64,15 +76,13 @@ void MoveTranslateSystem::Update(float deltaTime)
 				if (tagA.Tag == ObjectTag::Bullet)
 				{
 					healthCompA.IsQueuedForDestroy = true;
-					HealthCompB.Health--;
+					healthCompB.Health--;
 				}
-
-				if (tagB.Tag == ObjectTag::Bullet) 
-				{ 
-					
-					continue;
+				else if (tagA.Tag == ObjectTag::Player)
+				{
+					//canMove = false;
+					healthCompA.Health--;
 				}
-				canMove = false;
 			}
 		}
 

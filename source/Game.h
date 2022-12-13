@@ -2,7 +2,9 @@
 #include <string>
 #include <memory>
 #include <array>
+#include <queue>
 #include "ECSCore.h"
+#include "SpawnOrder.h"
 
 class ECSRegistry;
 class Entity;
@@ -48,6 +50,9 @@ private:
 
 	uint32_t m_SystemCount = 0;
 	std::array<std::unique_ptr<ISystem>, MAX_SYSTEMS> m_Systems;
+
+	//TODO check if we can replace this with our own statically stored array container type
+	std::queue<SpawnOrder> m_SpawnOrders;
 
 	EntityID playerEntity;
 };

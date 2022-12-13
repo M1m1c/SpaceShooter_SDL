@@ -1,7 +1,6 @@
 #include "WeaponSystem.h"
-#include "../ECSCore.h"
-#include "../ECSRegistry.h"
 #include "../Components.h"
+#include "../SpawnOrder.h"
 
 void WeaponSystem::Update( float deltaTime)
 {
@@ -61,14 +60,5 @@ void WeaponSystem::Update( float deltaTime)
 void WeaponSystem::SpawnBullet(glm::vec2 position,int direction)
 {
 
-	auto bullet = m_Registry->CreateEntity<RigidBodyComp, InputComp>(
-		Vector4(position.x, position.y, 5.f, 5.f),
-		ObjectTag::Bullet);
-
-	auto& rigidBody = m_Registry->GetComponent<RigidBodyComp>(bullet);
-	auto& input = m_Registry->GetComponent<InputComp>(bullet);
-
-	rigidBody.acceleration = 500.f;
-
-	input.InputSignature[direction] = 1;
+	m_OrderQueue.push(SpawnOrder(position, ObjectTag::Bullet, std::bitset<5>(1 << direction)));
 }

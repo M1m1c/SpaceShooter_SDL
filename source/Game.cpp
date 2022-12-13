@@ -11,6 +11,8 @@
 #include "systems/MoveTranslateSystem.h"
 #include "systems/WeaponSystem.h"
 #include "systems/DestructionSystem.h"
+#include "systems/WaveSpawnerSystem.h"
+#include "systems/EntitySpawnSystem.h"
 #include <iostream>
 #include <memory>
 
@@ -49,23 +51,17 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	playerEntity = m_ECSRegistry->CreateEntity<InputComp, RigidBodyComp, WeaponComp>(
 		Vector4(640.f, 400.f, 15.f, 15.f),
 		ObjectTag::Player);
-
-
-	for (size_t i = 0; i < 10; i++)
-	{
-		auto enemy = m_ECSRegistry->CreateEntity<RigidBodyComp>(
-			Vector4(100.f * (i + 1), 400.f, 20.f, 20.f),
-			ObjectTag::Enemy);
-	}
-
 	auto& inputComp = m_ECSRegistry->GetComponent<InputComp>(playerEntity);
+
 
 	//Systems added in execution order
 	AddSystem<PlayerController>(m_EventHandle, inputComp);
 	AddSystem<ThrottleSystem>(m_ECSRegistry->CreateComponentView<RigidBodyComp,InputComp>());
 	AddSystem<RenderSystem>(m_Renderer, m_ECSRegistry->CreateComponentView<TransformComp, TagComp>());
-	AddSystem<WeaponSystem>(m_ECSRegistry, m_ECSRegistry->CreateComponentView<TransformComp, InputComp, TagComp, WeaponComp>());
+	AddSystem<WeaponSystem>(m_SpawnOrders, m_ECSRegistry->CreateComponentView<TransformComp, InputComp, TagComp, WeaponComp>());
 	AddSystem<MoveTranslateSystem>(m_Renderer, m_Width, m_Height, m_ECSRegistry->CreateComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp>());
+	AddSystem<WaveSpawnerSystem>(m_SpawnOrders);
+	AddSystem<EntitySpawnSystem>(m_ECSRegistry, m_SpawnOrders);
 	AddSystem<DestructionSystem>(m_ECSRegistry);
 }
 
@@ -79,6 +75,9 @@ void Game::Run()
 
 		SDL_SetRenderDrawColor(m_Renderer, 20, 20, 30, 255);
 		SDL_RenderClear(m_Renderer);
+
+		//TODO maybe we should just get all the components of active enties here at once and tehn filter them down to the systems,
+		// this would avoid having to read for each system
 
 		for (size_t i = 0; i < m_SystemCount; i++)
 		{
