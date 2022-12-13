@@ -1,10 +1,10 @@
-#include "EnemySpawnerSystem.h"
+#include "WaveSpawnerSystem.h"
 
 #include "../ECSCore.h"
 #include "../SpawnOrder.h"
 
 
-void EnemySpawnerSystem::Update(float deltaTime)
+void WaveSpawnerSystem::Update(float deltaTime)
 {
 	m_WaveSpawnTime -= deltaTime;
 	if (m_WaveSpawnTime <= 0.f) 

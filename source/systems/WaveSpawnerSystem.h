@@ -17,11 +17,11 @@ public:
 	std::bitset<5> InputSignature;
 };
 
-class EnemySpawnerSystem : public ISystem
+class WaveSpawnerSystem : public ISystem
 {
 public:
-	EnemySpawnerSystem(std::queue<SpawnOrder>& orderQueue) : m_OrderQueue(orderQueue) { }
-	~EnemySpawnerSystem() = default;
+	WaveSpawnerSystem(std::queue<SpawnOrder>& orderQueue) : m_OrderQueue(orderQueue) { }
+	~WaveSpawnerSystem() = default;
 
 	virtual void Update(float deltaTime) override;
 private:

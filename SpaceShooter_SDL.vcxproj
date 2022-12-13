@@ -148,7 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\systems\EntitySpawnSystem.cpp" />
-    <ClCompile Include="source\systems\EnemySpawnerSystem.cpp" />
+    <ClCompile Include="source\systems\WaveSpawnerSystem.cpp" />
     <ClCompile Include="source\systems\DestructionSystem.cpp" />
     <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\main.cpp" />
@@ -161,7 +161,7 @@
   <ItemGroup>
     <ClInclude Include="source\systems\EntitySpawnSystem.h" />
     <ClInclude Include="source\SpawnOrder.h" />
-    <ClInclude Include="source\systems\EnemySpawnerSystem.h" />
+    <ClInclude Include="source\systems\WaveSpawnerSystem.h" />
     <ClInclude Include="source\systems\DestructionSystem.h" />
     <ClInclude Include="source\CompArray.h" />
     <ClInclude Include="source\ComponentAdmin.h" />

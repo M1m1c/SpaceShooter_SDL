@@ -39,7 +39,7 @@
     <ClCompile Include="source\systems\DestructionSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\systems\EnemySpawnerSystem.cpp">
+    <ClCompile Include="source\systems\WaveSpawnerSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\systems\EntitySpawnSystem.cpp">
@@ -92,7 +92,7 @@
     <ClInclude Include="source\systems\DestructionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\systems\EnemySpawnerSystem.h">
+    <ClInclude Include="source\systems\WaveSpawnerSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\SpawnOrder.h">
