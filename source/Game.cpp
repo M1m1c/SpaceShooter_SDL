@@ -53,9 +53,12 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 
 	for (size_t i = 0; i < 10; i++)
 	{
-		auto enemy = m_ECSRegistry->CreateEntity<RigidBodyComp>(
-			Vector4(100.f * (i + 1), 400.f, 20.f, 20.f),
+		auto enemy = m_ECSRegistry->CreateEntity<InputComp,RigidBodyComp>(
+			Vector4(100.f * (i + 1), 0.f, 20.f, 20.f),
 			ObjectTag::Enemy);
+
+		auto& input = m_ECSRegistry->GetComponent<InputComp>(enemy);
+		input.InputSignature[(int)Inputs::Down] = 1;
 	}
 
 	auto& inputComp = m_ECSRegistry->GetComponent<InputComp>(playerEntity);

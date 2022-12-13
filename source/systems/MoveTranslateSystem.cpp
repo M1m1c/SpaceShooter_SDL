@@ -22,6 +22,12 @@ void MoveTranslateSystem::Update(float deltaTime)
 
 		//TODO should only stop player from moving, should queue destroy on other things
 		//Boundry check
+
+		if (nextPosition.y >= m_ScreenHeight && tagA.Tag==ObjectTag::Enemy) 
+		{
+			healthCompA.IsQueuedForDestroy = true;
+		}
+
 		if (nextPosition.x <= 0.f ||
 			nextPosition.x >= m_ScreenWidth ||
 			nextPosition.y <= 0.f ||
