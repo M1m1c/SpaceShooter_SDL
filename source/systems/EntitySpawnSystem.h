@@ -1,6 +1,5 @@
 #pragma once
 #include "ISystem.h"
-#include "../ECSCore.h"
 #include <queue>
 class ECSRegistry;
 struct SpawnOrder;
@@ -10,7 +9,7 @@ class EntitySpawnSystem :public ISystem
 public:
 	EntitySpawnSystem(
 		const std::shared_ptr<ECSRegistry>& registry, 
-		std::queue<SpawnOrder, std::array<SpawnOrder, MAX_ENTITIES>>& orderQueue) :
+		std::queue<SpawnOrder>& orderQueue) :
 		m_Registry(registry), 
 		m_OrderQueue(orderQueue) {}
 
@@ -20,6 +19,6 @@ public:
 private:
 
 	const std::shared_ptr<ECSRegistry>& m_Registry;
-	std::queue<SpawnOrder, std::array<SpawnOrder, MAX_ENTITIES>>& m_OrderQueue;
+	std::queue<SpawnOrder>& m_OrderQueue;
 };
 
