@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\systems\EnemySpawnerSystem.cpp" />
     <ClCompile Include="source\systems\DestructionSystem.cpp" />
     <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\main.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="source\systems\WeaponSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\systems\EnemySpawnerSystem.h" />
     <ClInclude Include="source\systems\DestructionSystem.h" />
     <ClInclude Include="source\CompArray.h" />
     <ClInclude Include="source\ComponentAdmin.h" />
