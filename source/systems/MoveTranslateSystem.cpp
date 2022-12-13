@@ -33,11 +33,16 @@ void MoveTranslateSystem::Update(float deltaTime)
 			nextPosition.y <= 0.f ||
 			nextPosition.y >= m_ScreenHeight)
 		{
-			canMove = false;
+
+			
 
 			if (tagA.Tag == ObjectTag::Bullet) 
 			{ 
 				healthCompA.IsQueuedForDestroy = true;
+			}
+			else if(tagA.Tag == ObjectTag::Player)
+			{
+				canMove = false;
 			}
 		}
 
@@ -54,7 +59,7 @@ void MoveTranslateSystem::Update(float deltaTime)
 
 			auto& tagB = std::get<2>(table[j]);
 			auto& transformB = std::get<0>(table[j]);
-			auto& HealthCompB = std::get<3>(table[j]);
+			auto& healthCompB = std::get<3>(table[j]);
 
 			const glm::vec2 bMin = getMin(transformB);
 			const glm::vec2 bMax = getMax(transformB);
@@ -71,15 +76,13 @@ void MoveTranslateSystem::Update(float deltaTime)
 				if (tagA.Tag == ObjectTag::Bullet)
 				{
 					healthCompA.IsQueuedForDestroy = true;
-					HealthCompB.Health--;
+					healthCompB.Health--;
 				}
-
-				if (tagB.Tag == ObjectTag::Bullet) 
-				{ 
-					
-					continue;
+				else if (tagA.Tag == ObjectTag::Player)
+				{
+					//canMove = false;
+					healthCompA.Health--;
 				}
-				canMove = false;
 			}
 		}
 
