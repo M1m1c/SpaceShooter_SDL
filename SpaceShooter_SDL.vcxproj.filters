@@ -42,6 +42,9 @@
     <ClCompile Include="source\systems\EnemySpawnerSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\systems\EntitySpawnSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Game.h">
@@ -90,6 +93,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\systems\EnemySpawnerSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SpawnOrder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\systems\EntitySpawnSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
