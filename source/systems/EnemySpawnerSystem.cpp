@@ -2,15 +2,23 @@
 
 #include "../ECSCore.h"
 #include "../ECSRegistry.h"
-#include "../Components.h"
+
 
 void EnemySpawnerSystem::Update(float deltaTime)
 {
 	m_WaveSpawnTime -= deltaTime;
 	if (m_WaveSpawnTime <= 0.f) 
 	{
-		//TODO randomise between min and max spawn time
-		m_WaveSpawnTime = m_MaxWaveSpawnTime;
+		std::mt19937 gen(m_RD());
+
+		std::uniform_real_distribution<> disFloat(m_MinWaveSpawnTime, m_MaxWaveSpawnTime);
+		float randomSpawnTime = disFloat(gen);
+		m_WaveSpawnTime = randomSpawnTime;
+
+		std::uniform_int_distribution<> disInt(0, m_SpawnPatterns.size() - 1);
+		int randomInt = disInt(gen);
+		auto& pattern = m_SpawnPatterns[randomInt];
+
 
 		//TODO change this so we can set patterns of how they spawn and randamize between them,
 		//essentailly setup spawn parameters
@@ -19,11 +27,14 @@ void EnemySpawnerSystem::Update(float deltaTime)
 		for (size_t i = 0; i < 10; i++)
 		{
 			auto enemy = m_Registry->CreateEntity<InputComp, RigidBodyComp>(
-				Vector4(120.f * (i + 1), 0.f, 20.f, 20.f),
+				Vector4(
+					pattern.StartPosition.x + (pattern.Offset.x * i),
+					pattern.StartPosition.y + (pattern.Offset.y * i),
+					20.f, 20.f),
 				ObjectTag::Enemy);
 
 			auto& input = m_Registry->GetComponent<InputComp>(enemy);
-			input.InputSignature[(int)Inputs::Down] = 1;
+			input.InputSignature = pattern.InputSignature;
 		}
 
 	}
