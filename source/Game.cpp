@@ -11,6 +11,7 @@
 #include "systems/MoveTranslateSystem.h"
 #include "systems/WeaponSystem.h"
 #include "systems/DestructionSystem.h"
+#include "systems/EnemySpawnerSystem.h"
 #include <iostream>
 #include <memory>
 
@@ -51,15 +52,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 		ObjectTag::Player);
 
 
-	for (size_t i = 0; i < 10; i++)
-	{
-		auto enemy = m_ECSRegistry->CreateEntity<InputComp,RigidBodyComp>(
-			Vector4(100.f * (i + 1), 0.f, 20.f, 20.f),
-			ObjectTag::Enemy);
-
-		auto& input = m_ECSRegistry->GetComponent<InputComp>(enemy);
-		input.InputSignature[(int)Inputs::Down] = 1;
-	}
+	
 
 	auto& inputComp = m_ECSRegistry->GetComponent<InputComp>(playerEntity);
 
@@ -69,6 +62,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	AddSystem<RenderSystem>(m_Renderer, m_ECSRegistry->CreateComponentView<TransformComp, TagComp>());
 	AddSystem<WeaponSystem>(m_ECSRegistry, m_ECSRegistry->CreateComponentView<TransformComp, InputComp, TagComp, WeaponComp>());
 	AddSystem<MoveTranslateSystem>(m_Renderer, m_Width, m_Height, m_ECSRegistry->CreateComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp>());
+	AddSystem<EnemySpawnerSystem>(m_ECSRegistry);
 	AddSystem<DestructionSystem>(m_ECSRegistry);
 }
 
