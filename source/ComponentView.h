@@ -16,6 +16,7 @@ class ComponentView
 public:
 	ComponentView(CompSignature relevantSignature) : m_RelevantSignature(relevantSignature)
 	{
+		m_ComponentTable.reserve(MAX_ENTITIES);
 		m_EntitiesToTableIndex.fill(-1);
 		m_TableIndexToEntity.fill(-1);
 	}
@@ -23,6 +24,7 @@ public:
 	/*const std::vector<std::tuple<Components&...>>& GetComponents()
 	{
 		std::vector<std::tuple<Components&...>> table;
+
 		for (EntityID id : m_AliveEntities)
 		{
 			if ((m_Signatures[id] & m_RelevantSignature) == m_RelevantSignature)
@@ -33,6 +35,7 @@ public:
 		return table;
 	}*/
 
+	//TODO this is the function which is causing the crash
 	const std::vector<std::tuple<Components&...>>& GetComponents()
 	{
 		return m_ComponentTable;
