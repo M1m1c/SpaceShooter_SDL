@@ -8,7 +8,7 @@ void DestructionSystem::Update(float deltaTime)
 	auto aliveEntities = m_Registry->GetActiveEntities();
 	for (auto entityId : aliveEntities)
 	{
-		auto healthComp = m_Registry->GetComponent<HealthComp>(entityId);
+		auto& healthComp = m_Registry->GetComponent<HealthComp>(entityId);
 
 		auto isQueuedForDestroy = healthComp.IsQueuedForDestroy;
 		auto isDead = healthComp.Health <= 0;
