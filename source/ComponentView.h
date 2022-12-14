@@ -14,35 +14,79 @@ class ComponentView
 {
 
 public:
-	ComponentView(
-		const std::unordered_set<EntityID>& aliveEntites,
-		const std::array<CompSignature, MAX_ENTITIES>& signatures,
-		CompSignature relevantSignature,
-		const std::unique_ptr<ComponentAdmin>& compAdmin) :
-		m_AliveEntities(aliveEntites),
-		m_Signatures(signatures),
-		m_RelevantSignature(relevantSignature),
-		m_CompAdmin(compAdmin)
-	{}
+	ComponentView(CompSignature relevantSignature) : m_RelevantSignature(relevantSignature)
+	{
+		m_EntitiesToTableIndex.fill(-1);
+		m_TableIndexToEntity.fill(-1);
+	}
 
-	std::vector<std::tuple<Components&...>> GetComponents()
+	/*const std::vector<std::tuple<Components&...>>& GetComponents()
 	{
 		std::vector<std::tuple<Components&...>> table;
-			for (EntityID id : m_AliveEntities)
+		for (EntityID id : m_AliveEntities)
+		{
+			if ((m_Signatures[id] & m_RelevantSignature) == m_RelevantSignature)
 			{
-				if ((m_Signatures[id] & m_RelevantSignature) == m_RelevantSignature)
-				{			
-					table.push_back(std::tie(*&(m_CompAdmin->GetComponent<Components>(id))...));
-				}
+				table.push_back(std::tie(*&(m_CompAdmin->GetComponent<Components>(id))...));
 			}
-			return table;
+		}
+		return table;
+	}*/
+
+	const std::vector<std::tuple<Components&...>>& GetComponents()
+	{
+		return m_ComponentTable;
+	}
+
+	void Add(const EntityID& id, std::tuple<Components&...> tableEntry)
+	{
+		m_ComponentTable.push_back(tableEntry);
+		m_ContainedEntityIDs.insert(id);
+
+		m_EntitiesToTableIndex[id] = m_Size;
+		m_TableIndexToEntity[m_Size] = id;
+
+		m_Size++;
+	}
+
+	void Remove(const EntityID& id)
+	{
+		if (m_ComponentTable.size() == 0) { return; }
+		auto iterator = m_ComponentTable.begin() + m_EntitiesToTableIndex[id];
+		m_ComponentTable.erase(iterator);
+		m_ContainedEntityIDs.erase(id);
+
+		size_t indexOfRemovedEntity = m_EntitiesToTableIndex[id];
+		size_t indexOfLastElement = m_Size - 1;
+		EntityID entityOfLastElement = m_TableIndexToEntity[indexOfLastElement];
+
+		m_EntitiesToTableIndex[entityOfLastElement] = indexOfRemovedEntity;
+		m_TableIndexToEntity[indexOfRemovedEntity] = entityOfLastElement;
+
+		m_EntitiesToTableIndex[id] = -1;
+		m_TableIndexToEntity[indexOfLastElement] = -1;
+
+		m_Size--;
+
+	}
+
+	const CompSignature& GetRelevantSignature() { return m_RelevantSignature; }
+	bool ContainsEntity(EntityID id) 
+	{ 
+		return  m_ContainedEntityIDs.size() != 0 || m_ContainedEntityIDs.find(id) != m_ContainedEntityIDs.end();
 	}
 
 private:
 
-	const std::unique_ptr<ComponentAdmin>& m_CompAdmin;
 
+	size_t m_Size = 0;
 	CompSignature m_RelevantSignature;
+	std::unordered_set<EntityID> m_ContainedEntityIDs;
+	std::array<size_t, MAX_ENTITIES> m_EntitiesToTableIndex;
+	std::array<EntityID, MAX_ENTITIES> m_TableIndexToEntity;
+	std::vector<std::tuple<Components&...>> m_ComponentTable;
+
+	/*const std::unique_ptr<ComponentAdmin>& m_CompAdmin;
 	const std::array<CompSignature, MAX_ENTITIES>& m_Signatures;
-	const std::unordered_set<EntityID>& m_AliveEntities;
+	const std::unordered_set<EntityID>& m_AliveEntities;*/
 };
