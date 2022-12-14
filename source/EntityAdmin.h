@@ -107,14 +107,14 @@ public:
 	}
 
 
-	const std::array<CompSignature, MAX_ENTITIES>& Getsignatures() 
+	const std::array<CompSignature, MAX_ENTITIES>& GetSignatures() 
 	{
 		return m_Signatures;
 	}
 
 private:
 	FixedQueue<EntityID,MAX_ENTITIES> m_AvailableEntities{};
-	std::unordered_set<EntityID> m_InUseEntityIDs;
+	std::unordered_set<EntityID> m_InUseEntityIDs; //TODO maybe replace this set with FixedSizeSet
 	std::array<CompSignature, MAX_ENTITIES> m_Signatures{};
 	uint32_t m_LivingEntityCount{};
 };
