@@ -159,6 +159,7 @@
     <ClCompile Include="source\systems\WeaponSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\FixedQueue.h" />
     <ClInclude Include="source\systems\EntitySpawnSystem.h" />
     <ClInclude Include="source\SpawnOrder.h" />
     <ClInclude Include="source\systems\WaveSpawnerSystem.h" />
