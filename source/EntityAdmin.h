@@ -1,6 +1,7 @@
 #pragma once
+#include "ECSCore.h"
+#include "FixedQueue.h"
 #include <cstdint>
-#include <queue>
 #include <array>
 #include <cassert>
 #include <unordered_set>
@@ -112,7 +113,7 @@ public:
 	}
 
 private:
-	std::queue<EntityID> m_AvailableEntities{};
+	FixedQueue<EntityID,MAX_ENTITIES> m_AvailableEntities{};
 	std::unordered_set<EntityID> m_InUseEntityIDs;
 	std::array<CompSignature, MAX_ENTITIES> m_Signatures{};
 	uint32_t m_LivingEntityCount{};
