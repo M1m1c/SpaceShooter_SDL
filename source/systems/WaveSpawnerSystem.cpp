@@ -15,15 +15,20 @@ void WaveSpawnerSystem::Update(float deltaTime)
 		float randomSpawnTime = disFloat(gen);
 		m_WaveSpawnTime = randomSpawnTime;
 
-		std::uniform_int_distribution<> disInt(0, m_SpawnPatterns.size() - 1);
-		int randomInt = disInt(gen);
+		std::uniform_int_distribution<> disPatternInt(0, m_SpawnPatterns.size() - 1);
+		int randomInt = disPatternInt(gen);
 		auto& pattern = m_SpawnPatterns[randomInt];
+
+
+		std::uniform_int_distribution<> disOffsetInt(-3, 3);
+		randomInt = disOffsetInt(gen);
+
 
 		for (size_t i = 0; i < 10; i++)
 		{
 
 			m_OrderQueue.push(SpawnOrder(
-				Vector2(pattern.StartPosition.x + (pattern.Offset.x * i), pattern.StartPosition.y + (pattern.Offset.y * i)),
+				Vector2(pattern.StartPosition.x + (100.f*randomInt) + (pattern.Offset.x * i), pattern.StartPosition.y + (pattern.Offset.y * i)),
 				ObjectTag::Enemy,
 				pattern.InputSignature
 				));

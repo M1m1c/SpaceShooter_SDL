@@ -32,7 +32,7 @@ private:
 
 	float m_WaveSpawnTime = 2.f;
 	float m_MinWaveSpawnTime = 1.f;
-	float m_MaxWaveSpawnTime = 4.f;
+	float m_MaxWaveSpawnTime = 3.f;
 
 	std::array<SpawnParams, 4> m_SpawnPatterns{
 		SpawnParams(Vector2(120.f,0.f),Vector2(120.f,0.f), std::bitset<5>(1<<(int)Inputs::Down)),
