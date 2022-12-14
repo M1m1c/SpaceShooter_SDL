@@ -9,17 +9,6 @@
 #include "CompArray.h"
 #include "ComponentAdmin.h"
 
-
-class IComponentView
-{
-public:
-	IComponentView();
-	~IComponentView();
-
-private:
-
-};
-
 template<typename... Components>
 class ComponentView
 {
