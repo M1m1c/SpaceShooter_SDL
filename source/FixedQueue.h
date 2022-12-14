@@ -4,7 +4,7 @@ class FixedQueue {
 public:
     void push(const T& value) {
         if (m_size == MaxSize) {
-            throw std::length_error("StackQueue is full!");
+            throw std::length_error("FixedQueue is full!");
         }
 
         m_data[m_tail] = value;
@@ -14,7 +14,7 @@ public:
 
     void pop() {
         if (m_size == 0) {
-            throw std::length_error("StackQueue is empty!");
+            throw std::length_error("FixedQueue is empty!");
         }
 
         m_head = (m_head + 1) % MaxSize;
@@ -23,7 +23,7 @@ public:
 
     const T& front() const {
         if (m_size == 0) {
-            throw std::length_error("StackQueue is empty!");
+            throw std::length_error("FixedQueue is empty!");
         }
 
         return m_data[m_head];
@@ -31,7 +31,7 @@ public:
 
     const T& back() const {
         if (m_size == 0) {
-            throw std::length_error("StackQueue is empty!");
+            throw std::length_error("FixedQueue is empty!");
         }
 
         return m_data[(m_tail + MaxSize - 1) % MaxSize];
