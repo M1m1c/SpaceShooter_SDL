@@ -1,4 +1,6 @@
 #pragma once
+#include <stdexcept>
+
 template <typename T, size_t MaxSize>
 class FixedQueue {
 public:
