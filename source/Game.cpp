@@ -48,6 +48,19 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	m_ECSRegistry->RegisterComponent<HealthComp>();
 
 
+	//Creating systems views
+	auto throttleView = m_ECSRegistry->CreateComponentView<RigidBodyComp, InputComp>();
+	auto renderView = m_ECSRegistry->CreateComponentView<TransformComp, TagComp>();
+	auto weaponView = m_ECSRegistry->CreateComponentView<TransformComp, InputComp, TagComp, WeaponComp>();
+	auto moveTranslateView = m_ECSRegistry->CreateComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp>();
+
+	m_ECSRegistry->SetThrottleView(throttleView);
+	m_ECSRegistry->SetRenderView(renderView);
+	m_ECSRegistry->SetWeaponView(weaponView);
+	m_ECSRegistry->SetMoveTranslateView(moveTranslateView);
+
+
+	//Creating Player
 	playerEntity = m_ECSRegistry->CreateEntity<InputComp, RigidBodyComp, WeaponComp>(
 		Vector4(640.f, 400.f, 15.f, 15.f),
 		ObjectTag::Player);
@@ -56,10 +69,10 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 
 	//Systems added in execution order
 	AddSystem<PlayerController>(m_EventHandle, inputComp);
-	AddSystem<ThrottleSystem>(m_ECSRegistry->CreateComponentView<RigidBodyComp,InputComp>());
-	AddSystem<RenderSystem>(m_Renderer, m_ECSRegistry->CreateComponentView<TransformComp, TagComp>());
-	AddSystem<WeaponSystem>(m_SpawnOrders, m_ECSRegistry->CreateComponentView<TransformComp, InputComp, TagComp, WeaponComp>());
-	AddSystem<MoveTranslateSystem>(m_Renderer, m_Width, m_Height, m_ECSRegistry->CreateComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp>());
+	AddSystem<ThrottleSystem>(throttleView);
+	AddSystem<RenderSystem>(m_Renderer, renderView);
+	AddSystem<WeaponSystem>(m_SpawnOrders, weaponView);
+	AddSystem<MoveTranslateSystem>(m_Renderer, m_Width, m_Height, moveTranslateView);
 	AddSystem<WaveSpawnerSystem>(m_SpawnOrders);
 	AddSystem<EntitySpawnSystem>(m_ECSRegistry, m_SpawnOrders);
 	AddSystem<DestructionSystem>(m_ECSRegistry);
@@ -76,8 +89,11 @@ void Game::Run()
 		SDL_SetRenderDrawColor(m_Renderer, 20, 20, 30, 255);
 		SDL_RenderClear(m_Renderer);
 
-		//TODO maybe we should just get all the components of active enties here at once and tehn filter them down to the systems,
-		// this would avoid having to read for each system
+		//TODO maybe we should just get all the components of active enties here at once and them filter them down to the systems,
+		// this would avoid having to read for each system,
+		// make class with an array that holds pointers to the componentviews and sets their tuples at the start here
+
+
 
 		for (size_t i = 0; i < m_SystemCount; i++)
 		{

@@ -104,5 +104,11 @@
     <ClInclude Include="source\FixedQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\FixedSizeSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SystemsViewAdmin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
