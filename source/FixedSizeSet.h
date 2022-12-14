@@ -1,5 +1,7 @@
 #pragma once
 #include <cstddef>
+#include <array>
+#include <memory>
 
 template<typename T, std::size_t N>
 class FixedSizeSet {
@@ -14,8 +16,8 @@ public:
         if (contains(value)) return;
 
         for (size_type i = 0; i < N; ++i) {
-            if (data_[i] == nullptr) {
-                data_[i] = std::make_unique<value_type>(value);
+            if (m_Data[i] == nullptr) {
+                m_Data[i] = std::make_unique<value_type>(value);
                 return;
             }
         }
@@ -27,9 +29,9 @@ public:
     {
         for (size_type i = 0; i < N; ++i)
         {
-            if (data_[i] != nullptr && *data_[i] == value) 
+            if (m_Data[i] != nullptr && *m_Data[i] == value) 
             {
-                data_[i] = nullptr;
+                m_Data[i] = nullptr;
                 return;
             }
         }
@@ -40,7 +42,7 @@ public:
         size_type count = 0;
         for (size_type i = 0; i < N; ++i) 
         {
-            if (data_[i] != nullptr) ++count;
+            if (m_Data[i] != nullptr) ++count;
         }
         return count;
     }
@@ -52,7 +54,7 @@ public:
         bool retval = false;
         for (size_type i = 0; i < N; ++i) 
         {
-            if (data_[i] != nullptr && *data_[i] == value) 
+            if (m_Data[i] != nullptr && *m_Data[i] == value) 
             {
                 retval = true;
                 break;
@@ -61,6 +63,16 @@ public:
         return retval;
     }
 
+    auto begin() const
+    {
+        return m_Data.begin();
+    }
+
+    auto end() const
+    {
+        return m_Data.end();
+    }
+
 private:
-    std::array<std::unique_ptr<T>, N> data_;
+    std::array<std::unique_ptr<T>, N> m_Data;
 };
