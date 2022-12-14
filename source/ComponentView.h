@@ -9,10 +9,16 @@
 #include "CompArray.h"
 #include "ComponentAdmin.h"
 
-template<typename... Types>
-using DataTable = std::vector<std::tuple<Types...>>;
 
+class IComponentView
+{
+public:
+	IComponentView();
+	~IComponentView();
 
+private:
+
+};
 
 template<typename... Components>
 class ComponentView

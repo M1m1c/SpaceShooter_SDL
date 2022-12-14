@@ -130,28 +130,6 @@ public:
 		return m_EntityAdmin->GetMatchingSignatureCount(signature);
 	}
 
-	//TODO for some reason this does not return refernces to teh components, try to figure out why
-	//Composes a DataTable& where each entry corresponds to the components of one entity,
-	//based on the sent in componenttypes.
-	//Returns the number of entities that have these components.
-	template<typename... Types>
-	size_t GetAllComponentPairs(DataTable<Types...>& outTable)
-	{
-		CompSignature signature = ComposeSignature<Types...>();
-		size_t entityCount = 0;
-
-		std::vector<EntityID> entityIDs = m_EntityAdmin->GetEntitiesWithMatchingSignature(signature);
-		entityCount = entityIDs.size();
-
-		for (size_t i = 0; i < entityCount; i++)
-		{
-			outTable.push_back(std::tie(GetComponent<Types>(entityIDs[i])...));
-		}
-
-		return entityCount;
-	}
-
-
 	template< typename... Types>
 	std::vector<EntityID> GetEntityIDsMatchingSignature()
 	{
