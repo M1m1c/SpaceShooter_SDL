@@ -41,6 +41,9 @@ public:
 
 		(AddComponent<Types>(id), ...);
 
+		auto signature = m_EntityAdmin->GetSignature(id);
+		m_SystemsViewAdmin->OnComponentAdded(id, signature);
+
 		return id;
 	}
 
@@ -85,8 +88,6 @@ public:
 		auto signature = m_EntityAdmin->GetSignature(entityID);
 		signature.set(m_ComponentAdmin->GetComponentType<T>(), true);
 		m_EntityAdmin->SetSignature(entityID, signature);
-
-		m_SystemsViewAdmin->OnComponentAdded(entityID, signature);
 
 		return m_ComponentAdmin->GetComponent<T>(entityID);
 	}
