@@ -56,13 +56,13 @@ public:
 		return GetComponentArray<T>()->GetComponent(entity);
 	}
 
-	void EntityDestroyed(EntityID entity)
+	void OnEntityDestroyed(EntityID entity)
 	{
 		for (auto const& pair : m_ComponentArrays)
 		{
 			auto const& component = pair.second;
 
-			component->EntityDestroyed(entity);
+			component->OnEntityDestroyed(entity);
 		}
 	}
 

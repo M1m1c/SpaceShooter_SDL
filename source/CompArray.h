@@ -9,7 +9,7 @@ class ICompArray
 {
 public:
 	virtual ~ICompArray() = default;
-	virtual void EntityDestroyed(EntityID entity) = 0;
+	virtual void OnEntityDestroyed(EntityID entity) = 0;
 };
 
 
@@ -58,7 +58,7 @@ public:
 		return m_ComponentArray[m_EntityToIndexArray[entity]];
 	}
 
-	void EntityDestroyed(EntityID entity) override
+	void OnEntityDestroyed(EntityID entity) override
 	{
 		if (entity < m_EntityToIndexArray.size() && m_EntityToIndexArray[entity] != -1)
 		{
