@@ -1,6 +1,5 @@
 #include "WaveSpawnerSystem.h"
 
-#include "../ECSCore.h"
 #include "../SpawnOrder.h"
 
 
