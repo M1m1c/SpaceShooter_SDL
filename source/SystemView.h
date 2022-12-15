@@ -78,6 +78,7 @@ public:
 	}
 
 	const size_t& GetSize() { return m_Size; }
+	const EntityID& GetID(size_t index) { return m_TableIndexToEntity[index]; }
 
 private:
 	size_t m_Size = 0;
