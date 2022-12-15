@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <memory>
 #include <functional>
+#include "ECSCore.h"
 
 struct AABB
 {
@@ -29,9 +30,11 @@ public:
 	QuadTreeNode(float min_x, float min_y, float max_x, float max_y)
 		: m_AABB(min_x, min_y, max_x, max_y)
 	{
+		m_Data.reserve(MAX_ENTITIES * 0.1f);
 	}
 
 	const AABB& GetAABB() const { return m_AABB; }
+	const std::vector<T>& GetData() const { return m_Data; }
 
 	bool IsLeaf() const { return m_Children[0] == nullptr; }
 
@@ -76,6 +79,92 @@ public:
 		}
 	}
 
+	// Return the index of the child that contains the given point, or -1 if no such child exists
+	int FindIndex(float x, float y) const
+	{
+		float cx = (m_AABB.min_x + m_AABB.max_x) / 2;
+		float cy = (m_AABB.min_y + m_AABB.max_y) / 2;
+
+		int index = -1;
+		if (x < cx && y < cy) { index = 0; }
+		else if (x >= cx && y < cy) { index = 1; }
+		else if (x < cx && y >= cy) { index = 2; }
+		else if (x >= cx && y >= cy) { index = 3; }
+
+		return index;
+	}
+
+	QuadTreeNode* FindNode(float x, float y)
+	{
+		if (!IsLeaf())
+		{
+			// This node is not a leaf, so add the object to the appropriate child
+			int index = FindIndex(x, y);
+			if (index != -1)
+			{
+				return m_Children[index]->FindNode(x, y);
+			}
+		}
+		else
+		{
+			//TODO if we cant finr posiiton within this node then it is out of bounds and we should return null
+			auto isWithinX = x >= m_AABB.min_x && x <= m_AABB.max_x;
+			auto isWithinY = y >= m_AABB.min_y && y <= m_AABB.max_y;
+			if (isWithinX && isWithinY)
+			{
+				return this;
+			}
+			else
+			{
+				return nullptr;
+			}
+		}
+	}
+
+	void Add(T item, float x, float y)
+	{
+		int index = FindIndex(x, y);
+		if (!IsLeaf())
+		{
+			// This node is not a leaf, so add the object to the appropriate child
+			if (index != -1)
+			{
+				m_Children[index]->Add(item, x, y);
+			}
+		}
+		else if(index != -1)
+		{
+			if (std::find(m_Data.begin(), m_Data.end(), item) == m_Data.end())
+			{
+				// This is a leaf node, so store the object in this node
+				m_Data.push_back(item);
+			}
+		}
+	}
+
+	void Remove(T item, float x, float y)
+	{
+		if (IsLeaf())
+		{
+			// Check if the given point exists in this node
+			auto iterator = std::find(m_Data.begin(), m_Data.end(), item);
+			if (iterator != m_Data.end())
+			{
+				// The point exists in this node, so remove it
+				m_Data.erase(iterator);
+			}
+		}
+		else
+		{
+			// The point does not exist in this node, so check its children
+			int index = FindIndex(x, y);
+			if (index != -1 && m_Children[index] != nullptr)
+			{
+				m_Children[index]->Remove(item, x, y);
+			}
+		}
+	}
+
 private:
 
 	AABB m_AABB;
@@ -97,6 +186,28 @@ public:
 	void Traverse(std::function<void(QuadTreeNode<T>*)> func)
 	{
 		m_Root->Traverse(func);
+	}
+
+	void Add(T item, float x, float y) { m_Root->Add(item, x, y); }
+	void Remove(T item, float x, float y) { m_Root->Remove(item, x, y); }
+
+	void Update(T item, float x, float y, float prevX, float prevY)
+	{
+		auto node = m_Root->FindNode(prevX, prevY);
+		if (node == nullptr)
+		{
+			// The previous position of the object is not within the root node, so add it to the tree
+			m_Root->Add(item, x, y);
+			return;
+		}
+
+		// Check if the object has entered a new quadrant
+		if (m_Root->FindNode(x, y) != node)
+		{
+			// The object has entered a new quadrant, so remove it from its current node and add it to the appropriate leaf node
+			m_Root->Remove(item, prevX, prevY);
+			m_Root->Add(item, x, y);
+		}
 	}
 
 private:
