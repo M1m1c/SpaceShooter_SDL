@@ -4,6 +4,7 @@
 #include <array>
 #include <variant>
 #include <unordered_set>
+#include <unordered_map>
 #include <memory>
 #include <vector>
 #include "ECSCore.h"
@@ -18,25 +19,12 @@ public:
 	ComponentView(CompSignature relevantSignature) : m_RelevantSignature(relevantSignature)
 	{
 		m_ComponentTable.reserve(MAX_ENTITIES);
+		m_ContainedEntityIDs.reserve(MAX_ENTITIES);
+		//m_EntitiesToTableIndex.reserve(MAX_ENTITIES);
 		m_EntitiesToTableIndex.fill(-1);
 		m_TableIndexToEntity.fill(-1);
 	}
 
-	/*const std::vector<std::tuple<Components&...>>& GetComponents()
-	{
-		std::vector<std::tuple<Components&...>> table;
-
-		for (EntityID id : m_AliveEntities)
-		{
-			if ((m_Signatures[id] & m_RelevantSignature) == m_RelevantSignature)
-			{
-				table.push_back(std::tie(*&(m_CompAdmin->GetComponent<Components>(id))...));
-			}
-		}
-		return table;
-	}*/
-
-	//TODO this is the function which is causing the crash
 	const std::vector<std::tuple<Components&...>>& GetComponents()
 	{
 		return m_ComponentTable;
@@ -56,21 +44,29 @@ public:
 	void Remove(const EntityID& id)
 	{
 		if (m_ComponentTable.size() == 0) { return; }
-		auto iterator = m_ComponentTable.begin() + m_EntitiesToTableIndex[id];
-		m_ComponentTable.erase(iterator);
-		m_ContainedEntityIDs.erase(id);
 
-		size_t indexOfRemovedEntity = m_EntitiesToTableIndex[id];
-		size_t indexOfLastElement = m_Size - 1;
-		EntityID entityOfLastElement = m_TableIndexToEntity[indexOfLastElement];
+		if (m_EntitiesToTableIndex[id]==m_ComponentTable.size()-1)
+		{
+			m_ComponentTable.pop_back();
+		}
+		else
+		{
+			m_ComponentTable[m_EntitiesToTableIndex[id]] = std::move(m_ComponentTable.back());
+			m_ComponentTable.pop_back();
+			m_ContainedEntityIDs.erase(id);
 
-		m_EntitiesToTableIndex[entityOfLastElement] = indexOfRemovedEntity;
-		m_TableIndexToEntity[indexOfRemovedEntity] = entityOfLastElement;
+			size_t indexOfRemovedEntity = m_EntitiesToTableIndex[id];
+			size_t indexOfLastElement = m_Size - 1;
+			EntityID entityOfLastElement = m_TableIndexToEntity[indexOfLastElement];
 
-		m_EntitiesToTableIndex[id] = -1;
-		m_TableIndexToEntity[indexOfLastElement] = -1;
+			m_EntitiesToTableIndex[entityOfLastElement] = indexOfRemovedEntity;
+			m_TableIndexToEntity[indexOfRemovedEntity] = entityOfLastElement;
 
-		m_Size--;
+			m_EntitiesToTableIndex[id] = -1;
+			m_TableIndexToEntity[indexOfLastElement] = -1;
+		}
+
+		--m_Size;
 
 	}
 
@@ -81,16 +77,10 @@ public:
 	}
 
 private:
-
-
 	size_t m_Size = 0;
 	CompSignature m_RelevantSignature;
 	std::unordered_set<EntityID> m_ContainedEntityIDs;
 	std::array<size_t, MAX_ENTITIES> m_EntitiesToTableIndex;
 	std::array<EntityID, MAX_ENTITIES> m_TableIndexToEntity;
 	std::vector<std::tuple<Components&...>> m_ComponentTable;
-
-	/*const std::unique_ptr<ComponentAdmin>& m_CompAdmin;
-	const std::array<CompSignature, MAX_ENTITIES>& m_Signatures;
-	const std::unordered_set<EntityID>& m_AliveEntities;*/
 };
