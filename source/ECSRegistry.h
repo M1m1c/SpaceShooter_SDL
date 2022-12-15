@@ -69,7 +69,7 @@ public:
 		return m_EntityAdmin->GetLivingEntitiesCount();
 	}
 
-	const std::unordered_set<EntityID>& GetActiveEntities()
+	const FixedSizeSet<EntityID, MAX_ENTITIES>& GetActiveEntities()
 	{
 		return   m_EntityAdmin->GetActiveEntities();
 	}
