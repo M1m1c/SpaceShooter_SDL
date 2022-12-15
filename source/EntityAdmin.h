@@ -20,10 +20,10 @@ public:
 		}
 	}
 
-	EntityID& CreateEntity()
+	const EntityID& CreateEntity()
 	{
 		assert(m_LivingEntityCount < MAX_ENTITIES && "Too many entities in existence.");
-		EntityID id = m_AvailableEntities.front();
+		auto& id = m_AvailableEntities.front();
 		m_InUseEntityIDs.insert(id);
 		m_AvailableEntities.pop();
 		++m_LivingEntityCount;
