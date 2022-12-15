@@ -26,16 +26,17 @@ public:
 
 	void AddComponent(EntityID entity, T component)
 	{
+		assert(entity < MAX_ENTITIES && "Invalid entity ID");
 		assert(m_EntityToIndexArray[entity] == -1 && "Component added to same entity more than once.");
-		size_t newIndex = m_Size;
-		m_EntityToIndexArray[entity] = newIndex;
-		m_IndexToEntityArray[newIndex] = entity;
-		m_ComponentArray[newIndex] = component;
+		m_EntityToIndexArray[entity] = m_Size;
+		m_IndexToEntityArray[m_Size] = entity;
+		m_ComponentArray[m_Size] = component;
 		++m_Size;
 	}
 
 	void RemoveComponent(EntityID entity)
 	{
+		assert(entity < MAX_ENTITIES && "Invalid entity ID");
 		assert(m_EntityToIndexArray[entity] != -1 && "Removing non-existent component.");
 
 		size_t indexOfRemovedEntity = m_EntityToIndexArray[entity];
@@ -67,8 +68,8 @@ public:
 	}
 
 private:
-	std::array<T, MAX_ENTITIES> m_ComponentArray;
-	std::array<size_t, MAX_ENTITIES> m_EntityToIndexArray;
-	std::array<EntityID, MAX_ENTITIES>  m_IndexToEntityArray;
-	size_t m_Size;
+	std::array<T, MAX_ENTITIES> m_ComponentArray{};
+	std::array<size_t, MAX_ENTITIES> m_EntityToIndexArray{};
+	std::array<EntityID, MAX_ENTITIES>  m_IndexToEntityArray{};
+	size_t m_Size = 0;
 };
