@@ -10,6 +10,7 @@
 #include "ECSCore.h"
 #include "CompArray.h"
 #include "ComponentAdmin.h"
+#include <iostream>
 
 template<typename... Components>
 class SystemView
@@ -52,8 +53,9 @@ public:
 		{
 			m_ComponentTable[m_EntitiesToTableIndex[id]] = std::move(m_ComponentTable.back());
 			m_ComponentTable.pop_back();
-			m_ContainedEntityIDs.erase(id);		
 		}
+		
+		m_ContainedEntityIDs.erase(id);		
 
 		size_t indexOfRemovedEntity = m_EntitiesToTableIndex[id];
 		size_t indexOfLastElement = m_Size - 1;
@@ -74,6 +76,8 @@ public:
 	{ 
 		return  m_ContainedEntityIDs.size() != 0 && m_ContainedEntityIDs.find(id) != m_ContainedEntityIDs.end();
 	}
+
+	const size_t& GetSize() { return m_Size; }
 
 private:
 	size_t m_Size = 0;
