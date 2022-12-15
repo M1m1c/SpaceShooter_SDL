@@ -48,7 +48,7 @@ public:
     }
 
 private:
-    T m_data[MaxSize];
+    T m_data[MaxSize]{};
     size_t m_head = 0;
     size_t m_tail = 0;
     size_t m_size = 0;

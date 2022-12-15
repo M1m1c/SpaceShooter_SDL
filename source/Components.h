@@ -35,25 +35,26 @@ struct TransformComp
 	~TransformComp() = default;
 };
 
-struct NameComp
-{
-	std::string Name;
-};
-
 struct RigidBodyComp
 {
-	Vector2 velocity;
+	Vector2 velocity = Vector2(0.f,0.f);
 	float acceleration = 250.f;
+
+	RigidBodyComp() = default;
+	~RigidBodyComp() = default;
 };
 
 struct InputComp
 {
 	std::bitset<5> InputSignature = 0;
+
+	InputComp() = default;
+	~InputComp() = default;
 };
 
 struct TagComp 
 {
-	ObjectTag Tag;
+	ObjectTag Tag =ObjectTag::None;
 
 	TagComp() = default;
 	TagComp(ObjectTag tag) : Tag(tag){}
@@ -65,13 +66,17 @@ struct WeaponComp
 	bool CanShoot = true;
 	float CoolDown = 0.f;
 	float GetMaxCoolDown() { return maxCoolDown; }
+
+	WeaponComp()=default;
+	~WeaponComp()=default;
+
 private:
 	float maxCoolDown = 0.2f;
 };
 
 struct HealthComp
 {
-	uint16_t Health;
+	uint16_t Health = 1;
 	bool IsQueuedForDestroy = false;
 
 	HealthComp() = default;

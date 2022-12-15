@@ -24,12 +24,12 @@ public:
 	}
 
 	template<typename... Types>
-	EntityID& CreateEntity(
+	const EntityID& CreateEntity(
 		Vector4 transformValues = Vector4(0.f, 0.f, 1.f, 1.f),
 		ObjectTag tag = ObjectTag::None,
 		uint16_t health = 1)
 	{
-		auto id = m_EntityAdmin->CreateEntity();
+		const auto& id = m_EntityAdmin->CreateEntity();
 
 		AddComponent<TransformComp>(
 			id,
