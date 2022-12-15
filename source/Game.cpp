@@ -85,7 +85,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	AddSystem<CollisionSystem>(m_Renderer, collisionView);
 	AddSystem<MoveTranslateSystem>(m_QuadTree,moveView);
 	AddSystem<WaveSpawnerSystem>(m_SpawnOrders);
-	AddSystem<DestructionSystem>(m_IsRunning, m_ECSRegistry);
+	AddSystem<DestructionSystem>(m_IsRunning,m_QuadTree, m_ECSRegistry);
 	AddSystem<EntitySpawnSystem>(m_ECSRegistry, m_SpawnOrders);
 }
 

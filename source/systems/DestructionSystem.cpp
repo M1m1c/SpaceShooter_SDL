@@ -18,12 +18,13 @@ void DestructionSystem::Update(float deltaTime)
 
 		if (isQueuedForDestroy || isDead)
 		{
-			auto tagComp = m_Registry->GetComponent<TagComp>(*entityId);
+			auto& tagComp = m_Registry->GetComponent<TagComp>(*entityId);
 			if(tagComp.Tag == ObjectTag::Player)
 			{
 				m_IsGameRunning = false;
 			}
-
+			auto& transformComp = m_Registry->GetComponent<TransformComp>(*entityId);
+			m_QuadTree->Remove(*entityId, transformComp.Position.x, transformComp.Position.y);
 			m_Registry->DestroyEntity(*entityId);
 		}
 	}
