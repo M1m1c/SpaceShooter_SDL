@@ -83,7 +83,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	AddSystem<MoveTranslateSystem>(moveView);
 	AddSystem<WaveSpawnerSystem>(m_SpawnOrders);
 	AddSystem<EntitySpawnSystem>(m_ECSRegistry, m_SpawnOrders);
-	AddSystem<DestructionSystem>(m_ECSRegistry);
+	AddSystem<DestructionSystem>(m_IsRunning,m_ECSRegistry);
 }
 
 void Game::Run()
@@ -110,6 +110,8 @@ void Game::Run()
 
 		SDL_RenderPresent(m_Renderer);
 	}
+
+	std::cout << "GAME OVER!" << std::endl;
 }
 
 std::shared_ptr<ECSRegistry> Game::GetECSRegistry()

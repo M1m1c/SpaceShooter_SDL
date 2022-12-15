@@ -21,7 +21,7 @@ void DestructionSystem::Update(float deltaTime)
 			auto tagComp = m_Registry->GetComponent<TagComp>(*entityId);
 			if(tagComp.Tag == ObjectTag::Player)
 			{
-				//TODO close application
+				m_IsGameRunning = false;
 			}
 
 			m_Registry->DestroyEntity(*entityId);
