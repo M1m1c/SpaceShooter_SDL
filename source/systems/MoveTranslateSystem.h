@@ -1,6 +1,6 @@
 #pragma once
 #include "ISystem.h"
-#include "../ComponentView.h"
+#include "../SystemView.h"
 #include "../Components.h"
 #include <memory>
 #include <glm/glm.hpp>
@@ -14,7 +14,7 @@ public:
 		SDL_Renderer* renderer,
 		int width,
 		int height,
-		std::shared_ptr<ComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp >> componentView) :
+		std::shared_ptr<SystemView<TransformComp, RigidBodyComp, TagComp, HealthComp >> componentView) :
 		m_Renderer(renderer), m_ScreenWidth(width), m_ScreenHeight(height), m_ComponentView(componentView) {}
 	~MoveTranslateSystem() = default;
 
@@ -29,7 +29,7 @@ private:
 
 	void DrawCollider(TransformComp& transformA, glm::vec2& collderSize, bool canMove, SDL_Renderer* renderer);
 
-	std::shared_ptr<ComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp >> m_ComponentView;
+	std::shared_ptr<SystemView<TransformComp, RigidBodyComp, TagComp, HealthComp >> m_ComponentView;
 	SDL_Renderer* m_Renderer;
 	int m_ScreenWidth, m_ScreenHeight;
 };

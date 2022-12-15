@@ -2,7 +2,7 @@
 
 #include "ECSCore.h"
 #include "ECSRegistry.h"
-#include "ComponentView.h"
+#include "SystemView.h"
 #include "Components.h"
 #include <unordered_map>
 #include <memory>
@@ -91,10 +91,10 @@ public:
 
 public:
 
-	std::shared_ptr <ComponentView<RigidBodyComp, InputComp>> m_ThrottleView;
-	std::shared_ptr <ComponentView<TransformComp, TagComp>> m_RenderView;
-	std::shared_ptr <ComponentView<TransformComp, InputComp, TagComp, WeaponComp>> m_WeaponView;
-	std::shared_ptr <ComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp>> m_MoveTranslateView;
+	std::shared_ptr <SystemView<RigidBodyComp, InputComp>> m_ThrottleView;
+	std::shared_ptr <SystemView<TransformComp, TagComp>> m_RenderView;
+	std::shared_ptr <SystemView<TransformComp, InputComp, TagComp, WeaponComp>> m_WeaponView;
+	std::shared_ptr <SystemView<TransformComp, RigidBodyComp, TagComp, HealthComp>> m_MoveTranslateView;
 
 private:
 	std::unordered_map<size_t, std::shared_ptr<ICompArray>> m_ComponentArrays{};

@@ -9,7 +9,7 @@
 #include "SystemsViewAdmin.h"
 #include "Components.h"
 #include "Game.h"
-#include "ComponentView.h"
+#include "SystemView.h"
 
 
 
@@ -57,10 +57,10 @@ public:
 	}
 
 	template<typename... Components>
-	std::shared_ptr<ComponentView<Components...>> CreateComponentView()
+	std::shared_ptr<SystemView<Components...>> CreateComponentView()
 	{
 		auto signature = ComposeSignature<Components...>();
-		return std::make_shared<ComponentView<Components...>>(signature);
+		return std::make_shared<SystemView<Components...>>(signature);
 	}
 
 
@@ -157,10 +157,10 @@ public:
 		return signature[type];
 	}
 
-	void SetThrottleView(std::shared_ptr <ComponentView<RigidBodyComp, InputComp>> view) { m_SystemsViewAdmin->m_ThrottleView = view; }
-	void SetRenderView(std::shared_ptr <ComponentView<TransformComp, TagComp>> view) { m_SystemsViewAdmin->m_RenderView = view; }
-	void SetWeaponView(std::shared_ptr <ComponentView<TransformComp, InputComp, TagComp, WeaponComp>> view) { m_SystemsViewAdmin->m_WeaponView = view; }
-	void SetMoveTranslateView(std::shared_ptr <ComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp>> view) { m_SystemsViewAdmin->m_MoveTranslateView = view; }
+	void SetThrottleView(std::shared_ptr <SystemView<RigidBodyComp, InputComp>> view) { m_SystemsViewAdmin->m_ThrottleView = view; }
+	void SetRenderView(std::shared_ptr <SystemView<TransformComp, TagComp>> view) { m_SystemsViewAdmin->m_RenderView = view; }
+	void SetWeaponView(std::shared_ptr <SystemView<TransformComp, InputComp, TagComp, WeaponComp>> view) { m_SystemsViewAdmin->m_WeaponView = view; }
+	void SetMoveTranslateView(std::shared_ptr <SystemView<TransformComp, RigidBodyComp, TagComp, HealthComp>> view) { m_SystemsViewAdmin->m_MoveTranslateView = view; }
 
 private:
 	std::unique_ptr<ComponentAdmin> m_ComponentAdmin;

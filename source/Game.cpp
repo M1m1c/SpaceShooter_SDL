@@ -3,7 +3,7 @@
 #include "SDL.h"
 #include "ECSRegistry.h"
 #include "Components.h"
-#include "ComponentView.h"
+#include "SystemView.h"
 #include "systems/ISystem.h"
 #include "systems/PlayerController.h"
 #include "systems/ThrottleSystem.h"

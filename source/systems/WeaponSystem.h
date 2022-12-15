@@ -1,7 +1,7 @@
 #pragma once
 #include "ISystem.h"
 #include "../ECSCore.h"
-#include "../ComponentView.h"
+#include "../SystemView.h"
 #include "../FixedQueue.h"
 #include <memory>
 #include <glm/glm.hpp>
@@ -17,7 +17,7 @@ public:
 
 	WeaponSystem(
 		FixedQueue<SpawnOrder, MAX_ENTITIES>& orderQueue,
-		std::shared_ptr<ComponentView<TransformComp, InputComp, TagComp, WeaponComp>> componentView)
+		std::shared_ptr<SystemView<TransformComp, InputComp, TagComp, WeaponComp>> componentView)
 		: m_OrderQueue(orderQueue), m_ComponentView(componentView) {}
 
 	~WeaponSystem() = default;
@@ -27,6 +27,6 @@ public:
 private:
 	void SpawnBullet(glm::vec2 position, int direction);
 	FixedQueue<SpawnOrder, MAX_ENTITIES>& m_OrderQueue;
-	std::shared_ptr<ComponentView<TransformComp, InputComp, TagComp, WeaponComp>> m_ComponentView;
+	std::shared_ptr<SystemView<TransformComp, InputComp, TagComp, WeaponComp>> m_ComponentView;
 };
 
