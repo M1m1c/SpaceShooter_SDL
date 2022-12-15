@@ -5,7 +5,7 @@
 
 void ThrottleSystem::Update(float deltaTime)
 {
-	auto table = m_ComponentView->GetComponents();
+	auto& table = m_ComponentView->GetComponents();
 
 	for (size_t i = 0; i < table.size(); i++)
 	{
