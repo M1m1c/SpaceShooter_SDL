@@ -52,7 +52,6 @@ private:
 	uint32_t m_SystemCount = 0;
 	std::array<std::unique_ptr<ISystem>, MAX_SYSTEMS> m_Systems;
 
-	//TODO check if we can replace this with our own statically stored array container type
 	FixedQueue<SpawnOrder,MAX_ENTITIES> m_SpawnOrders;
 
 	EntityID playerEntity;
