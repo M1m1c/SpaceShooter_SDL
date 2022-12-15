@@ -6,6 +6,8 @@
 #include "Components.h"
 #include <unordered_map>
 #include <memory>
+#include <tuple>
+#include <utility>
 
 class SystemsViewAdmin
 {
@@ -60,22 +62,22 @@ public:
 
 	void OnEntityDestroyed(const EntityID& id)
 	{
-		if (!m_ThrottleView->ContainsEntity(id))
+		if (m_ThrottleView->ContainsEntity(id))
 		{
 			m_ThrottleView->Remove(id);
 		}
 
-		if (!m_RenderView->ContainsEntity(id))
+		if (m_RenderView->ContainsEntity(id))
 		{
 			m_RenderView->Remove(id);
 		}
 
-		if (!m_WeaponView->ContainsEntity(id))
+		if (m_WeaponView->ContainsEntity(id))
 		{
 			m_WeaponView->Remove(id);
 		}
 
-		if (!m_MoveTranslateView->ContainsEntity(id))
+		if (m_MoveTranslateView->ContainsEntity(id))
 		{
 			m_MoveTranslateView->Remove(id);
 		}
