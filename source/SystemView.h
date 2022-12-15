@@ -12,15 +12,14 @@
 #include "ComponentAdmin.h"
 
 template<typename... Components>
-class ComponentView
+class SystemView
 {
 
 public:
-	ComponentView(CompSignature relevantSignature) : m_RelevantSignature(relevantSignature)
+	SystemView(CompSignature relevantSignature) : m_RelevantSignature(relevantSignature)
 	{
 		m_ComponentTable.reserve(MAX_ENTITIES);
 		m_ContainedEntityIDs.reserve(MAX_ENTITIES);
-		//m_EntitiesToTableIndex.reserve(MAX_ENTITIES);
 		m_EntitiesToTableIndex.fill(-1);
 		m_TableIndexToEntity.fill(-1);
 	}

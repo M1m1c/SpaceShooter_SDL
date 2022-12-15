@@ -3,7 +3,7 @@
 #include <array>
 #include <memory>
 
-template<typename T, std::size_t N>
+template<typename T, std::size_t Size>
 class FixedSizeSet {
 public:
     using value_type = T;
@@ -15,7 +15,7 @@ public:
     {
         if (contains(value)) return;
 
-        for (size_type i = 0; i < N; ++i) {
+        for (size_type i = 0; i < Size; ++i) {
             if (m_Data[i] == nullptr) {
                 m_Data[i] = std::make_unique<value_type>(value);
                 return;
@@ -27,7 +27,7 @@ public:
 
     void erase(const value_type& value) 
     {
-        for (size_type i = 0; i < N; ++i)
+        for (size_type i = 0; i < Size; ++i)
         {
             if (m_Data[i] != nullptr && *m_Data[i] == value) 
             {
@@ -40,19 +40,19 @@ public:
     size_type size() const 
     {
         size_type count = 0;
-        for (size_type i = 0; i < N; ++i) 
+        for (size_type i = 0; i < Size; ++i) 
         {
             if (m_Data[i] != nullptr) ++count;
         }
         return count;
     }
 
-    size_type max_size() const { return N; }
+    size_type max_size() const { return Size; }
 
     bool contains(const value_type& value) const 
     {
         bool retval = false;
-        for (size_type i = 0; i < N; ++i) 
+        for (size_type i = 0; i < Size; ++i) 
         {
             if (m_Data[i] != nullptr && *m_Data[i] == value) 
             {
@@ -73,6 +73,21 @@ public:
         return m_Data.end();
     }
 
+    size_type count(const value_type& value) const
+    {
+        size_type count = 0;
+
+        for (size_type i = 0; i < Size; ++i)
+        {
+
+            if (m_Data[i] != nullptr && *m_Data[i] == value)
+            {
+                ++count;
+            }
+        }
+        return count;
+    }
+
 private:
-    std::array<std::unique_ptr<T>, N> m_Data;
+    std::array<std::unique_ptr<T>, Size> m_Data;
 };

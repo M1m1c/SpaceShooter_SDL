@@ -147,6 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\systems\BorderSystem.cpp" />
+    <ClCompile Include="source\systems\MoveCalcSystem.cpp" />
+    <ClCompile Include="source\systems\CollisionSystem.cpp" />
     <ClCompile Include="source\systems\EntitySpawnSystem.cpp" />
     <ClCompile Include="source\systems\WaveSpawnerSystem.cpp" />
     <ClCompile Include="source\systems\DestructionSystem.cpp" />
@@ -159,6 +162,10 @@
     <ClCompile Include="source\systems\WeaponSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\CollisionOrder.h" />
+    <ClInclude Include="source\systems\BorderSystem.h" />
+    <ClInclude Include="source\systems\MoveCalcSystem.h" />
+    <ClInclude Include="source\systems\CollisionSystem.h" />
     <ClInclude Include="source\FixedQueue.h" />
     <ClInclude Include="source\FixedSizeSet.h" />
     <ClInclude Include="source\systems\EntitySpawnSystem.h" />
@@ -168,7 +175,7 @@
     <ClInclude Include="source\CompArray.h" />
     <ClInclude Include="source\ComponentAdmin.h" />
     <ClInclude Include="source\Components.h" />
-    <ClInclude Include="source\ComponentView.h" />
+    <ClInclude Include="source\SystemView.h" />
     <ClInclude Include="source\ECSRegistry.h" />
     <ClInclude Include="source\EntityAdmin.h" />
     <ClInclude Include="source\ECSCore.h" />

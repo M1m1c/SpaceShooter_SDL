@@ -1,6 +1,7 @@
 #pragma once
 #include "ECSCore.h"
 #include "FixedQueue.h"
+#include "FixedSizeSet.h"
 #include <cstdint>
 #include <array>
 #include <cassert>
@@ -96,7 +97,7 @@ public:
 		return m_LivingEntityCount;
 	}
 
-	const std::unordered_set<EntityID>& GetActiveEntities()
+	const FixedSizeSet<EntityID, MAX_ENTITIES>& GetActiveEntities()
 	{
 		return  m_InUseEntityIDs;
 	}
@@ -114,7 +115,7 @@ public:
 
 private:
 	FixedQueue<EntityID,MAX_ENTITIES> m_AvailableEntities{};
-	std::unordered_set<EntityID> m_InUseEntityIDs; //TODO maybe replace this set with FixedSizeSet
+	FixedSizeSet<EntityID,MAX_ENTITIES> m_InUseEntityIDs;
 	std::array<CompSignature, MAX_ENTITIES> m_Signatures{};
 	uint32_t m_LivingEntityCount{};
 };

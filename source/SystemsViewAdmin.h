@@ -2,7 +2,7 @@
 
 #include "ECSCore.h"
 #include "ECSRegistry.h"
-#include "ComponentView.h"
+#include "SystemView.h"
 #include "Components.h"
 #include <unordered_map>
 #include <memory>
@@ -27,6 +27,16 @@ public:
 		}
 
 
+		const auto& moveSignature = m_MoveView->GetRelevantSignature();
+		if ((signature & moveSignature) == moveSignature)
+		{
+			if (!m_MoveView->ContainsEntity(id))
+			{
+				m_MoveView->Add(id, MakeTableEntry<TransformComp, RigidBodyComp>(id));
+			}
+		}
+
+
 		const auto& renderSignature = m_RenderView->GetRelevantSignature();
 		if ((signature & renderSignature) == renderSignature)
 		{
@@ -47,12 +57,12 @@ public:
 		}
 
 
-		const auto& moveTranslateSignature = m_MoveTranslateView->GetRelevantSignature();
+		const auto& moveTranslateSignature = m_CollisionView->GetRelevantSignature();
 		if ((signature & moveTranslateSignature) == moveTranslateSignature)
 		{
-			if (!m_MoveTranslateView->ContainsEntity(id))
+			if (!m_CollisionView->ContainsEntity(id))
 			{
-				m_MoveTranslateView->Add(id, MakeTableEntry<TransformComp, RigidBodyComp, TagComp, HealthComp>(id));
+				m_CollisionView->Add(id, MakeTableEntry<TransformComp, TagComp, HealthComp>(id));
 			}
 		}
 
@@ -66,6 +76,11 @@ public:
 		{
 			m_ThrottleView->Remove(id);
 		}
+		
+		if (m_MoveView->ContainsEntity(id))
+		{
+			m_MoveView->Remove(id);
+		}
 
 		if (m_RenderView->ContainsEntity(id))
 		{
@@ -77,9 +92,9 @@ public:
 			m_WeaponView->Remove(id);
 		}
 
-		if (m_MoveTranslateView->ContainsEntity(id))
+		if (m_CollisionView->ContainsEntity(id))
 		{
-			m_MoveTranslateView->Remove(id);
+			m_CollisionView->Remove(id);
 		}
 	}
 
@@ -91,10 +106,11 @@ public:
 
 public:
 
-	std::shared_ptr <ComponentView<RigidBodyComp, InputComp>> m_ThrottleView;
-	std::shared_ptr <ComponentView<TransformComp, TagComp>> m_RenderView;
-	std::shared_ptr <ComponentView<TransformComp, InputComp, TagComp, WeaponComp>> m_WeaponView;
-	std::shared_ptr <ComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp>> m_MoveTranslateView;
+	std::shared_ptr <SystemView<RigidBodyComp, InputComp>> m_ThrottleView;
+	std::shared_ptr <SystemView<TransformComp,RigidBodyComp>> m_MoveView;
+	std::shared_ptr <SystemView<TransformComp, TagComp>> m_RenderView;
+	std::shared_ptr <SystemView<TransformComp, InputComp, TagComp, WeaponComp>> m_WeaponView;
+	std::shared_ptr <SystemView<TransformComp, TagComp, HealthComp>> m_CollisionView;
 
 private:
 	std::unordered_map<size_t, std::shared_ptr<ICompArray>> m_ComponentArrays{};

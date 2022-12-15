@@ -28,9 +28,10 @@ struct TransformComp
 {
 	Vector2 Position;
 	Vector2 Size;
+	Vector2 NextPosition;
 
 	TransformComp() = default;
-	TransformComp(Vector2 position,Vector2 size): Position(position), Size(size){}
+	TransformComp(Vector2 position,Vector2 size): Position(position), Size(size),NextPosition(position) {}
 	~TransformComp() = default;
 };
 
