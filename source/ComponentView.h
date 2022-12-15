@@ -5,6 +5,7 @@
 #include <variant>
 #include <unordered_set>
 #include <memory>
+#include <vector>
 #include "ECSCore.h"
 #include "CompArray.h"
 #include "ComponentAdmin.h"
@@ -76,7 +77,7 @@ public:
 	const CompSignature& GetRelevantSignature() { return m_RelevantSignature; }
 	bool ContainsEntity(EntityID id) 
 	{ 
-		return  m_ContainedEntityIDs.size() != 0 || m_ContainedEntityIDs.find(id) != m_ContainedEntityIDs.end();
+		return  m_ContainedEntityIDs.size() != 0 && m_ContainedEntityIDs.find(id) != m_ContainedEntityIDs.end();
 	}
 
 private:
