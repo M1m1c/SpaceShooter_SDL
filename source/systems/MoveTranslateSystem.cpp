@@ -9,7 +9,13 @@ void MoveTranslateSystem::Update(float deltaTime)
 	{
 		auto& transform = std::get<0>(table[i]);
 		
+		auto nextPos = transform.NextPosition;
+		auto oldPos = transform.Position;
+
+		m_QuadTree->Update(m_SystemView->GetID(i), nextPos.x, nextPos.y, oldPos.x, oldPos.y);
+
 		transform.Position = transform.NextPosition;
+		
 	}
 }
 
