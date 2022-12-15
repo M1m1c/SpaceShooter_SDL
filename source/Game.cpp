@@ -8,7 +8,10 @@
 #include "systems/PlayerController.h"
 #include "systems/ThrottleSystem.h"
 #include "systems/RenderSystem.h"
+#include "systems/MoveCalcSystem.h"
 #include "systems/MoveTranslateSystem.h"
+#include "systems/BorderSystem.h"
+#include "systems/CollisionSystem.h"
 #include "systems/WeaponSystem.h"
 #include "systems/DestructionSystem.h"
 #include "systems/WaveSpawnerSystem.h"
@@ -50,14 +53,16 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 
 	//Creating systems views
 	auto throttleView = m_ECSRegistry->CreateComponentView<RigidBodyComp, InputComp>();
+	auto moveView = m_ECSRegistry->CreateComponentView<TransformComp, RigidBodyComp>();
 	auto renderView = m_ECSRegistry->CreateComponentView<TransformComp, TagComp>();
 	auto weaponView = m_ECSRegistry->CreateComponentView<TransformComp, InputComp, TagComp, WeaponComp>();
-	auto moveTranslateView = m_ECSRegistry->CreateComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp>();
+	auto collisionView = m_ECSRegistry->CreateComponentView<TransformComp, TagComp, HealthComp>();
 
 	m_ECSRegistry->SetThrottleView(throttleView);
+	m_ECSRegistry->SetMoveView(moveView);
 	m_ECSRegistry->SetRenderView(renderView);
 	m_ECSRegistry->SetWeaponView(weaponView);
-	m_ECSRegistry->SetMoveTranslateView(moveTranslateView);
+	m_ECSRegistry->SetCollisionView(collisionView);
 
 
 	//Creating Player
@@ -72,7 +77,10 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	AddSystem<ThrottleSystem>(throttleView);
 	AddSystem<RenderSystem>(m_Renderer, renderView);
 	AddSystem<WeaponSystem>(m_SpawnOrders, weaponView);
-	AddSystem<MoveTranslateSystem>(m_Renderer, m_Width, m_Height, moveTranslateView);
+	AddSystem<MoveCalcSystem>(moveView);
+	AddSystem<BorderSystem>(m_Width,m_Height,collisionView);
+	AddSystem<CollisionSystem>(m_Renderer,collisionView);
+	AddSystem<MoveTranslateSystem>(moveView);
 	AddSystem<WaveSpawnerSystem>(m_SpawnOrders);
 	AddSystem<EntitySpawnSystem>(m_ECSRegistry, m_SpawnOrders);
 	AddSystem<DestructionSystem>(m_ECSRegistry);
