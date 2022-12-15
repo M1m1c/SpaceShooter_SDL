@@ -173,9 +173,11 @@ private:
 };
 
 
-//TODO when an entity is destroyed it needs to be removed from the quadtree
+//TODO When an entity exits a border node it needs to get removed, mostly a problem with diagonals right now
 //TODO figure out how to iterate over nodes with more than one entity and do collision checks
 //TODO figure out how we can do boundry checks using the quadtrees border nodes
+//TODO make entites able to overlap multiple nodes by passing their collider size instead of just position
+//TODO ultimatley we only want to check collisions in nodes where there are more than one entites that have different tags, borders are a differnt case
 
 template<typename T>
 class QuadTree
@@ -205,9 +207,18 @@ public:
 			m_Root->Add(item, x, y);
 			return;
 		}
+		
+		//TODO this did not seem to help wiht the border nodes not getting emptied when exited
+	/*	if (nextNode == nullptr) 
+		{
+			m_Root->Remove(item, prevX, prevY);
+			m_Root->Remove(item, x, y);
+			return;
+		}*/
 
+		auto nextNode = m_Root->FindNode(x, y);
 		// Check if the object has entered a new quadrant
-		if (m_Root->FindNode(x, y) != node)
+		if (nextNode != node)
 		{
 			// The object has entered a new quadrant, so remove it from its current node and add it to the appropriate leaf node
 			m_Root->Remove(item, prevX, prevY);
