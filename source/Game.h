@@ -6,6 +6,7 @@
 #include "ECSCore.h"
 #include "SpawnOrder.h"
 #include "FixedQueue.h"
+#include "QuadTree.h"
 
 class ECSRegistry;
 class Entity;
@@ -30,8 +31,6 @@ public:
 
 	std::shared_ptr<ECSRegistry> GetECSRegistry();
 
-	Entity& CreateEntity(const std::string& name = std::string());
-
 private:
 	template<typename T,typename... Args>
 	void AddSystem(Args&&... args);
@@ -48,6 +47,8 @@ private:
 	std::shared_ptr<union SDL_Event> m_EventHandle;
 
 	std::shared_ptr<ECSRegistry> m_ECSRegistry;
+
+	std::shared_ptr<QuadTree<EntityID>> m_QuadTree;
 
 	uint32_t m_SystemCount = 0;
 	std::array<std::unique_ptr<ISystem>, MAX_SYSTEMS> m_Systems;

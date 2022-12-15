@@ -10,6 +10,7 @@
 #include "ECSCore.h"
 #include "CompArray.h"
 #include "ComponentAdmin.h"
+#include <iostream>
 
 template<typename... Components>
 class SystemView
@@ -52,18 +53,19 @@ public:
 		{
 			m_ComponentTable[m_EntitiesToTableIndex[id]] = std::move(m_ComponentTable.back());
 			m_ComponentTable.pop_back();
-			m_ContainedEntityIDs.erase(id);
-
-			size_t indexOfRemovedEntity = m_EntitiesToTableIndex[id];
-			size_t indexOfLastElement = m_Size - 1;
-			EntityID entityOfLastElement = m_TableIndexToEntity[indexOfLastElement];
-
-			m_EntitiesToTableIndex[entityOfLastElement] = indexOfRemovedEntity;
-			m_TableIndexToEntity[indexOfRemovedEntity] = entityOfLastElement;
-
-			m_EntitiesToTableIndex[id] = -1;
-			m_TableIndexToEntity[indexOfLastElement] = -1;
 		}
+		
+		m_ContainedEntityIDs.erase(id);		
+
+		size_t indexOfRemovedEntity = m_EntitiesToTableIndex[id];
+		size_t indexOfLastElement = m_Size - 1;
+		EntityID entityOfLastElement = m_TableIndexToEntity[indexOfLastElement];
+
+		m_EntitiesToTableIndex[entityOfLastElement] = indexOfRemovedEntity;
+		m_TableIndexToEntity[indexOfRemovedEntity] = entityOfLastElement;
+
+		m_EntitiesToTableIndex[id] = -1;
+		m_TableIndexToEntity[indexOfLastElement] = -1;
 
 		--m_Size;
 
@@ -74,6 +76,9 @@ public:
 	{ 
 		return  m_ContainedEntityIDs.size() != 0 && m_ContainedEntityIDs.find(id) != m_ContainedEntityIDs.end();
 	}
+
+	const size_t& GetSize() { return m_Size; }
+	const EntityID& GetID(size_t index) { return m_TableIndexToEntity[index]; }
 
 private:
 	size_t m_Size = 0;

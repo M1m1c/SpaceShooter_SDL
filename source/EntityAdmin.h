@@ -67,25 +67,6 @@ public:
 		return matchingCount;
 	}
 
-	std::vector<EntityID> GetEntitiesWithMatchingSignature(const CompSignature& signature)
-	{
-		std::vector<EntityID> matchingEntities;
-		for (size_t i = 0; i < MAX_ENTITIES; i++)
-		{
-			if (!IsEntityActive(i))
-			{
-				continue;
-			}
-
-			const CompSignature& entitySig = m_Signatures[i];
-			if ((entitySig & signature) == signature)
-			{
-				matchingEntities.push_back(i);
-			}
-		}
-		return matchingEntities;
-	}
-
 	CompSignature GetSignature(EntityID entity)
 	{
 		assert(entity < MAX_ENTITIES && "Entity out of range.");

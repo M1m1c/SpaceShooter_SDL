@@ -42,6 +42,9 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	m_ECSRegistry = std::make_shared<ECSRegistry>();
 	m_ECSRegistry->Init();
 
+
+	m_QuadTree = std::make_shared<QuadTree<EntityID>>(0, 0, m_Width, m_Height, 50.f);
+
 	//Registering components with ECS registry
 	m_ECSRegistry->RegisterComponent<TransformComp>();
 	m_ECSRegistry->RegisterComponent<InputComp>();
@@ -78,12 +81,12 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	AddSystem<RenderSystem>(m_Renderer, renderView);
 	AddSystem<WeaponSystem>(m_SpawnOrders, weaponView);
 	AddSystem<MoveCalcSystem>(moveView);
-	AddSystem<BorderSystem>(m_Width,m_Height,collisionView);
-	AddSystem<CollisionSystem>(m_Renderer,collisionView);
-	AddSystem<MoveTranslateSystem>(moveView);
+	AddSystem<BorderSystem>(m_Width, m_Height, collisionView);
+	AddSystem<CollisionSystem>(m_Renderer, collisionView);
+	AddSystem<MoveTranslateSystem>(m_QuadTree,moveView);
 	AddSystem<WaveSpawnerSystem>(m_SpawnOrders);
+	AddSystem<DestructionSystem>(m_IsRunning, m_ECSRegistry);
 	AddSystem<EntitySpawnSystem>(m_ECSRegistry, m_SpawnOrders);
-	AddSystem<DestructionSystem>(m_IsRunning,m_ECSRegistry);
 }
 
 void Game::Run()
@@ -97,11 +100,26 @@ void Game::Run()
 		SDL_SetRenderDrawColor(m_Renderer, 20, 20, 30, 255);
 		SDL_RenderClear(m_Renderer);
 
-		//TODO maybe we should just get all the components of active enties here at once and them filter them down to the systems,
-		// this would avoid having to read for each system,
-		// make class with an array that holds pointers to the componentviews and sets their tuples at the start here
+#ifdef _DEBUG
+		auto& renderer = m_Renderer;
+		m_QuadTree->Traverse([&renderer](QuadTreeNode<EntityID>* node)
+			{
+				SDL_Rect rect;
+				auto& aabb = node->GetAABB();
+				auto sizeX = aabb.max_x - aabb.min_x;
+				auto sizeY = aabb.max_y - aabb.min_y;
+				rect.x = aabb.min_x;
+				rect.y = aabb.min_y;
+				rect.w = sizeX;
+				rect.h = sizeY;
 
+				auto isEmpty = node->GetData().empty();
+				glm::ivec3 color = isEmpty? glm::ivec3(60, 60, 80) : glm::ivec3(140, 140, 40);
 
+				SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 255);
+				SDL_RenderDrawRect(renderer, &rect);
+			});
+#endif
 
 		for (size_t i = 0; i < m_SystemCount; i++)
 		{
