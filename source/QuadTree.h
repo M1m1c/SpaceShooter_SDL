@@ -22,6 +22,7 @@ struct AABB
 	}
 };
 
+template<typename T>
 class QuadTreeNode
 {
 public:
@@ -78,27 +79,26 @@ public:
 private:
 
 	AABB m_AABB;
-
 	std::shared_ptr<QuadTreeNode> m_Children[4] = { nullptr, nullptr, nullptr, nullptr };
-
+	std::vector<T> m_Data{};
 };
 
-
+template<typename T>
 class QuadTree
 {
 public:
 	// Construct a new quadtree with the given bounds, stopping division when threshold is reached
-	QuadTree(float min_x, float min_y, float max_x, float max_y, float cellSizeThreshold=50.f)
-		: m_Root(new QuadTreeNode(min_x, min_y, max_x, max_y))
+	QuadTree(float min_x, float min_y, float max_x, float max_y, float cellSizeThreshold = 50.f)
+		: m_Root(std::make_shared<QuadTreeNode<T>>(min_x, min_y, max_x, max_y))
 	{
 		m_Root->GenerateChildren(cellSizeThreshold);
 	}
 
-	void Traverse(std::function<void(QuadTreeNode*)> func)
+	void Traverse(std::function<void(QuadTreeNode<T>*)> func)
 	{
 		m_Root->Traverse(func);
 	}
 
 private:
-	std::shared_ptr<QuadTreeNode> m_Root;
+	std::shared_ptr<QuadTreeNode<T>> m_Root;
 };
