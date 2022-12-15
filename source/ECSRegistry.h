@@ -49,11 +49,12 @@ public:
 
 	void DestroyEntity(EntityID entityID)
 	{
+		m_SystemsViewAdmin->OnEntityDestroyed(entityID);
+
 		m_EntityAdmin->DestroyEntity(entityID);
 
 		m_ComponentAdmin->OnEntityDestroyed(entityID);
 
-		m_SystemsViewAdmin->OnEntityDestroyed(entityID);
 	}
 
 	template<typename... Components>
@@ -132,15 +133,6 @@ public:
 	uint32_t GetMatchingSignatureCount(const CompSignature& signature)
 	{
 		return m_EntityAdmin->GetMatchingSignatureCount(signature);
-	}
-
-	template< typename... Types>
-	std::vector<EntityID> GetEntityIDsMatchingSignature()
-	{
-		CompSignature signature = ComposeSignature<Types...>();
-		size_t entityCount = 0;
-
-		return m_EntityAdmin->GetEntitiesWithMatchingSignature(signature);
 	}
 
 
