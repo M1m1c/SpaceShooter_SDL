@@ -163,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\CollisionOrder.h" />
+    <ClInclude Include="source\QuadTree.h" />
     <ClInclude Include="source\systems\BorderSystem.h" />
     <ClInclude Include="source\systems\MoveCalcSystem.h" />
     <ClInclude Include="source\systems\CollisionSystem.h" />
