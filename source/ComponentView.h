@@ -20,7 +20,6 @@ public:
 	{
 		m_ComponentTable.reserve(MAX_ENTITIES);
 		m_ContainedEntityIDs.reserve(MAX_ENTITIES);
-		//m_EntitiesToTableIndex.reserve(MAX_ENTITIES);
 		m_EntitiesToTableIndex.fill(-1);
 		m_TableIndexToEntity.fill(-1);
 	}
