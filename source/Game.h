@@ -31,8 +31,6 @@ public:
 
 	std::shared_ptr<ECSRegistry> GetECSRegistry();
 
-	Entity& CreateEntity(const std::string& name = std::string());
-
 private:
 	template<typename T,typename... Args>
 	void AddSystem(Args&&... args);
