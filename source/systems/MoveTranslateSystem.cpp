@@ -8,7 +8,7 @@
 void MoveTranslateSystem::Update(float deltaTime)
 {
 
-	auto table = m_ComponentView->GetComponents();
+	auto& table = m_ComponentView->GetComponents();
 	auto size = table.size();
 	for (int i = 0; i < size; ++i)
 	{

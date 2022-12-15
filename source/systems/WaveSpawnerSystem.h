@@ -1,9 +1,10 @@
 #pragma once
 #include "ISystem.h"
 #include "../Components.h"
+#include "../FixedQueue.h"
+#include "../ECSCore.h"
 #include <array>
 #include <random>
-#include <queue>
 
 struct SpawnOrder;
 
@@ -20,19 +21,19 @@ public:
 class WaveSpawnerSystem : public ISystem
 {
 public:
-	WaveSpawnerSystem(std::queue<SpawnOrder>& orderQueue) : m_OrderQueue(orderQueue) { }
+	WaveSpawnerSystem(FixedQueue<SpawnOrder, MAX_ENTITIES>& orderQueue) : m_OrderQueue(orderQueue) { }
 	~WaveSpawnerSystem() = default;
 
 	virtual void Update(float deltaTime) override;
 private:
 
-	std::queue<SpawnOrder>& m_OrderQueue;
+	FixedQueue<SpawnOrder, MAX_ENTITIES>& m_OrderQueue;
 
 	std::random_device m_RD;
 
 	float m_WaveSpawnTime = 2.f;
 	float m_MinWaveSpawnTime = 1.f;
-	float m_MaxWaveSpawnTime = 4.f;
+	float m_MaxWaveSpawnTime = 3.f;
 
 	std::array<SpawnParams, 4> m_SpawnPatterns{
 		SpawnParams(Vector2(120.f,0.f),Vector2(120.f,0.f), std::bitset<5>(1<<(int)Inputs::Down)),

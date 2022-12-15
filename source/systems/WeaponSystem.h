@@ -2,9 +2,9 @@
 #include "ISystem.h"
 #include "../ECSCore.h"
 #include "../ComponentView.h"
+#include "../FixedQueue.h"
 #include <memory>
 #include <glm/glm.hpp>
-#include <queue>
 struct TransformComp;
 struct InputComp;
 struct TagComp;
@@ -16,7 +16,7 @@ class WeaponSystem : public ISystem
 public:
 
 	WeaponSystem(
-		std::queue<SpawnOrder>& orderQueue,
+		FixedQueue<SpawnOrder, MAX_ENTITIES>& orderQueue,
 		std::shared_ptr<ComponentView<TransformComp, InputComp, TagComp, WeaponComp>> componentView)
 		: m_OrderQueue(orderQueue), m_ComponentView(componentView) {}
 
@@ -26,7 +26,7 @@ public:
 
 private:
 	void SpawnBullet(glm::vec2 position, int direction);
-	std::queue<SpawnOrder>& m_OrderQueue;
+	FixedQueue<SpawnOrder, MAX_ENTITIES>& m_OrderQueue;
 	std::shared_ptr<ComponentView<TransformComp, InputComp, TagComp, WeaponComp>> m_ComponentView;
 };
 

@@ -1,6 +1,5 @@
 #include "EntitySpawnSystem.h"
 #include "../ECSRegistry.h"
-#include "../ECSCore.h"
 #include "../Components.h"
 #include "../SpawnOrder.h"
 

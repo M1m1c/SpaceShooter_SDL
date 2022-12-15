@@ -6,6 +6,7 @@
 #include "ECSCore.h"
 #include "EntityAdmin.h"
 #include "ComponentAdmin.h"
+#include "SystemsViewAdmin.h"
 #include "Components.h"
 #include "Game.h"
 #include "ComponentView.h"
@@ -19,6 +20,7 @@ public:
 	{
 		m_ComponentAdmin = std::make_unique<ComponentAdmin>();
 		m_EntityAdmin = std::make_unique<EntityAdmin>();
+		m_SystemsViewAdmin = std::make_unique<SystemsViewAdmin>(m_ComponentAdmin);
 	}
 
 	template<typename... Types>
@@ -39,6 +41,9 @@ public:
 
 		(AddComponent<Types>(id), ...);
 
+		auto signature = m_EntityAdmin->GetSignature(id);
+		m_SystemsViewAdmin->OnComponentAdded(id, signature);
+
 		return id;
 	}
 
@@ -46,18 +51,16 @@ public:
 	{
 		m_EntityAdmin->DestroyEntity(entityID);
 
-		m_ComponentAdmin->EntityDestroyed(entityID);
+		m_ComponentAdmin->OnEntityDestroyed(entityID);
+
+		m_SystemsViewAdmin->OnEntityDestroyed(entityID);
 	}
 
 	template<typename... Components>
-	std::shared_ptr<ComponentView<Components...>> CreateComponentView() 
+	std::shared_ptr<ComponentView<Components...>> CreateComponentView()
 	{
 		auto signature = ComposeSignature<Components...>();
-		return std::make_shared<ComponentView<Components...>>(
-			GetActiveEntities(),
-			m_EntityAdmin->Getsignatures(),
-			signature,
-			m_ComponentAdmin);
+		return std::make_shared<ComponentView<Components...>>(signature);
 	}
 
 
@@ -80,11 +83,12 @@ public:
 	template<typename T, typename... Args>
 	T& AddComponent(EntityID entityID, Args&&... args)
 	{
-		m_ComponentAdmin->AddComponent<T>(entityID,args...);
+		m_ComponentAdmin->AddComponent<T>(entityID, args...);
 
 		auto signature = m_EntityAdmin->GetSignature(entityID);
 		signature.set(m_ComponentAdmin->GetComponentType<T>(), true);
 		m_EntityAdmin->SetSignature(entityID, signature);
+
 		return m_ComponentAdmin->GetComponent<T>(entityID);
 	}
 
@@ -130,28 +134,6 @@ public:
 		return m_EntityAdmin->GetMatchingSignatureCount(signature);
 	}
 
-	//TODO for some reason this does not return refernces to teh components, try to figure out why
-	//Composes a DataTable& where each entry corresponds to the components of one entity,
-	//based on the sent in componenttypes.
-	//Returns the number of entities that have these components.
-	template<typename... Types>
-	size_t GetAllComponentPairs(DataTable<Types...>& outTable)
-	{
-		CompSignature signature = ComposeSignature<Types...>();
-		size_t entityCount = 0;
-
-		std::vector<EntityID> entityIDs = m_EntityAdmin->GetEntitiesWithMatchingSignature(signature);
-		entityCount = entityIDs.size();
-
-		for (size_t i = 0; i < entityCount; i++)
-		{
-			outTable.push_back(std::tie(GetComponent<Types>(entityIDs[i])...));
-		}
-
-		return entityCount;
-	}
-
-
 	template< typename... Types>
 	std::vector<EntityID> GetEntityIDsMatchingSignature()
 	{
@@ -162,6 +144,11 @@ public:
 	}
 
 
+	const std::array<CompSignature, MAX_ENTITIES>& GetSignatures()
+	{
+		return m_EntityAdmin->GetSignatures();
+	}
+
 	template<typename T>
 	bool AnyOf(EntityID entityID)
 	{
@@ -170,18 +157,13 @@ public:
 		return signature[type];
 	}
 
-	/*const std::array<CompSignature, MAX_ENTITIES>& Getsignatures()
-	{
-		return m_EntityAdmin->Getsignatures();
-	}
-
-	template<typename T>
-	std::shared_ptr<CompArray<T>> GetComponentArray()
-	{
-		return m_ComponentAdmin->GetComponentArray<T>();
-	}*/
+	void SetThrottleView(std::shared_ptr <ComponentView<RigidBodyComp, InputComp>> view) { m_SystemsViewAdmin->m_ThrottleView = view; }
+	void SetRenderView(std::shared_ptr <ComponentView<TransformComp, TagComp>> view) { m_SystemsViewAdmin->m_RenderView = view; }
+	void SetWeaponView(std::shared_ptr <ComponentView<TransformComp, InputComp, TagComp, WeaponComp>> view) { m_SystemsViewAdmin->m_WeaponView = view; }
+	void SetMoveTranslateView(std::shared_ptr <ComponentView<TransformComp, RigidBodyComp, TagComp, HealthComp>> view) { m_SystemsViewAdmin->m_MoveTranslateView = view; }
 
 private:
 	std::unique_ptr<ComponentAdmin> m_ComponentAdmin;
 	std::unique_ptr<EntityAdmin> m_EntityAdmin;
+	std::unique_ptr<SystemsViewAdmin> m_SystemsViewAdmin;
 };
