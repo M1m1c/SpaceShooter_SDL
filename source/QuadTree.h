@@ -172,6 +172,11 @@ private:
 	std::vector<T> m_Data{};
 };
 
+
+//TODO when an entity is destroyed it needs to be removed from the quadtree
+//TODO figure out how to iterate over nodes with more than one entity and do collision checks
+//TODO figure out how we can do boundry checks using the quadtrees border nodes
+
 template<typename T>
 class QuadTree
 {
