@@ -2,10 +2,8 @@
 #include <string>
 #include <bitset>
 #include <cmath>
-#include <glm/glm.hpp>
-
-using Vector4 = glm::vec4;
-using Vector2 = glm::vec2;
+#include "Vectors.h"
+#include "../containers/AABB.h"
 
 enum class Inputs
 {
@@ -31,13 +29,22 @@ struct TransformComp
 	Vector2 NextPosition;
 
 	TransformComp() = default;
-	TransformComp(Vector2 position,Vector2 size): Position(position), Size(size),NextPosition(position) {}
+	TransformComp(Vector2 position, Vector2 size) : Position(position), Size(size), NextPosition(position) {}
 	~TransformComp() = default;
+};
+
+struct ColliderComp
+{
+	AABB Collider = { 0.f,0.f,0.f,0.f };
+
+	ColliderComp() = default;
+	ColliderComp(Vector2 position, Vector2 size) : Collider(position, size) {}
+	~ColliderComp() = default;
 };
 
 struct RigidBodyComp
 {
-	Vector2 velocity = Vector2(0.f,0.f);
+	Vector2 velocity = Vector2(0.f, 0.f);
 	float acceleration = 250.f;
 
 	RigidBodyComp() = default;
@@ -52,12 +59,12 @@ struct InputComp
 	~InputComp() = default;
 };
 
-struct TagComp 
+struct TagComp
 {
-	ObjectTag Tag =ObjectTag::None;
+	ObjectTag Tag = ObjectTag::None;
 
 	TagComp() = default;
-	TagComp(ObjectTag tag) : Tag(tag){}
+	TagComp(ObjectTag tag) : Tag(tag) {}
 	~TagComp() = default;
 };
 
@@ -67,8 +74,8 @@ struct WeaponComp
 	float CoolDown = 0.f;
 	float GetMaxCoolDown() { return maxCoolDown; }
 
-	WeaponComp()=default;
-	~WeaponComp()=default;
+	WeaponComp() = default;
+	~WeaponComp() = default;
 
 private:
 	float maxCoolDown = 0.2f;
