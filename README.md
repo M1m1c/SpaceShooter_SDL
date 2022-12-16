@@ -9,7 +9,7 @@ The controls for playing are:
 
 **Colliding with an enemy and dying closes the application.**
 
-### *The approaches used to achieve better performance are as follows:*
+*The approaches used to achieve better performance are as follows:*
 
 ## Minimize allocations 
 
