@@ -8,8 +8,8 @@
 #include "ComponentAdmin.h"
 #include "SystemsViewAdmin.h"
 #include "Components.h"
-#include "Game.h"
 #include "SystemView.h"
+#include "../containers/FixedSizeSet.h"
 
 
 

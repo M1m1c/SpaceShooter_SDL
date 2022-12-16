@@ -1,7 +1,7 @@
 #include "RenderSystem.h"
 #include "SDL.h"
-#include "../ECSCore.h"
-#include "../Components.h"
+#include "../ECS/ECSCore.h"
+#include "../ECS/Components.h"
 
 void RenderSystem::Update(float deltaTime)
 {

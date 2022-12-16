@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <memory>
 #include <functional>
-#include "ECSCore.h"
+#include "../ECS/ECSCore.h"
 
 struct AABB
 {

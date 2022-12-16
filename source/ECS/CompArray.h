@@ -2,7 +2,6 @@
 #include <cassert>
 #include <unordered_map>
 #include <array>
-
 #include "ECSCore.h"
 
 class ICompArray

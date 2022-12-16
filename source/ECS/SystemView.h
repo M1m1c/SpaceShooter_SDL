@@ -7,10 +7,10 @@
 #include <unordered_map>
 #include <memory>
 #include <vector>
+
 #include "ECSCore.h"
 #include "CompArray.h"
 #include "ComponentAdmin.h"
-#include <iostream>
 
 template<typename... Components>
 class SystemView

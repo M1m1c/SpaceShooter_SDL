@@ -1,6 +1,6 @@
 #include "WaveSpawnerSystem.h"
 
-#include "../SpawnOrder.h"
+#include "SpawnOrder.h"
 
 
 void WaveSpawnerSystem::Update(float deltaTime)

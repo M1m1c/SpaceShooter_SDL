@@ -1,8 +1,8 @@
 #include "DestructionSystem.h"
-#include "../ECSCore.h"
-#include "../ECSRegistry.h"
-#include "../Components.h"
-#include "../FixedSizeSet.h"
+#include "../ECS/ECSCore.h"
+#include "../ECS/ECSRegistry.h"
+#include "../ECS/Components.h"
+#include "../containers/FixedSizeSet.h"
 
 void DestructionSystem::Update(float deltaTime)
 {

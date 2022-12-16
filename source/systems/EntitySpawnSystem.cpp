@@ -1,7 +1,7 @@
 #include "EntitySpawnSystem.h"
-#include "../ECSRegistry.h"
-#include "../Components.h"
-#include "../SpawnOrder.h"
+#include "SpawnOrder.h"
+#include "../ECS/ECSRegistry.h"
+#include "../ECS/Components.h"
 
 void EntitySpawnSystem::Update(float deltaTime)
 {

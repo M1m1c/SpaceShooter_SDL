@@ -162,24 +162,23 @@
     <ClCompile Include="source\systems\WeaponSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\CollisionOrder.h" />
-    <ClInclude Include="source\QuadTree.h" />
+    <ClInclude Include="source\containers\QuadTree.h" />
     <ClInclude Include="source\systems\BorderSystem.h" />
     <ClInclude Include="source\systems\MoveCalcSystem.h" />
     <ClInclude Include="source\systems\CollisionSystem.h" />
-    <ClInclude Include="source\FixedQueue.h" />
-    <ClInclude Include="source\FixedSizeSet.h" />
+    <ClInclude Include="source\containers\FixedQueue.h" />
+    <ClInclude Include="source\containers\FixedSizeSet.h" />
     <ClInclude Include="source\systems\EntitySpawnSystem.h" />
-    <ClInclude Include="source\SpawnOrder.h" />
+    <ClInclude Include="source\systems\SpawnOrder.h" />
     <ClInclude Include="source\systems\WaveSpawnerSystem.h" />
     <ClInclude Include="source\systems\DestructionSystem.h" />
-    <ClInclude Include="source\CompArray.h" />
-    <ClInclude Include="source\ComponentAdmin.h" />
-    <ClInclude Include="source\Components.h" />
-    <ClInclude Include="source\SystemView.h" />
-    <ClInclude Include="source\ECSRegistry.h" />
-    <ClInclude Include="source\EntityAdmin.h" />
-    <ClInclude Include="source\ECSCore.h" />
+    <ClInclude Include="source\ECS\CompArray.h" />
+    <ClInclude Include="source\ECS\ComponentAdmin.h" />
+    <ClInclude Include="source\ECS\Components.h" />
+    <ClInclude Include="source\ECS\SystemView.h" />
+    <ClInclude Include="source\ECS\ECSRegistry.h" />
+    <ClInclude Include="source\ECS\EntityAdmin.h" />
+    <ClInclude Include="source\ECS\ECSCore.h" />
     <ClInclude Include="source\Game.h" />
     <ClInclude Include="source\systems\ISystem.h" />
     <ClInclude Include="source\systems\ThrottleSystem.h" />
@@ -187,7 +186,7 @@
     <ClInclude Include="source\systems\PlayerController.h" />
     <ClInclude Include="source\systems\RenderSystem.h" />
     <ClInclude Include="source\systems\WeaponSystem.h" />
-    <ClInclude Include="source\SystemsViewAdmin.h" />
+    <ClInclude Include="source\ECS\SystemsViewAdmin.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

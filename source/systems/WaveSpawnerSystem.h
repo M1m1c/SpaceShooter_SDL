@@ -1,8 +1,8 @@
 #pragma once
 #include "ISystem.h"
-#include "../Components.h"
-#include "../FixedQueue.h"
-#include "../ECSCore.h"
+#include "../ECS/ECSCore.h"
+#include "../ECS/Components.h"
+#include "../containers/FixedQueue.h"
 #include <array>
 #include <random>
 

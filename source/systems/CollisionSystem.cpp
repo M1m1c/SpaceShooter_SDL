@@ -1,5 +1,5 @@
 #include "CollisionSystem.h"
-#include "../ECSCore.h"
+#include "../ECS/ECSCore.h"
 
 void CollisionSystem::Update(float deltaTime)
 {

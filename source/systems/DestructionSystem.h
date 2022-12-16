@@ -1,6 +1,7 @@
 #pragma once
 #include "ISystem.h"
-#include "../QuadTree.h"
+#include "../ECS/ECSCore.h"
+#include "../containers/QuadTree.h"
 #include <memory>
 class ECSRegistry;
 

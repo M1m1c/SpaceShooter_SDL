@@ -1,8 +1,8 @@
 #pragma once
 #include "ISystem.h"
-#include "../ECSCore.h"
-#include "../SystemView.h"
-#include "../FixedQueue.h"
+#include "../ECS/ECSCore.h"
+#include "../ECS/SystemView.h"
+#include "../containers/FixedQueue.h"
 #include <memory>
 #include <glm/glm.hpp>
 struct TransformComp;

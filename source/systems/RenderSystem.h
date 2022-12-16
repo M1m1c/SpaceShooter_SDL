@@ -1,6 +1,6 @@
 #pragma once
 #include "ISystem.h"
-#include "../SystemView.h"
+#include "../ECS/SystemView.h"
 #include <memory>
 struct SDL_Renderer;
 struct TransformComp;

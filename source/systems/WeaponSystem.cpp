@@ -1,6 +1,6 @@
 #include "WeaponSystem.h"
-#include "../Components.h"
-#include "../SpawnOrder.h"
+#include "../ECS/Components.h"
+#include "SpawnOrder.h"
 
 void WeaponSystem::Update( float deltaTime)
 {

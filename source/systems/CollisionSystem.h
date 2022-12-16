@@ -1,8 +1,8 @@
 #pragma once
 #include "ISystem.h"
-#include "../SystemView.h"
-#include "../Components.h"
-#include "../QuadTree.h"
+#include "../ECS/SystemView.h"
+#include "../ECS/Components.h"
+#include "../containers/QuadTree.h"
 #include <memory>
 #include <glm/glm.hpp>
 
