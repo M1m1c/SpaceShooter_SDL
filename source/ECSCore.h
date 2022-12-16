@@ -10,4 +10,4 @@ using CompSignature = std::bitset<MAX_COMPONENTS>;
 
 using EntityID = std::uint32_t;
 
-const EntityID MAX_ENTITIES = 1000;
+const EntityID MAX_ENTITIES = 10000;
