@@ -11,7 +11,7 @@
 class CollisionSystem : public ISystem
 {
 public:
-	CollisionSystem(std::shared_ptr<QuadTree<EntityID>> quadTree ,std::shared_ptr<SystemView<TransformComp, TagComp, HealthComp >> systemView) : m_QuadTree(quadTree), m_SystemView(systemView) {}
+	CollisionSystem(std::shared_ptr<QuadTree<EntityID>> quadTree ,std::shared_ptr<SystemView<TransformComp, TagComp, HealthComp, ColliderComp >> systemView) : m_QuadTree(quadTree), m_SystemView(systemView) {}
 	~CollisionSystem() = default;
 
 	virtual void Update(float deltaTime) override;
@@ -26,7 +26,7 @@ private:
 private:
 
 	std::shared_ptr<QuadTree<EntityID>> m_QuadTree;
-	std::shared_ptr<SystemView<TransformComp, TagComp, HealthComp >> m_SystemView;
+	std::shared_ptr<SystemView<TransformComp, TagComp, HealthComp, ColliderComp>> m_SystemView;
 
 };
 

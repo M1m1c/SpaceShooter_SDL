@@ -8,9 +8,9 @@
 class MoveCalcSystem : public ISystem
 {
 public:
-	MoveCalcSystem(std::shared_ptr<SystemView<TransformComp, RigidBodyComp>> view) : m_SystemView(view){}
+	MoveCalcSystem(std::shared_ptr<SystemView<TransformComp, RigidBodyComp, ColliderComp>> view) : m_SystemView(view){}
 	~MoveCalcSystem()=default;
 	virtual void Update(float deltaTime) override;
 private:
-	std::shared_ptr<SystemView<TransformComp, RigidBodyComp>> m_SystemView;
+	std::shared_ptr<SystemView<TransformComp, RigidBodyComp, ColliderComp>> m_SystemView;
 };
