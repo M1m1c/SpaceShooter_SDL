@@ -8,13 +8,15 @@ void MoveTranslateSystem::Update(float deltaTime)
 	for (int i = 0; i < size; ++i)
 	{
 		auto& transform = std::get<0>(table[i]);
+		auto& colliderComp = std::get<2>(table[i]);
 		
 		auto nextPos = transform.NextPosition;
-		auto oldPos = transform.Position;
-
-		m_QuadTree->Update(m_SystemView->GetID(i), nextPos.x, nextPos.y, oldPos.x, oldPos.y);
+		
+		auto nextCol = AABB(transform.NextPosition, transform.Size);
+		m_QuadTree->Update(m_SystemView->GetID(i), nextCol, colliderComp.Collider);
 
 		transform.Position = transform.NextPosition;
+		colliderComp.Collider = nextCol;
 		
 	}
 }
