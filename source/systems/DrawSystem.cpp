@@ -1,9 +1,9 @@
-#include "RenderSystem.h"
+#include "DrawSystem.h"
 #include "SDL.h"
-#include "../ECSCore.h"
-#include "../Components.h"
+#include "../ECS/ECSCore.h"
+#include "../ECS/Components.h"
 
-void RenderSystem::Update(float deltaTime)
+void DrawSystem::Update(float deltaTime)
 {
 	auto& table = m_SystemView->GetComponents();
 
@@ -31,7 +31,7 @@ void RenderSystem::Update(float deltaTime)
 	}
 }
 
-void RenderSystem::RenderPlayer(TransformComp& transform)
+void DrawSystem::RenderPlayer(TransformComp& transform)
 {
 
 	SDL_Rect rect = GenerateQuad(transform);
@@ -54,7 +54,7 @@ void RenderSystem::RenderPlayer(TransformComp& transform)
 }
 
 
-void RenderSystem::RenderEnemy(TransformComp& transform)
+void DrawSystem::RenderEnemy(TransformComp& transform)
 {
 	SDL_Rect rect = GenerateQuad(transform);
 
@@ -62,7 +62,7 @@ void RenderSystem::RenderEnemy(TransformComp& transform)
 	SDL_RenderFillRect(m_Renderer, &rect);
 }
 
-void RenderSystem::RenderBullet(TransformComp& transform)
+void DrawSystem::RenderBullet(TransformComp& transform)
 {
 	SDL_Rect rect = GenerateQuad(transform);
 
@@ -71,7 +71,7 @@ void RenderSystem::RenderBullet(TransformComp& transform)
 }
 
 
-SDL_Rect RenderSystem::GenerateQuad(TransformComp& transform)
+SDL_Rect DrawSystem::GenerateQuad(TransformComp& transform)
 {
 	auto min = transform.Position - transform.Size;
 	auto max = transform.Position + transform.Size;

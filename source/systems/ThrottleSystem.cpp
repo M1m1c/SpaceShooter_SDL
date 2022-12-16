@@ -1,7 +1,7 @@
 #include "ThrottleSystem.h"
-#include "../ECSCore.h"
-#include "../ECSRegistry.h"
-#include "../Components.h"
+#include "../ECS/ECSCore.h"
+#include "../ECS/ECSRegistry.h"
+#include "../ECS/Components.h"
 
 void ThrottleSystem::Update(float deltaTime)
 {

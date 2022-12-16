@@ -27,7 +27,7 @@
     <ClCompile Include="source\systems\ThrottleSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\systems\RenderSystem.cpp">
+    <ClCompile Include="source\systems\DrawSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\systems\MoveTranslateSystem.cpp">
@@ -59,22 +59,22 @@
     <ClInclude Include="source\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Components.h">
+    <ClInclude Include="source\ECS\Components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\EntityAdmin.h">
+    <ClInclude Include="source\ECS\EntityAdmin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\CompArray.h">
+    <ClInclude Include="source\ECS\CompArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\ECSCore.h">
+    <ClInclude Include="source\ECS\ECSCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\ComponentAdmin.h">
+    <ClInclude Include="source\ECS\ComponentAdmin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\ECSRegistry.h">
+    <ClInclude Include="source\ECS\ECSRegistry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\systems\PlayerController.h">
@@ -83,10 +83,10 @@
     <ClInclude Include="source\systems\ThrottleSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\SystemView.h">
+    <ClInclude Include="source\ECS\SystemView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\systems\RenderSystem.h">
+    <ClInclude Include="source\systems\DrawSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\systems\ISystem.h">
@@ -104,19 +104,19 @@
     <ClInclude Include="source\systems\WaveSpawnerSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\SpawnOrder.h">
+    <ClInclude Include="source\systems\SpawnOrder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\systems\EntitySpawnSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\FixedQueue.h">
+    <ClInclude Include="source\containers\FixedQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\FixedSizeSet.h">
+    <ClInclude Include="source\containers\FixedSizeSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\SystemsViewAdmin.h">
+    <ClInclude Include="source\ECS\SystemsViewAdmin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\systems\CollisionSystem.h">
@@ -125,13 +125,10 @@
     <ClInclude Include="source\systems\MoveCalcSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\CollisionOrder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\systems\BorderSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\QuadTree.h">
+    <ClInclude Include="source\containers\QuadTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

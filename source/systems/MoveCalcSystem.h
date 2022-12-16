@@ -1,8 +1,8 @@
 #pragma once
 
 #include "ISystem.h"
-#include "../SystemView.h"
-#include "../Components.h"
+#include "../ECS/SystemView.h"
+#include "../ECS/Components.h"
 #include <memory>
 
 class MoveCalcSystem : public ISystem

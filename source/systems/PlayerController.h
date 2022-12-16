@@ -2,7 +2,7 @@
 #include "ISystem.h"
 #include <memory>
 #include "SDL.h"
-#include "../Components.h"
+#include "../ECS/Components.h"
 
 class PlayerController : public ISystem
 {

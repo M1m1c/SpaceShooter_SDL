@@ -1,7 +1,7 @@
 #pragma once
 #include "ECSCore.h"
-#include "FixedQueue.h"
-#include "FixedSizeSet.h"
+#include "../containers/FixedQueue.h"
+#include "../containers/FixedSizeSet.h"
 #include <cstdint>
 #include <array>
 #include <cassert>

@@ -1,13 +1,13 @@
 #include "Game.h"
 
 #include "SDL.h"
-#include "ECSRegistry.h"
-#include "Components.h"
-#include "SystemView.h"
+#include "ECS/ECSRegistry.h"
+#include "ECS/Components.h"
+#include "ECS/SystemView.h"
 #include "systems/ISystem.h"
 #include "systems/PlayerController.h"
 #include "systems/ThrottleSystem.h"
-#include "systems/RenderSystem.h"
+#include "systems/DrawSystem.h"
 #include "systems/MoveCalcSystem.h"
 #include "systems/MoveTranslateSystem.h"
 #include "systems/BorderSystem.h"
@@ -43,7 +43,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	m_ECSRegistry->Init();
 
 
-	m_QuadTree = std::make_shared<QuadTree<EntityID>>(0, 0, m_Width, m_Height, 50.f);
+	m_QuadTree = std::make_shared<QuadTree<EntityID>>(0, 0, m_Width, m_Height, 100.f);
 
 	//Registering components with ECS registry
 	m_ECSRegistry->RegisterComponent<TransformComp>();
@@ -78,7 +78,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	//Systems added in execution order
 	AddSystem<PlayerController>(m_EventHandle, inputComp);
 	AddSystem<ThrottleSystem>(throttleView);
-	AddSystem<RenderSystem>(m_Renderer, renderView);
+	AddSystem<DrawSystem>(m_Renderer, renderView);
 	AddSystem<WeaponSystem>(m_SpawnOrders, weaponView);
 	AddSystem<MoveCalcSystem>(moveView);
 	AddSystem<BorderSystem>(m_Width, m_Height, collisionView);
@@ -101,6 +101,7 @@ void Game::Run()
 		SDL_RenderClear(m_Renderer);
 
 #ifdef _DEBUG
+		//Draws quadtree grid
 		auto& renderer = m_Renderer;
 		m_QuadTree->Traverse([&renderer](QuadTreeNode<EntityID>* node)
 			{

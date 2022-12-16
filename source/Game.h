@@ -3,17 +3,17 @@
 #include <memory>
 #include <array>
 #include <queue>
-#include "ECSCore.h"
-#include "SpawnOrder.h"
-#include "FixedQueue.h"
-#include "QuadTree.h"
+#include "ECS/ECSCore.h"
+#include "containers/FixedQueue.h"
+#include "containers/QuadTree.h"
+#include "systems/SpawnOrder.h"
 
 class ECSRegistry;
 class Entity;
 class ISystem;
 class PlayerController;
 class ThrottleSystem;
-class RenderSystem;
+class DrawSystem;
 class MoveTranslateSystem;
 class WeaponSystem;
 

@@ -1,5 +1,5 @@
 #include "MoveTranslateSystem.h"
-#include "../ECSCore.h"
+#include "../ECS/ECSCore.h"
 
 void MoveTranslateSystem::Update(float deltaTime)
 {

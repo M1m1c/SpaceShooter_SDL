@@ -1,17 +1,17 @@
 #pragma once
 #include "ISystem.h"
-#include "../SystemView.h"
+#include "../ECS/SystemView.h"
 #include <memory>
 struct SDL_Renderer;
 struct TransformComp;
 struct TagComp;
 struct SDL_Rect;
 
-class RenderSystem : public ISystem
+class DrawSystem : public ISystem
 {
 public:
-	RenderSystem(SDL_Renderer* renderer, std::shared_ptr<SystemView<TransformComp, TagComp>> componentView) :m_Renderer(renderer), m_SystemView(componentView) {}
-	~RenderSystem() = default;
+	DrawSystem(SDL_Renderer* renderer, std::shared_ptr<SystemView<TransformComp, TagComp>> componentView) :m_Renderer(renderer), m_SystemView(componentView) {}
+	~DrawSystem() = default;
 
 	virtual void Update(float deltaTime) override;
 

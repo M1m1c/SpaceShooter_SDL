@@ -1,7 +1,7 @@
 #pragma once
 #include "ISystem.h"
-#include "../ECSCore.h"
-#include "../FixedQueue.h"
+#include "../ECS/ECSCore.h"
+#include "../containers/FixedQueue.h"
 class ECSRegistry;
 struct SpawnOrder;
 
