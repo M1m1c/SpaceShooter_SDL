@@ -1,5 +1,7 @@
 # SpaceShooter_SDL
-A shmup game made using a data oriented approach. Uses SDL and GLM, features an ECS system and quadtree collision checking
+This project is a school exercise in data oriented programming.
+The goal was to make a performant 2D game that is able to handle spawning, moving and collisions of multiple entities.
+Uses SDL for window managment and GLM for its math features.
 
 The controls for playing are:
 - **WASD** or **Arrow keys** for movement.
@@ -7,10 +9,7 @@ The controls for playing are:
 
 **Colliding with an enemy and dying closes the application.**
 
-This project is meant as an exercise in data oriented programming.
-The goal was to make a performant 2D game that is able to handle spawning, moving and collisions of multiple entities.
-
-The approaches used to achieve this are as follows:
+### *The approaches used to achieve better performance are as follows:*
 
 ## Minimize allocations 
 
