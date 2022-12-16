@@ -25,16 +25,20 @@ void CollisionSystem::Update(float deltaTime)
 						auto& transformB = std::get<0>(table[tableIndex_B]);
 						auto& tagCompB = std::get<1>(table[tableIndex_B]);
 						auto& healthCompB = std::get<2>(table[tableIndex_B]);
+						auto& colliderCompB = std::get<3>(table[tableIndex_B]);
 
 						if (tagCompA.Tag != tagCompB.Tag)
 						{
-							const glm::vec2 aMin = nextPositionA - (transformA.Size * 0.5f);
-							const glm::vec2 aMax = nextPositionA + (transformA.Size * 0.5f);
-							const glm::vec2 bMin = transformB.Position - (transformB.Size * 0.5f);
-							const glm::vec2 bMax = transformB.Position + (transformB.Size * 0.5f);
+							////TODO just replace this with teh collider comps
+							//const glm::vec2 aMin = nextPositionA - (transformA.Size * 0.5f);
+							//const glm::vec2 aMax = nextPositionA + (transformA.Size * 0.5f);
+							//const glm::vec2 bMin = transformB.Position - (transformB.Size * 0.5f);
+							//const glm::vec2 bMax = transformB.Position + (transformB.Size * 0.5f);
 
+							auto nextCol = AABB(nextPositionA, transformA.Size);
+							
 							// Check if the AABBs intersect
-							if (aMax.x >= bMin.x && aMin.x <= bMax.x && aMax.y >= bMin.y && aMin.y <= bMax.y)
+							if (colliderCompB.Collider.IsIntersecting(nextCol))
 							{
 								healthCompA.IsQueuedForDestroy = true;
 								healthCompB.IsQueuedForDestroy = true;
