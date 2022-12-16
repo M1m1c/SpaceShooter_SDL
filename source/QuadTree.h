@@ -94,7 +94,7 @@ public:
 		return index;
 	}
 
-	QuadTreeNode* FindNode(float x, float y)
+	QuadTreeNode<T>* FindNode(float x, float y)
 	{
 		if (!IsLeaf())
 		{
@@ -172,6 +172,12 @@ private:
 	std::vector<T> m_Data{};
 };
 
+
+//TODO figure out how to iterate over nodes with more than one entity and do collision checks
+//TODO figure out how we can do boundry checks using the quadtrees border nodes
+//TODO make entites able to overlap multiple nodes by passing their collider size instead of just position
+//TODO ultimatley we only want to check collisions in nodes where there are more than one entites that have different tags, borders are a differnt case
+
 template<typename T>
 class QuadTree
 {
@@ -193,16 +199,28 @@ public:
 
 	void Update(T item, float x, float y, float prevX, float prevY)
 	{
-		auto node = m_Root->FindNode(prevX, prevY);
+		QuadTreeNode<T>* nextNode = nullptr;
+		nextNode = m_Root->FindNode(x, y);
+		if (nextNode == nullptr)
+		{
+			// the next position is outside the quadtree, remove the item form the last node it was in
+			m_Root->Remove(item, prevX, prevY);
+			return;
+		}
+
+		QuadTreeNode<T>* node = nullptr;
+		node = m_Root->FindNode(prevX, prevY);
 		if (node == nullptr)
 		{
 			// The previous position of the object is not within the root node, so add it to the tree
 			m_Root->Add(item, x, y);
 			return;
 		}
+		
+	
 
 		// Check if the object has entered a new quadrant
-		if (m_Root->FindNode(x, y) != node)
+		if (nextNode != node)
 		{
 			// The object has entered a new quadrant, so remove it from its current node and add it to the appropriate leaf node
 			m_Root->Remove(item, prevX, prevY);

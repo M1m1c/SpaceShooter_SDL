@@ -82,10 +82,10 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	AddSystem<WeaponSystem>(m_SpawnOrders, weaponView);
 	AddSystem<MoveCalcSystem>(moveView);
 	AddSystem<BorderSystem>(m_Width, m_Height, collisionView);
-	AddSystem<CollisionSystem>(m_Renderer, collisionView);
+	AddSystem<CollisionSystem>(m_QuadTree, collisionView);
 	AddSystem<MoveTranslateSystem>(m_QuadTree,moveView);
 	AddSystem<WaveSpawnerSystem>(m_SpawnOrders);
-	AddSystem<DestructionSystem>(m_IsRunning, m_ECSRegistry);
+	AddSystem<DestructionSystem>(m_IsRunning,m_QuadTree, m_ECSRegistry);
 	AddSystem<EntitySpawnSystem>(m_ECSRegistry, m_SpawnOrders);
 }
 
@@ -114,7 +114,8 @@ void Game::Run()
 				rect.h = sizeY;
 
 				auto isEmpty = node->GetData().empty();
-				glm::ivec3 color = isEmpty? glm::ivec3(60, 60, 80) : glm::ivec3(140, 140, 40);
+				auto isMoreThanOne = node->GetData().size()>1;
+				glm::ivec3 color = isEmpty? glm::ivec3(60, 60, 80) : isMoreThanOne? glm::ivec3(255, 0, 0) : glm::ivec3(140, 140, 40);
 
 				SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 255);
 				SDL_RenderDrawRect(renderer, &rect);

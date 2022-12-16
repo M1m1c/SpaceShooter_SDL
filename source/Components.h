@@ -76,10 +76,7 @@ private:
 
 struct HealthComp
 {
-	uint16_t Health = 1;
 	bool IsQueuedForDestroy = false;
-
 	HealthComp() = default;
-	HealthComp(uint16_t health) : Health(health){}
 	~HealthComp() = default;
 };
