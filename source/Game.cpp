@@ -43,7 +43,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	m_ECSRegistry->Init();
 
 
-	m_QuadTree = std::make_shared<QuadTree<EntityID>>(0, 0, m_Width, m_Height, 50.f);
+	m_QuadTree = std::make_shared<QuadTree<EntityID>>(0, 0, m_Width, m_Height, 100.f);
 
 	//Registering components with ECS registry
 	m_ECSRegistry->RegisterComponent<TransformComp>();
