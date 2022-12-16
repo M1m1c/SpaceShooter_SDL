@@ -9,7 +9,6 @@ The controls for playing are:
 
 **Colliding with an enemy and dying closes the application.**
 
-[![Video Preview](https://i.imgur.com/fNzVqn5.png)](https://youtu.be/N3DvlHJhawI)
 
 *The approaches used to achieve better performance are as follows:*
 
