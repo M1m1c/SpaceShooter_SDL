@@ -162,7 +162,9 @@
     <ClCompile Include="source\systems\WeaponSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\containers\AABB.h" />
     <ClInclude Include="source\containers\QuadTree.h" />
+    <ClInclude Include="source\ECS\Vectors.h" />
     <ClInclude Include="source\systems\BorderSystem.h" />
     <ClInclude Include="source\systems\MoveCalcSystem.h" />
     <ClInclude Include="source\systems\CollisionSystem.h" />
