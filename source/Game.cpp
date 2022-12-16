@@ -114,7 +114,8 @@ void Game::Run()
 				rect.h = sizeY;
 
 				auto isEmpty = node->GetData().empty();
-				glm::ivec3 color = isEmpty? glm::ivec3(60, 60, 80) : glm::ivec3(140, 140, 40);
+				auto isMoreThanOne = node->GetData().size()>1;
+				glm::ivec3 color = isEmpty? glm::ivec3(60, 60, 80) : isMoreThanOne? glm::ivec3(255, 0, 0) : glm::ivec3(140, 140, 40);
 
 				SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 255);
 				SDL_RenderDrawRect(renderer, &rect);
