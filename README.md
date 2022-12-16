@@ -1,7 +1,7 @@
 # SpaceShooter_SDL
 This project is a school exercise in data oriented programming.
 The goal was to make a performant 2D game that is able to handle spawning, moving and collisions of multiple entities.
-The project uses SDL for window managment and shape drawing and GLM for its math features.
+The project uses SDL for window managment and shape drawing, as well as GLM for its math features.
 
 The controls for playing are:
 - **WASD** or **Arrow keys** for movement.
