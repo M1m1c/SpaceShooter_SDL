@@ -33,7 +33,7 @@ public:
 		{
 			if (!m_MoveView->ContainsEntity(id))
 			{
-				m_MoveView->Add(id, MakeTableEntry<TransformComp, RigidBodyComp>(id));
+				m_MoveView->Add(id, MakeTableEntry<TransformComp, RigidBodyComp, ColliderComp>(id));
 			}
 		}
 
@@ -63,7 +63,7 @@ public:
 		{
 			if (!m_CollisionView->ContainsEntity(id))
 			{
-				m_CollisionView->Add(id, MakeTableEntry<TransformComp, TagComp, HealthComp>(id));
+				m_CollisionView->Add(id, MakeTableEntry<TransformComp, TagComp, HealthComp, ColliderComp>(id));
 			}
 		}
 
@@ -108,10 +108,10 @@ public:
 public:
 
 	std::shared_ptr <SystemView<RigidBodyComp, InputComp>> m_ThrottleView;
-	std::shared_ptr <SystemView<TransformComp,RigidBodyComp>> m_MoveView;
+	std::shared_ptr <SystemView<TransformComp,RigidBodyComp,ColliderComp>> m_MoveView;
 	std::shared_ptr <SystemView<TransformComp, TagComp>> m_RenderView;
 	std::shared_ptr <SystemView<TransformComp, InputComp, TagComp, WeaponComp>> m_WeaponView;
-	std::shared_ptr <SystemView<TransformComp, TagComp, HealthComp>> m_CollisionView;
+	std::shared_ptr <SystemView<TransformComp, TagComp, HealthComp,ColliderComp>> m_CollisionView;
 
 private:
 	std::unordered_map<size_t, std::shared_ptr<ICompArray>> m_ComponentArrays{};

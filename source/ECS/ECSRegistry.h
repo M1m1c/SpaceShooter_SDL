@@ -35,6 +35,11 @@ public:
 			Vector2(transformValues.x, transformValues.y),
 			Vector2(transformValues.z, transformValues.w));
 
+		AddComponent<ColliderComp>(
+			id,
+			Vector2(transformValues.x, transformValues.y),
+			Vector2(transformValues.z, transformValues.w));
+
 		AddComponent<TagComp>(id, tag);
 		AddComponent<HealthComp>(id);
 
@@ -149,10 +154,10 @@ public:
 	}
 
 	void SetThrottleView(std::shared_ptr <SystemView<RigidBodyComp, InputComp>> view) { m_SystemsViewAdmin->m_ThrottleView = view; }
-	void SetMoveView(std::shared_ptr <SystemView<TransformComp,RigidBodyComp>> view) { m_SystemsViewAdmin->m_MoveView = view; }
+	void SetMoveView(std::shared_ptr <SystemView<TransformComp,RigidBodyComp,ColliderComp>> view) { m_SystemsViewAdmin->m_MoveView = view; }
 	void SetRenderView(std::shared_ptr <SystemView<TransformComp, TagComp>> view) { m_SystemsViewAdmin->m_RenderView = view; }
 	void SetWeaponView(std::shared_ptr <SystemView<TransformComp, InputComp, TagComp, WeaponComp>> view) { m_SystemsViewAdmin->m_WeaponView = view; }
-	void SetCollisionView(std::shared_ptr <SystemView<TransformComp, TagComp, HealthComp>> view) { m_SystemsViewAdmin->m_CollisionView = view; }
+	void SetCollisionView(std::shared_ptr <SystemView<TransformComp, TagComp, HealthComp,ColliderComp>> view) { m_SystemsViewAdmin->m_CollisionView = view; }
 
 private:
 	std::unique_ptr<ComponentAdmin> m_ComponentAdmin;
