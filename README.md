@@ -30,6 +30,6 @@ The quadtree approach meant that the screen space was divided into leaf nodes of
 
 A caveat with the current implementation of the collision system is that an entity can only be in one node and this is based on its center position, not its size. This means that the graphics of entities can overlap each other without actually colliding, due to them being in separate nodes. A potential solution for this would be to allow entities to enter nodes based on their collider size, allowing them to be in multiple nodes at the same time. This is something I started on but did not have time to finish
 
-![image displaying a entity appearing to overlap multiple nodes]([https://imgur.com/t0YSGtl](https://imgur.com/a/04QumOM))
+![image displaying a entity appearing to overlap multiple nodes](https://i.imgur.com/t0YSGtl.png)
 
 *Above is screenshot of the issue, the center red square appears to be overlapping all four surrounding nodes, but is actually located in the top right node*
