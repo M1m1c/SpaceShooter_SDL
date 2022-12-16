@@ -23,11 +23,10 @@ void WaveSpawnerSystem::Update(float deltaTime)
 		randomInt = disOffsetInt(gen);
 
 
-		for (size_t i = 0; i < 10; i++)
+		for (size_t i = 0; i < pattern.Count; i++)
 		{
-
 			m_OrderQueue.push(SpawnOrder(
-				Vector2(pattern.StartPosition.x + (100.f*randomInt) + (pattern.Offset.x * i), pattern.StartPosition.y + (pattern.Offset.y * i)),
+				Vector2(pattern.StartPosition.x + (pattern.StartOffset *randomInt) + (pattern.Offset.x * i), pattern.StartPosition.y + (pattern.Offset.y * i)),
 				ObjectTag::Enemy,
 				pattern.InputSignature
 				));
