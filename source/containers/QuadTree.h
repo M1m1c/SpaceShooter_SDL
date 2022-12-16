@@ -98,7 +98,7 @@ public:
 	{
 		if (!IsLeaf())
 		{
-			// This node is not a leaf, so add the object to the appropriate child
+			// This node is not a leaf, so continue
 			int index = FindIndex(x, y);
 			if (index != -1)
 			{
@@ -107,7 +107,6 @@ public:
 		}
 		else
 		{
-			//TODO if we cant finr posiiton within this node then it is out of bounds and we should return null
 			auto isWithinX = x >= m_AABB.min_x && x <= m_AABB.max_x;
 			auto isWithinY = y >= m_AABB.min_y && y <= m_AABB.max_y;
 			if (isWithinX && isWithinY)
@@ -126,7 +125,7 @@ public:
 		int index = FindIndex(x, y);
 		if (!IsLeaf())
 		{
-			// This node is not a leaf, so add the object to the appropriate child
+			// This node is not a leaf, so add the item to the appropriate child
 			if (index != -1)
 			{
 				m_Children[index]->Add(item, x, y);
@@ -136,7 +135,7 @@ public:
 		{
 			if (std::find(m_Data.begin(), m_Data.end(), item) == m_Data.end())
 			{
-				// This is a leaf node, so store the object in this node
+				// This is a leaf node, so store the item in this node
 				m_Data.push_back(item);
 			}
 		}
@@ -146,17 +145,17 @@ public:
 	{
 		if (IsLeaf())
 		{
-			// Check if the given point exists in this node
+			// Check if the given item exists in this node
 			auto iterator = std::find(m_Data.begin(), m_Data.end(), item);
 			if (iterator != m_Data.end())
 			{
-				// The point exists in this node, so remove it
+				// The item exists in this node, so remove it
 				m_Data.erase(iterator);
 			}
 		}
 		else
 		{
-			// The point does not exist in this node, so check its children
+			// this is not a leaf node so continue searching
 			int index = FindIndex(x, y);
 			if (index != -1 && m_Children[index] != nullptr)
 			{
@@ -171,8 +170,6 @@ private:
 	std::shared_ptr<QuadTreeNode> m_Children[4] = { nullptr, nullptr, nullptr, nullptr };
 	std::vector<T> m_Data{};
 };
-
-//TODO make entites able to overlap multiple nodes by passing their collider size instead of just position
 
 template<typename T>
 class QuadTree
