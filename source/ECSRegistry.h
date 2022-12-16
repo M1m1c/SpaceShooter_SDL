@@ -26,8 +26,7 @@ public:
 	template<typename... Types>
 	const EntityID& CreateEntity(
 		Vector4 transformValues = Vector4(0.f, 0.f, 1.f, 1.f),
-		ObjectTag tag = ObjectTag::None,
-		uint16_t health = 1)
+		ObjectTag tag = ObjectTag::None)
 	{
 		const auto& id = m_EntityAdmin->CreateEntity();
 
@@ -37,7 +36,7 @@ public:
 			Vector2(transformValues.z, transformValues.w));
 
 		AddComponent<TagComp>(id, tag);
-		AddComponent<HealthComp>(id, health);
+		AddComponent<HealthComp>(id);
 
 		(AddComponent<Types>(id), ...);
 
