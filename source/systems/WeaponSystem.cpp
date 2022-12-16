@@ -56,9 +56,7 @@ void WeaponSystem::Update( float deltaTime)
 	}
 }
 
-//TODO figure out way of spawning bullet without needing access to registry
 void WeaponSystem::SpawnBullet(glm::vec2 position,int direction)
 {
-
 	m_OrderQueue.push(SpawnOrder(position, ObjectTag::Bullet, std::bitset<5>(1 << direction)));
 }
