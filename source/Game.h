@@ -13,7 +13,7 @@ class Entity;
 class ISystem;
 class PlayerController;
 class ThrottleSystem;
-class RenderSystem;
+class DrawSystem;
 class MoveTranslateSystem;
 class WeaponSystem;
 

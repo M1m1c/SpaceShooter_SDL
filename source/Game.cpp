@@ -7,7 +7,7 @@
 #include "systems/ISystem.h"
 #include "systems/PlayerController.h"
 #include "systems/ThrottleSystem.h"
-#include "systems/RenderSystem.h"
+#include "systems/DrawSystem.h"
 #include "systems/MoveCalcSystem.h"
 #include "systems/MoveTranslateSystem.h"
 #include "systems/BorderSystem.h"
@@ -78,7 +78,7 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	//Systems added in execution order
 	AddSystem<PlayerController>(m_EventHandle, inputComp);
 	AddSystem<ThrottleSystem>(throttleView);
-	AddSystem<RenderSystem>(m_Renderer, renderView);
+	AddSystem<DrawSystem>(m_Renderer, renderView);
 	AddSystem<WeaponSystem>(m_SpawnOrders, weaponView);
 	AddSystem<MoveCalcSystem>(moveView);
 	AddSystem<BorderSystem>(m_Width, m_Height, collisionView);
@@ -101,6 +101,7 @@ void Game::Run()
 		SDL_RenderClear(m_Renderer);
 
 #ifdef _DEBUG
+		//Draws quadtree grid
 		auto& renderer = m_Renderer;
 		m_QuadTree->Traverse([&renderer](QuadTreeNode<EntityID>* node)
 			{

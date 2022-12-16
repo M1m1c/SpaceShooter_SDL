@@ -158,7 +158,7 @@
     <ClCompile Include="source\systems\ThrottleSystem.cpp" />
     <ClCompile Include="source\systems\MoveTranslateSystem.cpp" />
     <ClCompile Include="source\systems\PlayerController.cpp" />
-    <ClCompile Include="source\systems\RenderSystem.cpp" />
+    <ClCompile Include="source\systems\DrawSystem.cpp" />
     <ClCompile Include="source\systems\WeaponSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -184,7 +184,7 @@
     <ClInclude Include="source\systems\ThrottleSystem.h" />
     <ClInclude Include="source\systems\MoveTranslateSystem.h" />
     <ClInclude Include="source\systems\PlayerController.h" />
-    <ClInclude Include="source\systems\RenderSystem.h" />
+    <ClInclude Include="source\systems\DrawSystem.h" />
     <ClInclude Include="source\systems\WeaponSystem.h" />
     <ClInclude Include="source\ECS\SystemsViewAdmin.h" />
   </ItemGroup>
