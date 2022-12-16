@@ -173,7 +173,6 @@ private:
 };
 
 
-//TODO When an entity exits a border node it needs to get removed, mostly a problem with diagonals right now
 //TODO figure out how to iterate over nodes with more than one entity and do collision checks
 //TODO figure out how we can do boundry checks using the quadtrees border nodes
 //TODO make entites able to overlap multiple nodes by passing their collider size instead of just position
@@ -200,6 +199,14 @@ public:
 
 	void Update(T item, float x, float y, float prevX, float prevY)
 	{
+		auto nextNode = m_Root->FindNode(x, y);
+		if (nextNode == nullptr)
+		{
+			// the next position is outside the quadtree, remove the item form the last node it was in
+			m_Root->Remove(item, prevX, prevY);
+			return;
+		}
+
 		auto node = m_Root->FindNode(prevX, prevY);
 		if (node == nullptr)
 		{
@@ -208,15 +215,8 @@ public:
 			return;
 		}
 		
-		//TODO this did not seem to help wiht the border nodes not getting emptied when exited
-	/*	if (nextNode == nullptr) 
-		{
-			m_Root->Remove(item, prevX, prevY);
-			m_Root->Remove(item, x, y);
-			return;
-		}*/
+	
 
-		auto nextNode = m_Root->FindNode(x, y);
 		// Check if the object has entered a new quadrant
 		if (nextNode != node)
 		{
