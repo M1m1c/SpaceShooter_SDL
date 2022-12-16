@@ -21,8 +21,9 @@ void DestructionSystem::Update(float deltaTime)
 			{
 				m_IsGameRunning = false;
 			}
-			auto& transformComp = m_Registry->GetComponent<TransformComp>(*entityId);
-			m_QuadTree->Remove(*entityId, transformComp.Position.x, transformComp.Position.y);
+			//auto& transformComp = m_Registry->GetComponent<TransformComp>(*entityId);
+			auto& colliderComp = m_Registry->GetComponent<ColliderComp>(*entityId);
+			m_QuadTree->Remove(*entityId, colliderComp.Collider);
 			m_Registry->DestroyEntity(*entityId);
 		}
 	}
