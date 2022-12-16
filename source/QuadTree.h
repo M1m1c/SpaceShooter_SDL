@@ -94,7 +94,7 @@ public:
 		return index;
 	}
 
-	QuadTreeNode* FindNode(float x, float y)
+	QuadTreeNode<T>* FindNode(float x, float y)
 	{
 		if (!IsLeaf())
 		{
@@ -199,7 +199,8 @@ public:
 
 	void Update(T item, float x, float y, float prevX, float prevY)
 	{
-		auto nextNode = m_Root->FindNode(x, y);
+		QuadTreeNode<T>* nextNode = nullptr;
+		nextNode = m_Root->FindNode(x, y);
 		if (nextNode == nullptr)
 		{
 			// the next position is outside the quadtree, remove the item form the last node it was in
@@ -207,7 +208,8 @@ public:
 			return;
 		}
 
-		auto node = m_Root->FindNode(prevX, prevY);
+		QuadTreeNode<T>* node = nullptr;
+		node = m_Root->FindNode(prevX, prevY);
 		if (node == nullptr)
 		{
 			// The previous position of the object is not within the root node, so add it to the tree
