@@ -4,6 +4,7 @@ A shmup game made using a data oriented approach. Uses SDL and GLM, features an 
 The controls for playing are:
 - WASD or arrow keys for movement.
 - SPACE for shooting. hold for automatic fire, tap for semi-automatic.
+
 Colliding with an enemy and dying closes the application.
 
 This project is meant as an exercise in data oriented programming.
