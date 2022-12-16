@@ -172,11 +172,7 @@ private:
 	std::vector<T> m_Data{};
 };
 
-
-//TODO figure out how to iterate over nodes with more than one entity and do collision checks
-//TODO figure out how we can do boundry checks using the quadtrees border nodes
 //TODO make entites able to overlap multiple nodes by passing their collider size instead of just position
-//TODO ultimatley we only want to check collisions in nodes where there are more than one entites that have different tags, borders are a differnt case
 
 template<typename T>
 class QuadTree
@@ -216,8 +212,6 @@ public:
 			m_Root->Add(item, x, y);
 			return;
 		}
-		
-	
 
 		// Check if the object has entered a new quadrant
 		if (nextNode != node)
