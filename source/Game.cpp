@@ -52,14 +52,15 @@ void Game::Init(SDL_Window* window, SDL_Surface* surface, const int width, const
 	m_ECSRegistry->RegisterComponent<RigidBodyComp>();
 	m_ECSRegistry->RegisterComponent<WeaponComp>();
 	m_ECSRegistry->RegisterComponent<HealthComp>();
+	m_ECSRegistry->RegisterComponent<ColliderComp>();
 
 
 	//Creating systems views
 	auto throttleView = m_ECSRegistry->CreateComponentView<RigidBodyComp, InputComp>();
-	auto moveView = m_ECSRegistry->CreateComponentView<TransformComp, RigidBodyComp>();
+	auto moveView = m_ECSRegistry->CreateComponentView<TransformComp, RigidBodyComp,ColliderComp>();
 	auto renderView = m_ECSRegistry->CreateComponentView<TransformComp, TagComp>();
 	auto weaponView = m_ECSRegistry->CreateComponentView<TransformComp, InputComp, TagComp, WeaponComp>();
-	auto collisionView = m_ECSRegistry->CreateComponentView<TransformComp, TagComp, HealthComp>();
+	auto collisionView = m_ECSRegistry->CreateComponentView<TransformComp, TagComp, HealthComp,ColliderComp>();
 
 	m_ECSRegistry->SetThrottleView(throttleView);
 	m_ECSRegistry->SetMoveView(moveView);
